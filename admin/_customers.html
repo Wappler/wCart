@@ -1,0 +1,72 @@
+<!-- Wappler include head-page="index.html" appConnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_sli components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxFormatter&quot;:{}}" jquery_slim_33="cdn"m_33="cdn" -->
+<section id="customers">
+	<div class="row">
+		<div class="col">
+			<h1>Customers</h1>
+		</div>
+	</div>
+	<div class="row" dmx-hide="scCustomers.data.qryCustomers">
+		<div class="col">
+			<h5>There are no Custmers at this stage</h5>
+		</div>
+	</div>
+	<div class="row" dmx-show="scCustomers.data.qryCustomers">
+		<div class="col-6">
+			<table class="table table-hover table-sm">
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scCustomers.data.qryCustomers" id="tableRepeat1">
+					<tr dmx-on:click="ddCustomer.select(CustomerID)" dmx-class:bg-warning="(CustomerID == ddCustomer.data.CustomerID)">
+						<td dmx-text="CustomerFirstName"></td>
+						<td dmx-text="CustomerLastName"></td>
+						<td dmx-text="CustomerEmail"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-6">
+			<p class="text-danger" dmx-hide="ddCustomer.data">Choose a Customer to see the details</p>
+			<table class="table" dmx-show="ddCustomer.data">
+				<tbody dmx-generator="bs4table" dmx-populate="ddCustomer.data">
+					<tr>
+						<th class="w-25">Firstname</th>
+						<td dmx-text="ddCustomer.data.CustomerFirstName"></td>
+					</tr>
+					<tr>
+						<th>Lastname</th>
+						<td dmx-text="ddCustomer.data.CustomerLastName"></td>
+					</tr>
+					<tr>
+						<th>Address</th>
+						<td dmx-text="ddCustomer.data.CustomerAddress"></td>
+					</tr>
+					<tr>
+						<th>City</th>
+						<td dmx-text="ddCustomer.data.CustomerCity"></td>
+					</tr>
+					<tr>
+						<th>State</th>
+						<td dmx-text="ddCustomer.data.CustomerState"></td>
+					</tr>
+					<tr>
+						<th>Postcode</th>
+						<td dmx-text="ddCustomer.data.CustomerZip"></td>
+					</tr>
+					<tr>
+						<th>Country</th>
+						<td dmx-text="ddCustomer.data.CustomerCountry"></td>
+					</tr>
+					<tr>
+						<th>Email</th>
+						<td dmx-text="ddCustomer.data.CustomerEmail"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>

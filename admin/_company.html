@@ -1,0 +1,119 @@
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="cdn" components="{&quot;dmxBootstrap4Modal&quot;:{},&quot;dmxDropzone&quot;:{}}" -->
+<section id="company">
+	<div class="row">
+		<div class="col">
+			<h1>Company</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-2">
+			<img alt="Comapny Logo" class="img-fluid" dmx-bind:src="/assets/images/company_logo/{{scCompany.data.qryCompany.CompanyLogo}}">
+			<button class="btn btn-block btn-outline-primary btn-sm mt-2" dmx-on:click="mdlLogoUpdate.show()">Change Logo</button>
+			<p class="small "><em>The logo should be 260x260 px in size. This is also important when generating the Favicons Generated using <a href="https://realfavicongenerator.net/" target="_blank">https://realfavicongenerator.net/</a></em></p>
+		</div>
+		<div class="col-6 offset-1">
+			<form is="dmx-serverconnect-form" id="frmCompanyUpdate" method="post" action="../dmxConnect/api/company/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="scCompany.data.qryCompany"
+				dmx-on:success="scCompany.load({});notifies.success('Company has been updated')">
+				<input type="hidden" id="inp_CompanyID" name="CompanyID" dmx-bind:value="scCompany.data.qryCompany.CompanyID">
+				<div class="form-group row">
+					<label for="inp_CompanyName" class="col-sm-3 col-form-label">Name</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyName" name="CompanyName" dmx-bind:value="scCompany.data.qryCompany.CompanyName" aria-describedby="inp_CompanyName_help" placeholder="Enter Company name">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyBusinessID" class="col-sm-3 col-form-label">Business Nr.</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyBusinessID" name="CompanyBusinessID" dmx-bind:value="scCompany.data.qryCompany.CompanyBusinessID" aria-describedby="inp_CompanyBusinessID_help"
+							placeholder="Enter Company business">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyAddress" class="col-sm-3 col-form-label">Address</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyAddress" name="CompanyAddress" dmx-bind:value="scCompany.data.qryCompany.CompanyAddress" aria-describedby="inp_CompanyAddress_help" placeholder="Enter Company address">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyCity" class="col-sm-3 col-form-label">City</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyCity" name="CompanyCity" dmx-bind:value="scCompany.data.qryCompany.CompanyCity" aria-describedby="inp_CompanyCity_help" placeholder="Enter Company city">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyState" class="col-sm-3 col-form-label">Region</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyState" name="CompanyState" dmx-bind:value="scCompany.data.qryCompany.CompanyState" aria-describedby="inp_CompanyState_help" placeholder="Enter Company state">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyZip" class="col-sm-3 col-form-label">Postcode</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyZip" name="CompanyZip" dmx-bind:value="scCompany.data.qryCompany.CompanyZip" aria-describedby="inp_CompanyZip_help" placeholder="Enter Company zip">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyCountry" class="col-sm-3 col-form-label">Country</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyCountry" name="CompanyCountry" dmx-bind:value="scCompany.data.qryCompany.CompanyCountry" aria-describedby="inp_CompanyCountry_help" placeholder="Enter Company country">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyEmail" class="col-sm-3 col-form-label">Email</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyEmail" name="CompanyEmail" dmx-bind:value="scCompany.data.qryCompany.CompanyEmail" aria-describedby="inp_CompanyEmail_help" placeholder="Enter Company email">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyPhone" class="col-sm-3 col-form-label">Phone</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyPhone" name="CompanyPhone" dmx-bind:value="scCompany.data.qryCompany.CompanyPhone" aria-describedby="inp_CompanyPhone_help" placeholder="Enter Company phone">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyRegistrationDate" class="col-sm-3 col-form-label">Registered</label>
+					<div class="col-sm-9">
+						<input type="date" class="form-control" id="inp_CompanyRegistrationDate" name="CompanyRegistrationDate" dmx-bind:value="scCompany.data.qryCompany.CompanyRegistrationDate" aria-describedby="inp_CompanyRegistrationDate_help"
+							placeholder="Enter Company registration date">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_CompanyWebsite" class="col-sm-3 col-form-label">Website</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_CompanyWebsite" name="CompanyWebsite" dmx-bind:value="scCompany.data.qryCompany.CompanyWebsite" aria-describedby="inp_CompanyWebsite_help" placeholder="Enter Company website">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<div class="col-sm-3">&nbsp;</div>
+					<div class="col-sm-9">
+						<button type="submit" class="btn btn-primary" dmx-bind:value="scCompany.data.qryCompany.Save">Update</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- Modal to change the Logo -->
+	<div class="modal" id="mdlLogoUpdate" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary text-light">
+					<h5 class="modal-title">Logo Update</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="frmLogoUpdate" method="post" is="dmx-serverconnect-form" action="../dmxConnect/api/company/update_logo.php"
+						dmx-on:success="scCompany.load({});notifies.success('Logo has been updated');mdlLogoUpdate.hide();mdlLogoUpdate.frmLogoUpdate.reset()" dmx-on:error="notifies.danger('An error has occurred')">
+						<input type="hidden" id="upd_CompanyID" name="CompanyID" dmx-bind:value="scCompany.data.qryCompany.CompanyID">
+						<input is="dmx-dropzone" id="upd_logo" type="file" name="logo">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" dmx-on:click="mdlLogoUpdate.frmLogoUpdate.submit()">Update Logo</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

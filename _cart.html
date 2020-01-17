@@ -1,0 +1,64 @@
+<!-- Wappler include head-page="index.html" appConnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" -->
+<section id="cart">
+	<div class="container">
+		<div class="row">
+			<div class="col-7">
+				<h1 class="mt-3">Shopping Cart</h1>
+			</div>
+		</div>
+		<div class="row" dmx-hide="arrCart.count">
+			<div class="col">
+				<h5 class="text-danger">Your cart is empty!</h5>
+			</div>
+		</div>
+		<div class="row mt-4" dmx-show="(arrSubtotal.items.sum() > 0)">
+			<div class="col">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th class="text-center">Price</th>
+								<th class="text-center">Qty</th>
+								<th class="text-center">Remove</th>
+								<th class="text-right">Amount</th>
+							</tr>
+						</thead>
+						<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="localStorage.data.cart.cartitems" id="tableRepeat1">
+							<tr>
+								<td dmx-text="product"></td>
+								<td dmx-text="price.toNumber().formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)" class="text-center"></td>
+								<td class="text-center">
+									<input id="inp_qty" name="qty" type="text" class="form-control form-control-sm ml-auto mr-auto" dmx-bind:value="qty"
+										dmx-on:updated="arrCart.replaceAt($index,{product: product, price: price, qty: value});arrSubtotal.replaceAt($index,(price * value.toNumber()))">
+								</td>
+								<td class="text-center"><button class="btn text-danger" dmx-on:click="arrCart.removeAt($index);arrSubtotal.removeAt($index);arrPID.removeAt($index)"><i class="fas fa-times"></i></button></td>
+								<td class="text-right" dmx-text="(price * qty).formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row" dmx-show="(arrSubtotal.items.sum() > 0)">
+			<div class="col-md-6 offset-md-6">
+				<div class="table-responsive">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th scope="row">Payable</th>
+								<td class="text-right" dmx-text="arrSubtotal.items.sum().formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col text-right">
+				<button class="btn btn-primary" dmx-on:click="browser.goto('./products')"><i class="fas fa-arrow-alt-circle-left fa-lg"></i>&nbsp; Continue Shopping</button>
+				<button class="btn btn-primary" dmx-on:click="browser.goto('./checkout')" dmx-show="(arrSubtotal.items.sum() > 0)">Go to Checkout&nbsp;&nbsp;<i class="fas fa-arrow-alt-circle-right fa-lg"></i></button>
+			</div>
+		</div>
+	</div>
+</section>

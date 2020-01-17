@@ -1,0 +1,115 @@
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxFormatter&quot;:{},&quot;dmxAnimateCSS&quot;:{}}" id="userhome" -->
+<section id="userhome">
+	<div class="container" dmx-hide="(varLoggedin.value >= 1)">
+		<div class="row">
+			<div class="col-12">
+				<h5 class="mt-3">You are not authorised to view this page. Please log in.</h5>
+			</div>
+		</div>
+	</div>
+	<div class="container" dmx-show="(varLoggedin.value >= 1)">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="mt-3">Home Page - {{scLoggedinCustomer.data.qryCustomer.CustomerFirstName}} {{scLoggedinCustomer.data.qryCustomer.CustomerLastName}}</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<p>Here you can change your personal details.</p>
+				<form is="dmx-serverconnect-form" id="frmCustomerUpdate" method="post" action="dmxConnect/api/customers/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="scLoggedinCustomer.data.qryCustomer"
+					dmx-on:success="scLoggedinCustomer.load({});notifies.success('You have successfully registered as a customer.')">
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerEmail" class="col-sm-2 col-form-label">Email</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerEmail" name="CustomerEmail" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerEmail" aria-describedby="inp_CustomerEmail_help"
+								placeholder="Enter Customer email">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerFirstName" class="col-sm-2 col-form-label">Firstname</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerFirstName" name="CustomerFirstName" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerFirstName" aria-describedby="inp_CustomerFirstName_help"
+								placeholder="Enter Customer first name">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerLastName" class="col-sm-2 col-form-label">Lastname</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerLastName" name="CustomerLastName" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerLastName" aria-describedby="inp_CustomerLastName_help"
+								placeholder="Enter Customer last name">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerAddress" class="col-sm-2 col-form-label">Address</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerAddress" name="CustomerAddress" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerAddress" aria-describedby="inp_CustomerAddress_help"
+								placeholder="Enter Customer address">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerCity" class="col-sm-2 col-form-label">City</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerCity" name="CustomerCity" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerCity" aria-describedby="inp_CustomerCity_help"
+								placeholder="Enter Customer city">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerCountry" class="col-sm-2 col-form-label">Country</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerCountry" name="CustomerCountry" dmx-bind:value="dvCountry.data[0].CountryName" aria-describedby="inp_CustomerCountry_help" placeholder="Enter Customer country">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerState" class="col-sm-2 col-form-label">{{dvCountry.data[0].CountryRegionName}}</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerState" name="CustomerState" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerState" aria-describedby="inp_CustomerState_help"
+								placeholder="Enter Customer state">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<label for="inp_CustomerZip" class="col-sm-2 col-form-label">Postalcode</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inp_CustomerZip" name="CustomerZip" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerZip" aria-describedby="inp_CustomerZip_help" placeholder="Enter Customer zip">
+						</div>
+					</div>
+					<div class="form-group row mt-2">
+						<input type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerID" id="inp_CustomerID" name="CustomerID">
+						<div class="col-sm-2">&nbsp;</div>
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.Save">Update</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-12 col-md-6">
+				<h5>Your Purchases/Invoices</h5>
+				<div class="row" dmx-hide="scOrders.data.qryOrders">
+					<div class="col-12">
+						<p>Once you have placed an order, you will be able to see it here.</p>
+					</div>
+				</div>
+				<div class="row" dmx-show="scOrders.data.qryOrders">
+					<div class="col-12">
+						<p>Click on an order to view/print the invoice.</p>
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Order date</th>
+										<th class="text-right">Order amount</th>
+									</tr>
+								</thead>
+								<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scOrders.data.qryOrders" id="rptOrders">
+									<tr dmx-on:click="browser.goto('invoice/' + OrderID)" style="cursor:pointer;">
+										<td dmx-text="OrderDate.formatDate(&quot;dd-MM-yyyy&quot;)"></td>
+										<td dmx-text="OrderAmount.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)" class="text-right"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

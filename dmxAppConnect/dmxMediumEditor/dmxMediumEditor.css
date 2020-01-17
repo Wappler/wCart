@@ -1,0 +1,107 @@
+/*csslint adjoining-classes: false*/
+
+/* Fix for bootstrap */
+.form-control.medium-editor-element {
+    height: auto;
+}
+
+.medium-editor-alert-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 400ms opacity;
+    pointer-events: none;
+}
+
+.medium-editor-alert-active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.medium-editor-alert {
+    left: 50%;
+    top: 1em;
+    width: 30%;
+    margin-left: -15%;
+}
+
+.medium-editor-alert button {
+    pointer-events: none;
+    height: auto !important;
+}
+
+.medium-editor-insertbar {
+    display: none;
+    position: absolute;
+}
+
+.medium-editor-insertbar-toggle {
+    margin: 0;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background: transparent;
+    color: #ccc;
+    line-height: 32px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    transition: transform 200ms;
+}
+
+.medium-editor-insertbar-active {
+    display: block;
+}
+
+.medium-editor-insertbar-expand .medium-editor-insertbar-toggle {
+    transform: rotate(45deg);
+}
+
+.medium-editor-insertbar-actions, .medium-editor-insertbar-actions li {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.medium-editor-insertbar-actions {
+    display: none;
+}
+
+.medium-editor-insertbar-expand .medium-editor-insertbar-actions {
+    display: inline-block;
+}
+
+.medium-editor-insertbar button {
+    margin-left: 8px;
+    min-width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background: transparent;
+    color: #ccc;
+    line-height: 32px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    transition: all 400ms;
+}
+
+.medium-editor-insertbar button:focus {
+  outline: none;
+}
+
+.medium-editor-insertbar button:hover {
+    border-color: #999;
+    color: #999;
+}

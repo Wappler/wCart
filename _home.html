@@ -1,0 +1,24 @@
+<!-- Wappler include head-page="index.html" appConnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" -->
+<section id="home">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 mt-3">
+				<h1>Welcome to {{scCompany.data.qryCompany.CompanyName}}</h1>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4">
+				<div class="card">
+					<div class="card-header text-center bg-warning">Our Featured Product</div>
+					<img class="card-img-top" dmx-bind:src="scProducts.data.qryProducts[0].ProductThumb" dmx-bind:alt="scProducts.data.qryProducts[0].ProductName" dmx-show="scProducts.data.qryProducts[0].ProductThumb">
+					<div class="card-body">
+						<h4 class="card-title" dmx-text="scProducts.data.qryProducts[0].ProductName">Card title</h4>
+						<p class="card-text" dmx-html="scProducts.data.qryProducts[0].ProductShortDesc">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						<p dmx-text="scProducts.data.qryProducts[0].ProductPrice.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)">Enter your content here</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-6 col-lg-8">CONTENT</div>
+		</div>
+	</div>
+</section>

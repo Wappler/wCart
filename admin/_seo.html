@@ -1,0 +1,141 @@
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_sli components="{&quot;dmxFormatter&quot;:{},&quot;dmxValidator&quot;:{}}"quot;:{}}" id="metatags" jquery_slim_33="cdn" -->
+<section id="metatags">
+	<div class="row">
+		<div class="col">
+			<h1>SEO</h1>
+			<p>This section is very important for SEO where the <strong>Title</strong> and <strong>Description</strong> fields will display in your document</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="btn btn-primary" dmx-on:click="mdlMetatagsInsert.show()">Add New Page</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Page</th>
+						</tr>
+					</thead>
+					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scMetatags.data.qryMetaTags" id="rptMetaTags">
+						<tr dmx-on:click="ddMetatag.select(metaID)" dmx-class:bg-warning="(metaID == ddMetatag.data.metaID)">
+							<td dmx-text="metaPage"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-8 mt-2 offset-1">
+			<h5 dmx-hide="ddMetatag.data" class="text-danger">Choose a page to edit the details</h5>
+			<h6 dmx-show="ddMetatag.data">SEO Update Form</h6>
+			<form is="dmx-serverconnect-form" id="frmMetatagsUpdate" method="post" action="../dmxConnect/api/metatags/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddMetatag.data" dmx-show="ddMetatag.data"
+				dmx-on:success="scMetatags.load({});notifies.success('Updated');frmMetatagsUpdate.reset()">
+				<input type="hidden" id="inp_metaID" dmx-bind:value="ddMetatag.data.metaID" name="metaID">
+				<div class="form-group row">
+					<label for="upd_metaPage" class="col-sm-2 col-form-label">Menu Item</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="upd_metaPage" name="metaPage" dmx-bind:value="ddMetatag.data.metaPage" placeholder="Enter the name of the page" required="">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="upd_metaID" class="col-sm-2 col-form-label">URL</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="upd_metaURL" name="metaURL" dmx-bind:value="ddMetatag.data.metaURL" placeholder="Enter the URL e.g. /mypage" required="">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="upd_metaTitle" class="col-sm-2 col-form-label">Title</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="upd_metaTitle" name="metaTitle" dmx-bind:value="ddMetatag.data.metaTitle" placeholder="Enter the page title (for SEO)" required="">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="upd_metaDescription" class="col-sm-2 col-form-label">Description</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" name="metaDescription" id="upd_metaDescription" dmx-bind:value="ddMetatag.data.metaDescription" placeholder="Enter Meta description (for SEO)" required=""></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-2">&nbsp;</div>
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-danger" dmx-on:click="mdlMetatagDelete.show()">Delete</button>
+						<button type="submit" class="btn btn-primary" dmx-bind:value="ddMetatag.data.Save">Update</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- Moal to insert new Metatags -->
+	<div class="modal fade" id="mdlMetatagsInsert" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary text-light">
+					<h5 class="modal-title">Add a new page</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form is="dmx-serverconnect-form" id="frmMetatagInsert" method="post" action="../dmxConnect/api/metatags/insert.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
+						dmx-on:success="scMetatags.load({});notifies.success('The page has been added');mdlMetatagsInsert.hide();mdlMetatagsInsert.frmMetatagInsert.reset()">
+						<div class="form-group row mt-2">
+							<label for="ins_metaPage" class="col-sm-2 col-form-label">Page</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ins_metaPage" name="metaPage" aria-describedby="inp_metaPage_help" placeholder="Enter page name">
+							</div>
+						</div>
+						<div class="form-group row mt-2">
+							<label for="ins_metaTitle" class="col-sm-2 col-form-label">Title</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ins_metaTitle" name="metaTitle" aria-describedby="inp_metaTitle_help" placeholder="Enter page Title">
+							</div>
+						</div>
+						<div class="form-group row mt-2">
+							<label for="ins_metaDescription" class="col-sm-2 col-form-label">Description</label>
+							<div class="col-sm-10">
+								<textarea id="ins_metaDescription" name="metaDescription" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="form-group row mt-2">
+							<label for="ins_metaURL" class="col-sm-2 col-form-label">URL</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ins_metaURL" name="metaURL" aria-describedby="inp_metaURL_help" placeholder="Enter URL e.g. /mypage">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="mdlMetatagsInsert.frmMetatagInsert.reset()">Close</button>
+					<button type="button" class="btn btn-primary" dmx-on:click="frmMetatagInsert.submit()">Add new page</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal for Metatag delete -->
+	<div class="modal fade" id="mdlMetatagDelete" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-danger text-light">
+					<h5 class="modal-title">Delete Metatag</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure that you want to delete this entry? This cannot be undone.</p>
+				</div>
+				<form is="dmx-serverconnect-form" id="frmMetatagDelete" method="post" action="../dmxConnect/api/metatags/delete.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddMetatag.data.metaID"
+					dmx-on:success="scMetatags.load({});notifies.success('Removed');mdlMetatagDelete.hide()">
+					<input type="hidden" class="form-control" id="del_metaID" name="metaID" dmx-bind:value="ddMetatag.data.metaID">
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" dmx-on:click="mdlMetatagDelete.frmMetatagDelete.submit()">Delete Metatag</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

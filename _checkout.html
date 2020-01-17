@@ -1,0 +1,73 @@
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" components="{&quot;dmxFormatter&quot;:{}}" -->
+<section id="checkout">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="mt-3">Checkout</h1>
+			</div>
+		</div>
+		<div class="row" dmx-hide="arrCart.count">
+			<div class="col">
+				<h5 class="text-danger">Your cart is empty!</h5>
+			</div>
+			<div class="col text-right">
+				<button class="btn btn-primary" dmx-on:click="browser.goto('./products')"><i class="fas fa-arrow-alt-circle-left fa-lg"></i>&nbsp; Continue Shopping</button>
+			</div>
+		</div>
+		<div class="row" dmx-show="arrCart.count">
+			<div class="col-12 undefined-NaN col-md-6 order-md-2">
+				<div class="row">
+					<div class="col-12">
+						<h5>Order Summary</h5>
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+									<tr>
+										<th scope="row">To be Paid</th>
+										<td class="text-right" dmx-text="arrSubtotal.items.sum().formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col" dmx-show="(varLoggedin.value >= 1)">
+						<h5>Shipping Details</h5>
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td dmx-text="scLoggedinCustomer.data.qryCustomer.CustomerFirstName + ' ' +  scLoggedinCustomer.data.qryCustomer.CustomerLastName"></td>
+									</tr>
+									<tr>
+										<td dmx-text="scLoggedinCustomer.data.qryCustomer.CustomerAddress"></td>
+									</tr>
+									<tr>
+										<td dmx-text="scLoggedinCustomer.data.qryCustomer.CustomerZip + ' ' +  scLoggedinCustomer.data.qryCustomer.CustomerCity"></td>
+									</tr>
+									<tr>
+										<td dmx-text="scLoggedinCustomer.data.qryCustomer.CustomerCountry"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-primary btn-block" dmx-on:click="mdlLoginCustomer.show()" dmx-hide="(varLoggedin.value >= 1)">Add User Detail</button>
+				<form id="frmPay" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/orders/checkout.php" dmx-on:success="arrCart.empty();arrSubtotal.empty();arrPID.empty();browser.goto('invoice/' + frmPay.data.lastinvoice)">
+					<input id="inp_customerid" name="customerid" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerID">
+					<input id="inp_customername" name="customername" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerFirstName + ' ' +  scLoggedinCustomer.data.qryCustomer.CustomerLastName">
+					<input id="inp_customeremail" name="customeremail" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerEmail">
+					<input id="inp_subtotal" name="subtotal" type="hidden" dmx-bind:value="arrSubtotal.items.sum()">
+					<div id="record" is="dmx-repeat" dmx-bind:repeat="localStorage.data.cart.cartitems">
+						<input id="inp_productname" name="productname" type="hidden" dmx-bind:value="product" dmx-bind:name="record[{{$index}}][productname]">
+						<input id="inp_price" name="price" type="hidden" dmx-bind:value="price" dmx-bind:name="record[{{$index}}][price]">
+						<input id="inp_qty" name="qty" type="hidden" dmx-bind:value="qty" dmx-bind:name="record[{{$index}}][qty]">
+					</div>
+					<button class="btn btn-primary btn-block" dmx-show="(varLoggedin.value >= 1)" type="submit">Pay {{arrSubtotal.items.sum().formatCurrency("$", ".", ",", "2")}}</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>

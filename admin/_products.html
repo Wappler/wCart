@@ -1,0 +1,143 @@
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local"  components="{&quot;dmxFormatter&quot;:{}}"components="{&quot;dmxValidator components="{&quot;dmxValidator&quot;:{},&quot;dmxBootstrap4Modal&quot;:{}}"components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxMediumEditor&quot;:{},&quot;dmxFormatter components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxMediumEditor&quot;:{},&quot;dmxFormatter&quot;:{},&quot;dmxBootstrap4Modal&quot;:{}}"components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxMediumEditor&quot;:{} jquery_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_sli fontawesome_5="cdn"tawesome_5="cdn"tawesome_5=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"m_33="cdn" -->
+<section id="products">
+	<div class="row">
+		<div class="col">
+			<h1>Products</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="btn btn-primary" dmx-on:click="mdlProductInsert.show()">Add New Product</button>
+		</div>
+	</div>
+	<div class="row" dmx-show="scProducts.data.qryProducts">
+		<div class="col-5">
+			<div class="table-responsive">
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>SKU</th>
+							<th>Product name</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scProducts.data.qryProducts" id="rptProducts">
+						<tr dmx-on:click="ddProduct.select(ProductID)" dmx-class:bg-warning="(ProductID == ddProduct.data.ProductID)">
+							<td dmx-text="ProductSKU"></td>
+							<td dmx-text="ProductName"></td>
+							<td><i class="far fa-file-excel text-danger" dmx-hide="ProductLive"></i></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-6 offset-1">
+			<h5 class="text-danger" dmx-hide="ddProduct.data">Choose a Product to view the details</h5>
+			<form is="dmx-serverconnect-form" id="frmProductUpdate" method="post" action="../dmxConnect/api/products/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddProduct.data"
+				dmx-on:success="scProducts.load({});notifies.success('The product has beeb updated');frmProductUpdate.reset()" dmx-show="ddProduct.data">
+				<input type="hidden" id="upd_ProductID" name="ProductID" dmx-bind:value="ddProduct.data.ProductID">
+				<div class="form-group row">
+					<label for="ins_ProductSKU" class="col-sm-3 col-form-label">SKU</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="ins_ProductSKU" name="ProductSKU" dmx-bind:value="ddProduct.data.ProductSKU" placeholder="Enter Product sku">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="ins_ProductName" class="col-sm-3 col-form-label">Productname</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="ins_ProductName" name="ProductName" dmx-bind:value="ddProduct.data.ProductName" placeholder="Enter Product name" required="">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="ins_ProductPrice" class="col-sm-3 col-form-label">Price</label>
+					<div class="col-sm-9">
+						<input class="form-control" id="ins_ProductPrice" name="ProductPrice" dmx-bind:value="ddProduct.data.ProductPrice" placeholder="Enter Product price" required="">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="ins_ProductShortDesc" class="col-sm-3 col-form-label">Short desc</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="ins_ProductShortDesc" name="ProductShortDesc" dmx-bind:value="ddProduct.data.ProductShortDesc" placeholder="Enter Product short desc">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="ins_ProductLongDesc" class="col-sm-3 col-form-label">Long desc</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" name="ProductLongDesc" id="ins_ProductLongDesc" is="dmx-medium-editor" rows="5" fontawesome>{{ddProduct.data.ProductLongDesc}}</textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-9 offset-sm-3">
+						<div class="custom-control custom-checkbox">
+							<input class="custom-control-input" type="checkbox" id="ins_ProductLive" name="ProductLive" value="1" dmx-bind:checked="(ddProduct.data.ProductLive == 1)">
+							<label class="custom-control-label" for="ins_ProductLive">Product Live</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-9 offset-md-3">
+						<button class="btn btn-danger" dmx-on:click="mdlProductDelete.show()">Delete</button>
+						<button type="submit" class="btn btn-primary" dmx-bind:value="ddProduct.data.Save">Update</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- Modal to Insert a new Product -->
+	<div class="modal fade" id="mdlProductInsert" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-light bg-primary">
+					<h5 class="modal-title">Add Product</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form is="dmx-serverconnect-form" id="frmProductInsert" method="post" action="../dmxConnect/api/products/insert.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
+						dmx-on:success="scProducts.load({});notifies.success('A new product has been added');mdlProductInsert.hide();ddProduct.select(mdlProductInsert.frmProductInsert.data.LastProduct)">
+						<div class="form-group row">
+							<label for="inp_ProductSKU" class="col-sm-2 col-form-label">SKU</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inp_ProductSKU" name="ProductSKU" aria-describedby="inp_ProductSKU_help" placeholder="Enter Product SKU">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inp_ProductName" class="col-sm-2 col-form-label">Name</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inp_ProductName" name="ProductName" aria-describedby="inp_ProductName_help" placeholder="Enter Product Name" required="">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="mdlProductInsert.frmProductInsert.reset()">Close</button>
+					<button type="button" class="btn btn-primary" dmx-on:click="mdlProductInsert.frmProductInsert.submit()">Add Product</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal to delete a product -->
+	<div class="modal fade" id="mdlProductDelete" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-light bg-danger">
+					<h5 class="modal-title">Delete Product</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure that you want to delete this product? This action cannot be undone.</p>
+					<form is="dmx-serverconnect-form" id="frmProductDelete" method="post" action="../dmxConnect/api/products/delete.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddProduct.data"
+						dmx-on:success="scProducts.load({});notifies.success('The product has been deleted');mdlProductDelete.hide();mdlProductDelete.frmProductDelete.reset()">
+						<input type="hidden" name="ProductID" id="inp_ProductID" dmx-bind:value="ddProduct.data.ProductID"></form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" dmx-on:click="mdlProductDelete.frmProductDelete.submit()">Delete Product</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,135 @@
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="cdn" id="administrators" components="{&quot;dmxValidator&quot;:{}}" -->
+<section id="admins">
+	<div class="row">
+		<div class="col">
+			<h1>Administrators</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="btn btn-primary" dmx-on:click="mdlAdministratorInsert.show()">Add Administrator</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-5">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>User name</th>
+							<th>User level</th>
+						</tr>
+					</thead>
+					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scAdministrators.data.qryAdministrators" id="rptUserLevel">
+						<tr dmx-on:click="ddAdministrator.select(UserID)" dmx-class:bg-warning="(ddAdministrator.data.UserID == UserID)">
+							<td dmx-text="UserName"></td>
+							<td dmx-text="UserLevel"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-6 offset-1">
+			<h5 class="text-danger" dmx-hide="ddAdministrator.data">Choose an Administrator to edit the details</h5>
+			<p dmx-show="ddAdministrator.data" class="text-info">To change the Password, delete the Administrator and create a new one.</p>
+			<form is="dmx-serverconnect-form" id="frmAdministratorUpdate" method="post" action="../dmxConnect/api/administrators/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddAdministrator.data"
+				dmx-show="ddAdministrator.data" dmx-on:success="scAdministrators.load();notifies.success('Updated')">
+				<input type="hidden" name="UserID" id="inp_UserID" dmx-bind:value="ddAdministrator.data.UserID">
+				<div class="form-group row">
+					<label for="inp_UserName" class="col-sm-2 col-form-label">Username</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inp_UserName" name="UserName" dmx-bind:value="ddAdministrator.data.UserName" aria-describedby="inp_UserName_help" placeholder="Enter User name" required="">
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<label for="inp_UserLevel" class="col-sm-2 col-form-label">Level</label>
+					<div class="col-sm-9">
+						<select id="inp_UserLevel" class="form-control" name="UserLevel" dmx-bind:value="ddAdministrator.data.UserLevel" required="">
+							<option value="">Please choose...</option>
+							<option value="Products Manager">Products Manager</option>
+							<option value="Sales Manager">Sales Manager</option>
+							<option value="Supervisor">Supervisor</option>
+							<option value="Manager">Manager</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row mt-2">
+					<div class="col-sm-2">&nbsp;</div>
+					<div class="col-sm-9">
+						<button class="btn btn-danger" dmx-on:click="mdlAdministratorDelete.show()">Delete</button>
+						<button type="submit" class="btn btn-primary" dmx-bind:value="ddAdministrator.data.Save">Update</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- Modal to add an Administrator -->
+	<div class="modal fade" id="mdlAdministratorInsert" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-light bg-primary">
+					<h5 class="modal-title">Add an Administrator</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form is="dmx-serverconnect-form" id="frmAdministratorInsert" method="post" action="../dmxConnect/api/administrators/insert.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
+						dmx-on:success="scAdministrators.load({});notifies.success('Administrator has been added');mdlAdministratorInsert.hide();mdlAdministratorInsert.frmAdministratorInsert.reset()">
+						<div class="form-group row">
+							<label for="ins_UserName" class="col-sm-3 col-form-label">Username</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ins_UserName" name="UserName" aria-describedby="inp_UserName_help" placeholder="Enter User name" required="">
+							</div>
+						</div>
+						<div class="form-group row mt-2">
+							<label for="ins_UserPassword" class="col-sm-3 col-form-label">Password</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ins_UserPassword" name="UserPassword" aria-describedby="inp_UserPassword_help" placeholder="Enter User password" required="">
+							</div>
+						</div>
+						<div class="form-group row mt-2">
+							<label for="ins_UserLevel" class="col-sm-3 col-form-label">Level</label>
+							<div class="col-sm-9">
+								<select id="ins_UserLevel" name="UserLevel" class="form-control" required="">
+									<option value="">Please choose...</option>
+									<option value="Products Manager">Products Manager</option>
+									<option value="Sales Manager">Sales Manager</option>
+									<option value="Supervisor">Supervisor</option>
+									<option value="Manager">Manager</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="mdlAdministratorInsert.frmAdministratorInsert.reset()">Close</button>
+					<button type="button" class="btn btn-primary" dmx-on:click="mdlAdministratorInsert.frmAdministratorInsert.submit()">Add Administrator</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal to delete an Administrator -->
+	<div class="modal fade" id="mdlAdministratorDelete" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-light bg-danger">
+					<h5 class="modal-title">Delete Administrator</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure that you want to delete this Administrator? This action cannot be undone.</p>
+					<form is="dmx-serverconnect-form" id="frmAdministratorDelete" method="post" action="../dmxConnect/api/administrators/delete.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddAdministrator.data"
+						dmx-on:success="scAdministrators.load({});notifies.success('Administrator has been deleted');mdlAdministratorDelete.hide()">
+						<input type="hidden" name="UserID" id="inp_UserID" dmx-bind:value="ddAdministrator.data.UserID"></form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" dmx-on:click="">Close</button>
+					<button type="button" class="btn btn-danger" dmx-on:click="mdlAdministratorDelete.frmAdministratorDelete.submit()">Delete Administrator</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
