@@ -1,0 +1,48 @@
+{
+  "projectName": "wCart",
+  "projectType": "web",
+  "projectServerModel": "PHP",
+  "useRouting": true,
+  "addBase": true,
+  "routingHandler": "apache",
+  "styleFile": "/css/style.css",
+  "assetsFolder": "/assets",
+  "targets": [
+    {
+      "webServerPort": 8100,
+      "webServerLang": "PHP",
+      "PHPVersion": "7.3.x",
+      "databaseType": "mysql",
+      "databasePort": 9906,
+      "mySQLVersion": "8.0.x",
+      "mySQL_rootPassword": "1m5LbpLE",
+      "mySQL_databaseName": "wcart",
+      "mySQL_username": "db_user",
+      "mySQL_password": "tutRmDTf",
+      "targetType": "docker",
+      "webServer": "apache",
+      "noSampleData": true,
+      "name": "localdocker",
+      "remoteURL": "http://localhost:8100"
+    }
+  ],
+  "frameworks": [
+    {
+      "name": "appConnect",
+      "type": "local"
+    },
+    {
+      "name": "jquery_slim_33",
+      "type": "local"
+    },
+    {
+      "name": "bootstrap4",
+      "type": "local"
+    },
+    {
+      "name": "fontawesome_5",
+      "type": "cdn"
+    }
+  ],
+  "activeTarget": "localdocker"
+}

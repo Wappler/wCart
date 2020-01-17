@@ -1,0 +1,118 @@
+{
+  "routes": [
+    {
+      "path": "/invoice/:id",
+      "url": "/invoice.html",
+      "name": "invoice",
+      "strict": true
+    },
+    {
+      "path": "/",
+      "url": "/index.html",
+      "name": "home",
+      "routes": [
+        {
+          "type": "page",
+          "id": "routehome",
+          "path": "/",
+          "url": "_home.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "routeabout",
+          "path": "/about",
+          "url": "_about.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "routeproducts",
+          "path": "/products",
+          "url": "_products.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "routecontact",
+          "path": "/contact",
+          "url": "_contact.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "routecart",
+          "path": "/cart",
+          "url": "_cart.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "routecheckout",
+          "path": "/checkout",
+          "url": "_checkout.html"
+        },
+        {
+          "type": "page",
+          "id": "routeuserhome",
+          "path": "/user-home",
+          "url": "_user-home.html"
+        }
+      ]
+    },
+    {
+      "path": "/admin/",
+      "url": "/admin/index.html",
+      "name": "dashboard",
+      "routes": [
+        {
+          "type": "page",
+          "id": "rteDashboard",
+          "path": "/",
+          "url": "_dashboard.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "rteOrders",
+          "path": "/orders",
+          "url": "_orders.html"
+        },
+        {
+          "type": "page",
+          "id": "rteProducts",
+          "path": "/products",
+          "url": "_products.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "rteCustomers",
+          "path": "/customers",
+          "url": "_customers.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "rteAdministrators",
+          "path": "/administrators",
+          "url": "_administrators.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "rteMetatags",
+          "path": "/seo",
+          "url": "_seo.html"
+        },
+        {
+          "type": "page",
+          "id": "rteCompany",
+          "path": "/company",
+          "url": "_company.html",
+          "exact": ""
+        }
+      ]
+    }
+  ]
+}
