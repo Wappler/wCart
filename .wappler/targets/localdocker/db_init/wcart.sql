@@ -382,17 +382,17 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Dumping structure for table wcart.products
 CREATE TABLE IF NOT EXISTS `products` (
   `ProductID` int(12) NOT NULL AUTO_INCREMENT,
-  `ProductSKU` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `ProductName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `ProductPrice` float NOT NULL,
-  `ProductWeight` float NOT NULL,
-  `ProductCartDesc` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `ProductShortDesc` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `ProductLongDesc` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `ProductThumb` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `ProductImage` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ProductSKU` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ProductName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ProductPrice` float DEFAULT NULL,
+  `ProductWeight` float DEFAULT NULL,
+  `ProductCartDesc` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ProductShortDesc` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ProductLongDesc` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `ProductThumb` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ProductImage` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `ProductCategoryID` int(11) DEFAULT NULL,
-  `ProductUpdateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ProductUpdateDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `ProductStock` float DEFAULT NULL,
   `ProductLive` tinyint(1) DEFAULT '0',
   `ProductUnlimited` tinyint(1) DEFAULT '1',
@@ -404,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` (`ProductID`, `ProductSKU`, `ProductName`, `ProductPrice`, `ProductWeight`, `ProductCartDesc`, `ProductShortDesc`, `ProductLongDesc`, `ProductThumb`, `ProductImage`, `ProductCategoryID`, `ProductUpdateDate`, `ProductStock`, `ProductLive`, `ProductUnlimited`, `ProductLocation`) VALUES
 	(1, '000-0001', 'Cotton T-Shirt', 9.99, 3, 'Light Cotton T-Shirt', 'A light cotton T-Shirt made with 100% real cotton.', 'A light cotton T-Shirt made with 100% real cotton.\r\n\r\nMade right here in the USA for over 15 years, this t-shirt is lightweight and durable.', '', '', 5, '2013-06-13 01:00:50', 100, 1, 0, NULL),
-	(2, '000-0004', 'Los Angeles', 179.99, 8, 'Track and Trail', 'A rugged track and trail athletic shoe', 'A rugged track and trail athletic shoe', '', '', 4, '2013-07-25 19:04:36', NULL, 0, 1, NULL);
+	(2, '000-0004', 'Los Angeles', 179.99, NULL, NULL, 'A rugged track and trail athletic shoe', 'A rugged track and trail athletic shoe', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 
 -- Dumping structure for table wcart.regions
@@ -862,16 +862,16 @@ INSERT INTO `regions` (`RegionID`, `RegionName`, `RegionCode`, `RegionCountry`) 
 -- Dumping structure for table wcart.users
 CREATE TABLE IF NOT EXISTS `users` (
   `UserID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserName` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `UserPassword` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `UserLevel` int(11) NOT NULL DEFAULT '2',
+  `UserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `UserPassword` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `UserLevel` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table wcart.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`UserID`, `UserName`, `UserPassword`, `UserLevel`) VALUES
-	(1, 'user@wappler.io', 'wappleruser', 1);
+	(2, 'Admin', '2ffda559d52f087171443389e2ff157da9b1fa5ec98abc9f8b11fdddcc245b9b', 'Manager');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
