@@ -5,12 +5,12 @@
 			<h1>Customers</h1>
 		</div>
 	</div>
-	<div class="row" dmx-hide="scCustomers.data.qryCustomers">
+	<div class="row" dmx-hide="scCustomers.data.qryCustomers.hasItems()">
 		<div class="col">
 			<h5>There are no Custmers at this stage</h5>
 		</div>
 	</div>
-	<div class="row" dmx-show="scCustomers.data.qryCustomers">
+	<div class="row" dmx-show="scCustomers.data.qryCustomers.hasItems()">
 		<div class="col-6">
 			<table class="table table-hover table-sm">
 				<thead>
