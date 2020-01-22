@@ -363,6 +363,72 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "rptcategories": {
+      "meta": [
+        {
+          "name": "metaDescription",
+          "type": "text"
+        },
+        {
+          "name": "metaID",
+          "type": "number"
+        },
+        {
+          "name": "metaPage",
+          "type": "text"
+        },
+        {
+          "name": "metaTitle",
+          "type": "text"
+        },
+        {
+          "name": "metaURL",
+          "type": "text"
+        }
+      ],
+      "outputType": "array"
+    },
+    "repeat1": {
+      "meta": [
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "metaID",
+          "type": "number"
+        },
+        {
+          "name": "metaPage",
+          "type": "text"
+        },
+        {
+          "name": "metaURL",
+          "type": "text"
+        },
+        {
+          "name": "metaTitle",
+          "type": "text"
+        },
+        {
+          "name": "metaDescription",
+          "type": "text"
+        }
+      ],
+      "outputType": "array"
     }
   },
   "pgMetatags": {
@@ -516,6 +582,97 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "dvMetatags": {
+      "meta": [
+        {
+          "name": "metaDescription",
+          "type": "text"
+        },
+        {
+          "name": "metaID",
+          "type": "number"
+        },
+        {
+          "name": "metaPage",
+          "type": "text"
+        },
+        {
+          "name": "metaTitle",
+          "type": "text"
+        },
+        {
+          "name": "metaURL",
+          "type": "text"
+        }
+      ],
+      "outputType": "array"
+    },
+    "ddMetatag": {
+      "meta": [
+        {
+          "name": "metaDescription",
+          "type": "text"
+        },
+        {
+          "name": "metaID",
+          "type": "number"
+        },
+        {
+          "name": "metaPage",
+          "type": "text"
+        },
+        {
+          "name": "metaTitle",
+          "type": "text"
+        },
+        {
+          "name": "metaURL",
+          "type": "text"
+        }
+      ],
+      "outputType": "array"
+    },
+    "ddCategory": {
+      "meta": [
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "metaID",
+          "type": "number"
+        },
+        {
+          "name": "metaPage",
+          "type": "text"
+        },
+        {
+          "name": "metaURL",
+          "type": "text"
+        },
+        {
+          "name": "metaTitle",
+          "type": "text"
+        },
+        {
+          "name": "metaDescription",
+          "type": "text"
+        }
+      ],
+      "outputType": "array"
     }
   },
   "products": {
@@ -595,6 +752,37 @@ dmx.config({
         },
         {
           "name": "ProductLocation",
+          "type": "text"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        }
+      ],
+      "outputType": "array"
+    }
+  },
+  "appMetatags": {
+    "rptMetaTags": {
+      "meta": [
+        {
+          "name": "metaDescription",
+          "type": "text"
+        },
+        {
+          "name": "metaID",
+          "type": "number"
+        },
+        {
+          "name": "metaPage",
+          "type": "text"
+        },
+        {
+          "name": "metaTitle",
+          "type": "text"
+        },
+        {
+          "name": "metaURL",
           "type": "text"
         }
       ],

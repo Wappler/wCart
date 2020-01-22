@@ -1,9 +1,10 @@
-<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" id="products" -->
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" id="products" components="{&quot;dmxFormatter&quot;:{}}" -->
 <section id="products">
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<h1 class="mt-3">Products</h1>
+				<h1 class="mt-3" dmx-show="(params.category != &quot;all&quot;)">{{dvMetaTags.data[0].metaPage}}</h1>
+				<h1 class="mt-3" dmx-show="(params.category == &quot;all&quot;)">Products</h1>
 			</div>
 		</div>
 		<div class="row mt-4" is="dmx-repeat" id="rptProducts" dmx-bind:repeat="dvProducts.data">

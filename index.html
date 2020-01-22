@@ -47,15 +47,15 @@
 	<dmx-serverconnect id="scCompany" url="dmxConnect/api/company/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scOrders" url="dmxConnect/api/orders/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scProducts" url="dmxConnect/api/products/list.php"></dmx-serverconnect>
+	<dmx-serverconnect id="scCategories" url="dmxConnect/api/categories/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCountries" url="dmxConnect/api/countries/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scRegionsFiltered" url="dmxConnect/api/regionsFiltered/list.php" dmx-param:filter="mdlRegisterCustomer.frmRegisterCustomer.sel_CustomerCountry.value"></dmx-serverconnect>
 	<dmx-serverconnect id="scMetaTags" url="dmxConnect/api/metatags/list.php"></dmx-serverconnect>
 	<dmx-data-view id="dvOrderDetail" dmx-bind:data="scOrders.data.rptOrderDetail[0].qryOrderDetail" filter="(OrderID ==params.id)"></dmx-data-view>
 	<dmx-data-view id="dvOrders" dmx-bind:data="scOrders.data.rptOrderDetail" filter="(scLoggedinCustomer.data.qryCustomer.CustomerID == OrderCustomerID)"></dmx-data-view>
-	<dmx-data-view id="dvProducts" dmx-bind:data="scProducts.data.qryProducts" filter="(ProductLive == 1)"></dmx-data-view>
+	<dmx-data-view id="dvProducts" dmx-bind:data="scProducts.data.qryProducts" filter="(routeproducts.params.category == &quot;all&quot;) ? &quot; &quot; : (CategoryURL == routeproducts.params.category))"></dmx-data-view>
 	<dmx-data-view id="dvMetaTags" dmx-bind:data="scMetaTags.data.qryMetaTags" filter="(metaURL == browser.location.pathname)"></dmx-data-view>
 	<dmx-data-view id="dvCountry" dmx-bind:data="scCountries.data.qryCountries" filter="(CountryISO == scLoggedinCustomer.data.qryCustomer.CustomerCountry)"></dmx-data-view>
-
 	<dmx-local-manager id="localStorage"></dmx-local-manager>
 	<dmx-array id="arrCart" dmx-on:updated="localStorage.set('cart',{cartitems: items})" dmx-bind:items="localStorage.data.cart.cartitems"></dmx-array>
 	<dmx-array id="arrSubtotal" dmx-bind:items="localStorage.data.subtotal" dmx-on:updated="localStorage.set('subtotal',items,{})"></dmx-array>
@@ -81,7 +81,13 @@
 								<a class="nav-item nav-link text-warning" href="./cart" dmx-show="arrCart.count"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp;({{arrSubtotal.items.sum().formatCurrency("$", ".", ",", "2")}})</a>
 								<a class="nav-item nav-link active" href="./" dmx-on:click="scroll.goto('#index')">Home</a>
 								<a class="nav-item nav-link" href="./about" dmx-on:click="scroll.goto('#index')">About</a>
-								<a class="nav-item nav-link" href="./products" dmx-on:click="scroll.goto('#index')">Products</a>
+								<div class="dropdown">
+									<a href="#" class="nav-item nav-link dropdown-toggle" data-toggle="dropdown">Products</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="./products/all">All</a>
+										<a class="dropdown-item" href="#" dmx-repeat:repeat1="scCategories.data.qryCategories" dmx-bind:href="metaURL">{{CategoryName}}</a>
+									</div>
+								</div>
 								<a class="nav-item nav-link" href="./contact" dmx-on:click="scroll.goto('#index')">Contact</a>
 								<a class="nav-item nav-link" href="#" dmx-on:click="mdlLoginCustomer.show()" dmx-hide="(varLoggedin.value >= 1)">Login</a>
 								<a class="nav-item nav-link" href="#" dmx-show="(varLoggedin.value >= 1)" dmx-on:click="scLogoutCustomer.load({});scOrders.load({});scLoggedinCustomer.load({});varLoggedin.setValue(0)">Logout </a>
@@ -97,7 +103,7 @@
 	<main>
 		<div is="dmx-route" path="/" url="_home.html" id="routehome" exact></div>
 		<div is="dmx-route" path="/about" url="_about.html" id="routeabout" exact></div>
-		<div is="dmx-route" path="/products" url="_products.html" id="routeproducts" exact></div>
+		<div is="dmx-route" path="/products/:category" url="_products.html" id="routeproducts" exact></div>
 		<div is="dmx-route" path="/contact" url="_contact.html" id="routecontact" exact></div>
 		<div is="dmx-route" path="/cart" url="_cart.html" id="routecart" exact></div>
 		<div is="dmx-route" path="/checkout" url="_checkout.html" id="routecheckout"></div>

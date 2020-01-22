@@ -37,13 +37,42 @@ $app->define(<<<'JSON'
               {
                 "table": "products",
                 "column": "*"
+              },
+              {
+                "table": "categories",
+                "column": "CategoryName"
+              },
+              {
+                "table": "categories",
+                "column": "CategoryURL"
               }
             ],
             "table": {
               "name": "products"
             },
-            "joins": [],
-            "query": "SELECT *\nFROM products",
+            "joins": [
+              {
+                "table": "categories",
+                "column": "*",
+                "type": "INNER",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "categories",
+                      "column": "CategoryID",
+                      "operator": "equal",
+                      "value": {
+                        "table": "products",
+                        "column": "ProductCategoryID"
+                      },
+                      "operation": "="
+                    }
+                  ]
+                }
+              }
+            ],
+            "query": "SELECT products.*, categories.CategoryName, categories.CategoryURL\nFROM products\nINNER JOIN categories ON (categories.CategoryID = products.ProductCategoryID)",
             "params": [],
             "orders": []
           }
@@ -112,6 +141,14 @@ $app->define(<<<'JSON'
           },
           {
             "name": "ProductLocation",
+            "type": "text"
+          },
+          {
+            "name": "CategoryName",
+            "type": "text"
+          },
+          {
+            "name": "CategoryURL",
             "type": "text"
           }
         ],

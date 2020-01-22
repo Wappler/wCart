@@ -28,7 +28,7 @@
         {
           "type": "page",
           "id": "routeproducts",
-          "path": "/products",
+          "path": "/products/:category",
           "url": "_products.html",
           "exact": ""
         },
@@ -80,16 +80,16 @@
         },
         {
           "type": "page",
-          "id": "rteProducts",
-          "path": "/products",
-          "url": "_products.html",
+          "id": "rteCustomers",
+          "path": "/customers",
+          "url": "_customers.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "rteCustomers",
-          "path": "/customers",
-          "url": "_customers.html",
+          "id": "rteProducts",
+          "path": "/products",
+          "url": "_products.html",
           "exact": ""
         },
         {
@@ -110,6 +110,13 @@
           "id": "rteCompany",
           "path": "/company",
           "url": "_company.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "id": "rteCategories",
+          "path": "/categories",
+          "url": "_categories.html",
           "exact": ""
         }
       ]

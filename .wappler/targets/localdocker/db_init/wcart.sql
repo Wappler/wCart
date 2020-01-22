@@ -16,6 +16,22 @@
 CREATE DATABASE IF NOT EXISTS `wcart` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `wcart`;
 
+-- Dumping structure for table wcart.categories
+CREATE TABLE IF NOT EXISTS `categories` (
+  `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `CategoryName` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `CategoryURL` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `CategoryMetaID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CategoryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table wcart.categories: ~2 rows (approximately)
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` (`CategoryID`, `CategoryName`, `CategoryURL`, `CategoryMetaID`) VALUES
+	(1, 'Clothing', 'clothing', 8),
+	(2, 'Footwear', 'footwear', 9);
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+
 -- Dumping structure for table wcart.company
 CREATE TABLE IF NOT EXISTS `company` (
   `CompanyID` int(11) NOT NULL AUTO_INCREMENT,
@@ -326,15 +342,20 @@ CREATE TABLE IF NOT EXISTS `metatags` (
   `metaTitle` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `metaDescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`metaID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table wcart.metatags: ~4 rows (approximately)
+-- Dumping data for table wcart.metatags: ~9 rows (approximately)
 /*!40000 ALTER TABLE `metatags` DISABLE KEYS */;
 INSERT INTO `metatags` (`metaID`, `metaPage`, `metaURL`, `metaTitle`, `metaDescription`) VALUES
 	(1, 'Home', '/', 'Welcome to', 'Description for home page'),
 	(2, 'About', '/about', 'About', 'Description for about'),
 	(3, 'Contact', '/contact', 'Get in touch', 'description for contact'),
-	(4, 'Products', '/products', 'Our products', 'Description for products');
+	(4, 'Products', '/products', 'Our products', 'Description for products'),
+	(5, 'User-Home', '/user-home', 'User Home', 'Description for User Home'),
+	(6, 'Cart', '/cart', 'Shopping Cart', 'Description for Shopping Cart'),
+	(7, 'Checkout', '/checkout', 'Checkout', 'Description for Checkout'),
+	(8, 'Clothing', '/products/clothing', 'Clothing', 'Description for clothing'),
+	(9, 'Footwear', '/products/footwear', 'Footwear', 'Description for footwear');
 /*!40000 ALTER TABLE `metatags` ENABLE KEYS */;
 
 -- Dumping structure for table wcart.orderdetails
@@ -403,8 +424,8 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Dumping data for table wcart.products: 2 rows
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` (`ProductID`, `ProductSKU`, `ProductName`, `ProductPrice`, `ProductWeight`, `ProductCartDesc`, `ProductShortDesc`, `ProductLongDesc`, `ProductThumb`, `ProductImage`, `ProductCategoryID`, `ProductUpdateDate`, `ProductStock`, `ProductLive`, `ProductUnlimited`, `ProductLocation`) VALUES
-	(1, '000-0001', 'Cotton T-Shirt', 9.99, 3, 'Light Cotton T-Shirt', 'A light cotton T-Shirt made with 100% real cotton.', 'A light cotton T-Shirt made with 100% real cotton.\r\n\r\nMade right here in the USA for over 15 years, this t-shirt is lightweight and durable.', '', '', 5, '2013-06-13 01:00:50', 100, 1, 0, NULL),
-	(2, '000-0004', 'Los Angeles', 179.99, NULL, NULL, 'A rugged track and trail athletic shoe', 'A rugged track and trail athletic shoe', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
+	(1, '000-0001', 'Cotton T-Shirt', 9.99, 3, 'Light Cotton T-Shirt', 'A light cotton T-Shirt made with 100% real cotton.', 'A light cotton T-Shirt made with 100% real cotton.\r\n\r\nMade right here in the USA for over 15 years, this t-shirt is lightweight and durable.', '', '', 1, '2013-06-13 01:00:50', 100, 1, 0, NULL),
+	(2, '000-0004', 'Los Angeles', 179.99, NULL, NULL, 'A rugged track and trail athletic shoe', 'A rugged track and trail athletic shoe', NULL, NULL, 2, NULL, NULL, 1, NULL, NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 
 -- Dumping structure for table wcart.regions
@@ -864,11 +885,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `UserID` int(11) NOT NULL AUTO_INCREMENT,
   `UserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `UserPassword` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `UserLevel` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `UserLevel` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table wcart.users: ~0 rows (approximately)
+-- Dumping data for table wcart.users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`UserID`, `UserName`, `UserPassword`, `UserLevel`) VALUES
 	(2, 'Admin', '2ffda559d52f087171443389e2ff157da9b1fa5ec98abc9f8b11fdddcc245b9b', 'Manager');

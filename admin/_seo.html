@@ -1,4 +1,4 @@
-<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_sli components="{&quot;dmxFormatter&quot;:{},&quot;dmxValidator&quot;:{}}"quot;:{}}" id="metatags" jquery_slim_33="cdn" -->
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_sli="" components="{&quot;dmxFormatter&quot;:{},&quot;dmxValidator&quot;:{}}" quot;:{}}"="" id="appMetatags" jquery_slim_33="cdn" -->
 <section id="metatags">
 	<div class="row">
 		<div class="col">
@@ -13,14 +13,14 @@
 	</div>
 	<div class="row">
 		<div class="col-3">
-			<div class="table-responsive">
+			<div class="table-responsive table-sm">
 				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>Page</th>
 						</tr>
 					</thead>
-					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scMetatags.data.qryMetaTags" id="rptMetaTags">
+					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="dvMetatags.data" id="rptMetaTags">
 						<tr dmx-on:click="ddMetatag.select(metaID)" dmx-class:bg-warning="(metaID == ddMetatag.data.metaID)">
 							<td dmx-text="metaPage"></td>
 						</tr>
@@ -35,32 +35,32 @@
 				dmx-on:success="scMetatags.load({});notifies.success('Updated');frmMetatagsUpdate.reset()">
 				<input type="hidden" id="inp_metaID" dmx-bind:value="ddMetatag.data.metaID" name="metaID">
 				<div class="form-group row">
-					<label for="upd_metaPage" class="col-sm-2 col-form-label">Menu Item</label>
-					<div class="col-sm-10">
+					<label for="upd_metaPage" class="col-sm-3 col-form-label">Page</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control" id="upd_metaPage" name="metaPage" dmx-bind:value="ddMetatag.data.metaPage" placeholder="Enter the name of the page" required="">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="upd_metaID" class="col-sm-2 col-form-label">URL</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="upd_metaURL" name="metaURL" dmx-bind:value="ddMetatag.data.metaURL" placeholder="Enter the URL e.g. /mypage" required="">
+					<label for="upd_metaID" class="col-sm-3 col-form-label">Route</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="upd_metaURL" name="metaURL" dmx-bind:value="ddMetatag.data.metaURL" placeholder="Enter the Route as in /mypage" required="">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="upd_metaTitle" class="col-sm-2 col-form-label">Title</label>
-					<div class="col-sm-10">
+					<label for="upd_metaTitle" class="col-sm-3 col-form-label">Meta Title</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control" id="upd_metaTitle" name="metaTitle" dmx-bind:value="ddMetatag.data.metaTitle" placeholder="Enter the page title (for SEO)" required="">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="upd_metaDescription" class="col-sm-2 col-form-label">Description</label>
-					<div class="col-sm-10">
+					<label for="upd_metaDescription" class="col-sm-3 col-form-label">Meta Description</label>
+					<div class="col-sm-9">
 						<textarea class="form-control" name="metaDescription" id="upd_metaDescription" dmx-bind:value="ddMetatag.data.metaDescription" placeholder="Enter Meta description (for SEO)" required=""></textarea>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-sm-2">&nbsp;</div>
-					<div class="col-sm-10">
+					<div class="col-sm-3">&nbsp;</div>
+					<div class="col-sm-9">
 						<button type="submit" class="btn btn-danger" dmx-on:click="mdlMetatagDelete.show()">Delete</button>
 						<button type="submit" class="btn btn-primary" dmx-bind:value="ddMetatag.data.Save">Update</button>
 					</div>
@@ -69,7 +69,7 @@
 		</div>
 	</div>
 	<!-- Moal to insert new Metatags -->
-	<div class="modal fade" id="mdlMetatagsInsert" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="mdlMetatagsInsert" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-on:hide-bs-modal="frmMetatagInsert.reset()">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-primary text-light">
@@ -82,27 +82,27 @@
 					<form is="dmx-serverconnect-form" id="frmMetatagInsert" method="post" action="../dmxConnect/api/metatags/insert.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
 						dmx-on:success="scMetatags.load({});notifies.success('The page has been added');mdlMetatagsInsert.hide();mdlMetatagsInsert.frmMetatagInsert.reset()">
 						<div class="form-group row mt-2">
-							<label for="ins_metaPage" class="col-sm-2 col-form-label">Page</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="ins_metaPage" name="metaPage" aria-describedby="inp_metaPage_help" placeholder="Enter page name">
+							<label for="ins_metaPage" class="col-sm-3 col-form-label">Page</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ins_metaPage" name="metaPage" aria-describedby="inp_metaPage_help" placeholder="Enter page name" required="">
 							</div>
 						</div>
 						<div class="form-group row mt-2">
-							<label for="ins_metaTitle" class="col-sm-2 col-form-label">Title</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="ins_metaTitle" name="metaTitle" aria-describedby="inp_metaTitle_help" placeholder="Enter page Title">
+							<label for="ins_metaTitle" class="col-sm-3 col-form-label">Meta Title</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ins_metaTitle" name="metaTitle" aria-describedby="inp_metaTitle_help" placeholder="Enter page Meta Title" required="">
 							</div>
 						</div>
 						<div class="form-group row mt-2">
-							<label for="ins_metaDescription" class="col-sm-2 col-form-label">Description</label>
-							<div class="col-sm-10">
-								<textarea id="ins_metaDescription" name="metaDescription" class="form-control"></textarea>
+							<label for="ins_metaDescription" class="col-sm-3 col-form-label">Meta Description</label>
+							<div class="col-sm-9">
+								<textarea id="ins_metaDescription" name="metaDescription" class="form-control" placeholder="Enter the Meta Description" required=""></textarea>
 							</div>
 						</div>
 						<div class="form-group row mt-2">
-							<label for="ins_metaURL" class="col-sm-2 col-form-label">URL</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="ins_metaURL" name="metaURL" aria-describedby="inp_metaURL_help" placeholder="Enter URL e.g. /mypage">
+							<label for="ins_metaURL" class="col-sm-3 col-form-label">Route</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ins_metaURL" name="metaURL" aria-describedby="inp_metaURL_help" placeholder="Enter the Route e.g. /mypage" required="">
 							</div>
 						</div>
 					</form>

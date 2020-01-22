@@ -1,0 +1,136 @@
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="cdn" id="appC components="{&quot;dmxBootstrap4TableGenerato components="{&quot;dmxFormatter components="{&quot;dmxBootstrap4Modal&quot;:{}}"components="{&quot;dmxValidator components="{&quot;dmxValidator&quot;:{}}"components="{&quot;dmxFormatter components="{&quot;dmxValidator&quot;:{}}"components="{&quot;dmxBootstrap4Modal components="{&quot;dmxFormatter&quot;:{}}"components="{&quot;dmxFormatter&quot;:{}}"quot;:{}}" -->
+<section id="categories" dmx-on:click="">
+	<div class="row">
+		<div class="col">
+			<h1>Product Categories</h1>
+			<p>Product Categories will be shown in the Navigation Bar as a dropdown under Products.<br> The Meta tags will display in your document for SEO</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="btn btn-primary" dmx-on:click="mdlCategoryInsert.show()">Add Catergory</button>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-4">
+			<div class="table-responsive">
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Category name</th>
+						</tr>
+					</thead>
+					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scCategories.data.qryCategories" id="tableRepeat1">
+						<tr dmx-on:click="ddCategory.select(CategoryID)">
+							<td dmx-text="CategoryName" dmx-class:bg-warning="(CategoryID == ddCategory.data.CategoryID)"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-7 offset-1">
+			<h5 class="text-danger" dmx-hide="ddCategory.data">Choose a Category to edit</h5>
+			<form is="dmx-serverconnect-form" id="frmCategoryUpdate" method="post" action="../dmxConnect/api/categories/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddCategory.data" dmx-show="ddCategory.data"
+				dmx-on:success="scCategories.load({});scMetatags.load({});notifies.success('The Category has been updated');frmCategoryUpdate.reset()">
+				<input type="hidden" name="CategoryID" id="upd_CategoryID" dmx-bind:value="ddCategory.data.CategoryID">
+				<input type="hidden" name="CategoryURL" id="upd_CategoryURL" dmx-bind:value="upd_CategoryName.value.underscore()">
+				<input type="hidden" name="CategoryMetaID" id="upd_CategoryMetaID" dmx-bind:value="ddCategory.data.CategoryMetaID">
+				<input type="hidden" name="metaID" id="upd_metaID" dmx-bind:value="ddCategory.data.metaID">
+				<input type="hidden" name="metaPage" id="upd_metaPage" dmx-bind:value="upd_CategoryName.value">
+				<input type="hidden" name="metaURL" id="upd_metaURL" dmx-bind:value="/products/{{upd_CategoryName.value.underscore()}}">
+				<div class="form-group row">
+					<label for="inp_CategoryName" class="col-sm-3 col-form-label">Name</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="upd_CategoryName" name="CategoryName" dmx-bind:value="ddCategory.data.CategoryName" placeholder="Enter Category name">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="upd_metaTitle" class="col-sm-3 col-form-label">Meta Title</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="upd_metaTitle" name="metaTitle" dmx-bind:value="ddCategory.data.metaTitle" placeholder="Enter Meta title">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="upd_metaDescription" class="col-sm-3 col-form-label">Meta Description</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" name="metaDescription" id="upd_metaDescription" dmx-bind:value="ddCategory.data.metaDescription" placeholder="Enter Meta description"></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-3">&nbsp;</div>
+					<div class="col-sm-9">
+						<button class="btn btn-danger" dmx-bind:value="ddCategory.data.Save" dmx-on:click="mdlCategoryDelete.show()">Delete Category</button>
+						<button type="submit" class="btn btn-primary" dmx-bind:value="ddCategory.data.Save">Update Category</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal fade" id="mdlCategoryInsert" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-on:hide-bs-modal="frmCategoryInsert.reset()">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-light bg-primary">
+					<h5 class="modal-title">Add Category</h5>
+					<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form is="dmx-serverconnect-form" id="frmCategoryInsert" method="post" action="../dmxConnect/api/categories/insert.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
+						dmx-on:success="scCategories.load({});scMetatags.load({});notifies.success('Category has been added');mdlCategoryInsert.hide()">
+						<div class="form-group row">
+							<label for="ins_CategoryName" class="col-sm-3 col-form-label">Category</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ins_CategoryName" name="CategoryName" placeholder="Enter Category name" required="">
+							</div>
+						</div>
+						<input type="hidden" name="CategoryURL" id="ins_CategoryURL" dmx-bind:value="ins_CategoryName.value.underscore()">
+						<input type="hidden" name="metaPage" id="ins_metaPage" dmx-bind:value="ins_CategoryName.value">
+						<input type="hidden" name="metaURL" id="ins_metaURL" dmx-bind:value="/products/{{ins_CategoryName.value.underscore()}}">
+						<div class="form-group row">
+							<label for="ins_metaTitle" class="col-sm-3 col-form-label">Meta Title</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ins_metaTitle" name="metaTitle" placeholder="Enter Meta title" required="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="ins_metaDescription" class="col-sm-3 col-form-label">Meta Description</label>
+							<div class="col-sm-9">
+								<textarea id="ins_metaDescription" name="metaDescription" class="form-control" placeholder="Enter Meta description" required=""></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" dmx-on:click="mdlCategoryInsert.frmCategoryInsert.submit()">Add Category</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="mdlCategoryDelete" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-on:hide-bs-modal="frmCategoryDelete.reset()">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-light bg-danger">
+					<h5 class="modal-title">Delete Category</h5>
+					<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure that you ant to delete this Category? This action cannot be undone.</p>
+					<form is="dmx-serverconnect-form" id="frmCategoryDelete" method="post" action="../dmxConnect/api/categories/delete.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddCategory.data"
+						dmx-on:success="scCategories.load({});scMetatags.load({});notifies.success('The Category has been deleted');mdlCategoryDelete.hide()">
+						<input type="hidden" id="inp_CategoryID" name="CategoryID" dmx-bind:value="ddCategory.data.CategoryID">
+						<input type="hidden" id="inp_metaID" name="metaID" dmx-bind:value="ddCategory.data.metaID">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" dmx-on:click="mdlCategoryDelete.frmCategoryDelete.submit()">Delete Category</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

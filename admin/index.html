@@ -39,11 +39,14 @@
 	<dmx-serverconnect id="scAdministrators" url="../dmxConnect/api/administrators/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCustomers" url="../dmxConnect/api/customers/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scProducts" url="../dmxConnect/api/products/list.php"></dmx-serverconnect>
-	<dmx-serverconnect id="scMetatags" url="../dmxConnect/api/metatags/list.php"></dmx-serverconnect>
+	<dmx-serverconnect id="scCategories" url="../dmxConnect/api/categories/list.php"></dmx-serverconnect>
+	<dmx-serverconnect id="scMetatags" url="../dmxConnect/api/metatags/list.php" dmx-param:sort=""></dmx-serverconnect>
+	<dmx-data-view id="dvMetatags" dmx-bind:data="scMetatags.data.qryMetaTags" filter="!metaURL.startsWith(&quot;/products/&quot;)" sortOn="metaPage"></dmx-data-view>
 	<dmx-data-detail id="ddAdministrator" dmx-bind:data="scAdministrators.data.qryAdministrators" key="UserID"></dmx-data-detail>
 	<dmx-data-detail id="ddCustomer" dmx-bind:data="scCustomers.data.qryCustomers" key="CustomerID"></dmx-data-detail>
 	<dmx-data-detail id="ddProduct" dmx-bind:data="scProducts.data.qryProducts" key="ProductID"></dmx-data-detail>
-	<dmx-data-detail id="ddMetatag" dmx-bind:data="scMetatags.data.qryMetaTags" key="metaID"></dmx-data-detail>
+	<dmx-data-detail id="ddCategory" dmx-bind:data="scCategories.data.qryCategories" key="CategoryID"></dmx-data-detail>
+	<dmx-data-detail id="ddMetatag" dmx-bind:data="dvMetatags.data" key="metaID"></dmx-data-detail>
 	<div is="dmx-browser" id="browser"></div>
 	<dmx-notifications id="notifies" offset-y="45"></dmx-notifications>
 
@@ -66,42 +69,48 @@
 								<i class="fas fa-home fa-fw"></i>&nbsp;Dashboard
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="./seo">
+								<i class="fas fa-chart-bar"></i>&nbsp;SEO
+							</a>
+						</li>
 						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
+						<li class="nav-item font-weight-bold text-center">Sales</li>
 						<li class="nav-item">
 							<a class="nav-link" href="./orders">
 								<i class="fas fa-file fa-fw"></i>&nbsp;Orders
 							</a>
 						</li>
-						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
 						<li class="nav-item">
 							<a class="nav-link" href="./customers">
 								<i class="fas fa-users fa-fw"></i>&nbsp;Customers
 							</a>
 						</li>
 						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
+						<li class="nav-item font-weight-bold text-center">Products</li>
 						<li class="nav-item">
 							<a class="nav-link" href="./products">
 								<i class="fas fa-shopping-cart fa-fw"></i>&nbsp;Products
 							</a>
 						</li>
-						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
 						<li class="nav-item">
-							<a class="nav-link" href="./company">
-								<i class="far fa-building fa-fw"></i>&nbsp;Company
+							<a class="nav-link" href="./categories">
+								<i class="fas fa-tags fa-fw"></i>&nbsp;Categories
 							</a>
 						</li>
 						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
+						<li class="nav-item font-weight-bold text-center">Company</li>
+						<li class="nav-item">
+							<a class="nav-link" href="./company">
+								<i class="fas fa-building fa-fw"></i>&nbsp;Company
+							</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="./administrators">
 								<i class="fas fa-user-friends fa-fw"></i>&nbsp;Administrators
 							</a>
 						</li>
 						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
-						<li class="nav-item">
-							<a class="nav-link" href="./seo">
-								<i class="fas fa-tags fa-fw"></i>&nbsp;SEO
-							</a>
-						</li>
 					</ul>
 				</div>
 			</nav>
@@ -112,11 +121,12 @@
 					<div class="col">
 						<div is="dmx-route" path="/" url="_dashboard.html" id="rteDashboard" exact></div>
 						<div is="dmx-route" path="/orders" url="_orders.html" id="rteOrders"></div>
-						<div is="dmx-route" path="/products" url="_products.html" id="rteProducts" exact></div>
 						<div is="dmx-route" path="/customers" url="_customers.html" id="rteCustomers" exact></div>
+						<div is="dmx-route" path="/products" url="_products.html" id="rteProducts" exact></div>
 						<div is="dmx-route" path="/administrators" url="_administrators.html" id="rteAdministrators" exact></div>
 						<div is="dmx-route" path="/seo" url="_seo.html" id="rteMetatags"></div>
 						<div is="dmx-route" path="/company" url="_company.html" id="rteCompany" exact></div>
+						<div is="dmx-route" path="/categories" url="_categories.html" id="rteCategories" exact></div>
 					</div>
 				</div>
 			</div>
