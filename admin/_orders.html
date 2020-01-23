@@ -1,13 +1,78 @@
-<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="cdn" id="orders" -->
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontaweso jquery_slim_33="cdn"quot;:{}}" quot;:{}}"="" id="appOrders" -->
 <section id="orders">
 	<div class="row">
 		<div class="col">
 			<h1>Orders</h1>
-			<p>Under Construction</p>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-6"></div>
-		<div class="col-6"></div>
+		<div class="col-4" id="appOrders">
+			<table class="table table-hover table-sm">
+				<thead>
+					<tr>
+						<th class="text-center">Date</th>
+						<th class="text-center">Amount</th>
+						<th class="text-center">Shipped</th>
+					</tr>
+				</thead>
+				<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scOrders.data.qryOrders" id="tableRepeat1">
+					<tr dmx-on:click="ddInvoice.select(OrderID)" dmx-class:bg-warning="OrderID == ddInvoice.data.OrderID">
+						<td dmx-text="OrderDate.formatDate(&quot;dd-MM-yyyy&quot;)" class="text-center"></td>
+						<td dmx-text="OrderAmount.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)" class="text-center"></td>
+						<td class="text-center"><span dmx-show="OrderShipped"><i class="far fa-check-circle text-success"></i></span><span dmx-hide="OrderShipped"><i class="far fa-dot-circle text-danger"></i></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-7 offset-1">
+			<h5 class="text-danger" dmx-hide="ddInvoice.data">Please choose an order to see the invoice.</h5>
+			<div class="invoice" dmx-show="ddInvoice.data">
+				<form is="dmx-serverconnect-form" id="frmOrderShipped" method="post" action="../dmxConnect/api/orders/shipped.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
+					dmx-on:success="scOrders.load({});notifies.success('Shipping status has been changed');scInvoice.load();frmOrderShipped.reset()">
+					<input type="hidden" name="OrderID" id="inp_OrderID" dmx-bind:value="ddInvoice.data.OrderID">
+					<div class="form-group row">
+						<div class="custom-control custom-checkbox">
+							<input class="custom-control-input" type="checkbox" id="upd_OrderShipped" name="OrderShipped" value="1" dmx-bind:checked="(ddInvoice.data.OrderShipped == 1)" dmx-on:click="frmOrderShipped.submit()">
+							<label class="custom-control-label" style="line-height:2em" for="upd_OrderShipped">Order Shipped</label>
+						</div>
+					</div>
+				</form>
+				<h3>Tax Invoice</h3>
+				<p class="mb-0">Inv Nr.:&nbsp;{{ddInvoice.data.OrderID}}</p>
+				<p>Date : &nbsp; {{ddInvoice.data.OrderDate.toDate().formatDate("dd-MM-yyyy")}} </p>
+				<h5>Billing Address</h5>
+				<p class="mb-0">{{ddInvoice.data.CustomerFirstName}} {{ddInvoice.data.CustomerLastName}}</p>
+				<p class="mb-0">{{ddInvoice.data.CustomerCity}}</p>
+				<p class="mb-0">{{ddInvoice.data.CustomerState}} {{ddInvoice.data.CustomerZip}} </p>
+				<p>{{ddInvoice.data.CustomerCountry}}</p>
+				<p>{{ddInvoice.data.CustomerEmail}}</p>
+				<div class="table-responsive">
+					<table class="table table-sm">
+						<thead>
+							<tr>
+								<th scope="col">Description</th>
+								<th scope="col" class="text-center">Price</th>
+								<th scope="col" class="text-center">Quantity</th>
+								<th scope="col" class="text-right">Amount</th>
+							</tr>
+						</thead>
+						<tbody is="dmx-repeat" id="rptOrderDetails" dmx-bind:repeat="ddInvoice.data.qryOrderDetails">
+							<tr>
+								<td dmx-text="DetailName"></td>
+								<td dmx-text="DetailPrice.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)" class="text-center"></td>
+								<td dmx-text="DetailQuantity" class="text-center"></td>
+								<td dmx-text="(DetailQuantity * DetailPrice).formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)" class="text-right"></td>
+							</tr>
+						</tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<th class="text-right">Total</th>
+							<td class="text-right">{{ddInvoice.data.OrderAmount.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>

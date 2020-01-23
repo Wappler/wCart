@@ -97,12 +97,14 @@
 									<tr>
 										<th>Order date</th>
 										<th class="text-right">Order amount</th>
+										<th class="text-center">Order Shipped</th>
 									</tr>
 								</thead>
 								<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scOrders.data.qryOrders" id="rptOrders">
 									<tr dmx-on:click="browser.goto('invoice/' + OrderID)" style="cursor:pointer;">
 										<td dmx-text="OrderDate.formatDate(&quot;dd-MM-yyyy&quot;)"></td>
 										<td dmx-text="OrderAmount.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)" class="text-right"></td>
+										<td class="text-center"><span dmx-show="OrderShipped"><i class="far fa-check-circle text-success"></i></span><span dmx-hide="OrderShipped"><i class="far fa-dot-circle text-danger"></i></span></td>
 									</tr>
 								</tbody>
 							</table>

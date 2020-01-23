@@ -38,12 +38,17 @@
 	<dmx-serverconnect id="scCompany" url="../dmxConnect/api/company/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scAdministrators" url="../dmxConnect/api/administrators/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCustomers" url="../dmxConnect/api/customers/list.php"></dmx-serverconnect>
+	<dmx-serverconnect id="scOrders" url="../dmxConnect/api/orders/list_admin.php"></dmx-serverconnect>
+	<dmx-serverconnect id="scInvoice" url="../dmxConnect/api/orderdetails/invoice_admin.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scProducts" url="../dmxConnect/api/products/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCategories" url="../dmxConnect/api/categories/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scMetatags" url="../dmxConnect/api/metatags/list.php" dmx-param:sort=""></dmx-serverconnect>
 	<dmx-data-view id="dvMetatags" dmx-bind:data="scMetatags.data.qryMetaTags" filter="!metaURL.startsWith(&quot;/products/&quot;)" sortOn="metaPage"></dmx-data-view>
 	<dmx-data-detail id="ddAdministrator" dmx-bind:data="scAdministrators.data.qryAdministrators" key="UserID"></dmx-data-detail>
-	<dmx-data-detail id="ddCustomer" dmx-bind:data="scCustomers.data.qryCustomers" key="CustomerID"></dmx-data-detail>
+	<dmx-data-detail id="ddCustomer" dmx-bind:data="scCustomers.data.qryCustomers" key="CustomerID">
+
+	</dmx-data-detail>
+	<dmx-data-detail id="ddInvoice" dmx-bind:data="scInvoice.data.rptOrders" key="OrderID"></dmx-data-detail>
 	<dmx-data-detail id="ddProduct" dmx-bind:data="scProducts.data.qryProducts" key="ProductID"></dmx-data-detail>
 	<dmx-data-detail id="ddCategory" dmx-bind:data="scCategories.data.qryCategories" key="CategoryID"></dmx-data-detail>
 	<dmx-data-detail id="ddMetatag" dmx-bind:data="dvMetatags.data" key="metaID"></dmx-data-detail>
@@ -71,7 +76,7 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="./seo">
-								<i class="fas fa-chart-bar"></i>&nbsp;SEO
+								<i class="fas fa-chart-bar fa-fw"></i>&nbsp;SEO
 							</a>
 						</li>
 						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>

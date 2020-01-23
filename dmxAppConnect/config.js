@@ -673,6 +673,145 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "ddInvoice": {
+      "meta": [
+        {
+          "name": "OrderID",
+          "type": "number"
+        },
+        {
+          "name": "OrderCustomerID",
+          "type": "number"
+        },
+        {
+          "name": "OrderAmount",
+          "type": "number"
+        },
+        {
+          "name": "OrderShipName",
+          "type": "text"
+        },
+        {
+          "name": "OrderShipAddress",
+          "type": "text"
+        },
+        {
+          "name": "OrderShipAddress2",
+          "type": "text"
+        },
+        {
+          "name": "OrderCity",
+          "type": "text"
+        },
+        {
+          "name": "OrderState",
+          "type": "text"
+        },
+        {
+          "name": "OrderZip",
+          "type": "text"
+        },
+        {
+          "name": "OrderCountry",
+          "type": "text"
+        },
+        {
+          "name": "OrderPhone",
+          "type": "text"
+        },
+        {
+          "name": "OrderPostage",
+          "type": "number"
+        },
+        {
+          "name": "OrderTax",
+          "type": "number"
+        },
+        {
+          "name": "OrderEmail",
+          "type": "text"
+        },
+        {
+          "name": "OrderDate",
+          "type": "datetime"
+        },
+        {
+          "name": "OrderShipped",
+          "type": "number"
+        },
+        {
+          "name": "OrderTrackingNumber",
+          "type": "text"
+        },
+        {
+          "name": "CustomerEmail",
+          "type": "text"
+        },
+        {
+          "name": "CustomerFirstName",
+          "type": "text"
+        },
+        {
+          "name": "CustomerLastName",
+          "type": "text"
+        },
+        {
+          "name": "CustomerAddress",
+          "type": "text"
+        },
+        {
+          "name": "CustomerCity",
+          "type": "text"
+        },
+        {
+          "name": "CustomerState",
+          "type": "text"
+        },
+        {
+          "name": "CustomerZip",
+          "type": "text"
+        },
+        {
+          "name": "CustomerCountry",
+          "type": "text"
+        },
+        {
+          "name": "qryOrderDetails",
+          "type": "array",
+          "sub": [
+            {
+              "name": "DetailID",
+              "type": "number"
+            },
+            {
+              "name": "DetailOrderID",
+              "type": "number"
+            },
+            {
+              "name": "DetailProductID",
+              "type": "number"
+            },
+            {
+              "name": "DetailName",
+              "type": "text"
+            },
+            {
+              "name": "DetailPrice",
+              "type": "number"
+            },
+            {
+              "name": "DetailSKU",
+              "type": "text"
+            },
+            {
+              "name": "DetailQuantity",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "outputType": "array"
     }
   },
   "products": {
@@ -784,6 +923,74 @@ dmx.config({
         {
           "name": "metaURL",
           "type": "text"
+        }
+      ],
+      "outputType": "array"
+    }
+  },
+  "appOrders": {
+    "rptOrderDetail": {
+      "meta": [
+        {
+          "name": "DetailID",
+          "type": "number"
+        },
+        {
+          "name": "DetailOrderID",
+          "type": "number"
+        },
+        {
+          "name": "DetailProductID",
+          "type": "number"
+        },
+        {
+          "name": "DetailName",
+          "type": "text"
+        },
+        {
+          "name": "DetailPrice",
+          "type": "number"
+        },
+        {
+          "name": "DetailSKU",
+          "type": "text"
+        },
+        {
+          "name": "DetailQuantity",
+          "type": "number"
+        }
+      ],
+      "outputType": "array"
+    },
+    "rptOrderDetails": {
+      "meta": [
+        {
+          "name": "DetailID",
+          "type": "number"
+        },
+        {
+          "name": "DetailOrderID",
+          "type": "number"
+        },
+        {
+          "name": "DetailProductID",
+          "type": "number"
+        },
+        {
+          "name": "DetailName",
+          "type": "text"
+        },
+        {
+          "name": "DetailPrice",
+          "type": "number"
+        },
+        {
+          "name": "DetailSKU",
+          "type": "text"
+        },
+        {
+          "name": "DetailQuantity",
+          "type": "number"
         }
       ],
       "outputType": "array"
