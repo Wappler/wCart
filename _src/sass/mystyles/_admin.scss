@@ -36,3 +36,22 @@ padding-top: 0;
   font-weight: 500;
   color: #333;
 }
+
+#admin div#image {
+  position: relative;
+  img {
+    transition: 0.5s ease;
+  }
+  button {
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    opacity: 0;
+    transition: 0.5s ease;
+  }
+  &:hover, &:focus {
+    img, button {
+      opacity: 0.8;
+    }
+  }
+}

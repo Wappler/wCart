@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<button class="btn btn-primary btn-block" dmx-on:click="mdlLoginCustomer.show()" dmx-hide="(varLoggedin.value >= 1)">Add User Detail</button>
+				<button class="btn btn-primary btn-block" dmx-on:click="mdlRegisterCustomer.show()" dmx-hide="(varLoggedin.value >= 1)">Add User Detail</button>
 				<form id="frmPay" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/orders/checkout.php" dmx-on:success="arrCart.empty();arrSubtotal.empty();arrPID.empty();browser.goto('invoice/' + frmPay.data.lastinvoice)">
 					<input id="inp_customerid" name="customerid" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerID">
 					<input id="inp_customername" name="customername" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerFirstName + ' ' +  scLoggedinCustomer.data.qryCustomer.CustomerLastName">

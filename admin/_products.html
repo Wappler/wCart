@@ -1,31 +1,23 @@
-<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local"  components="{&quot;dmxFormatter&quot;:{}}"components="{&quot;dmxValidator components="{&quot;dmxValidator&quot;:{},&quot;dmxBootstrap4Modal&quot;:{}}"components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxMediumEditor&quot;:{},&quot;dmxFormatter components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxMediumEditor&quot;:{},&quot;dmxFormatter&quot;:{},&quot;dmxBootstrap4Modal&quot;:{}}"components="{&quot;dmxBootstrap4TableGenerator&quot;:{},&quot;dmxMediumEditor&quot;:{} jquery_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_sli fontawesome_5="cdn"tawesome_5="cdn"tawesome_5=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33=" jquery_slim_33="cdn"ry_slim_33="cdn"ry_slim_33="cdn"m_33="cdn" -->
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="cdn" id="appProducts" components="{&quot;dmxFormatter&quot;:{},&quot;bs-custom-file-input&quot;:{},&quot;dmxValidator&quot;:{},&quot;dmxBootstrap4Modal&quot;:{},&quot;dmxDropzone&quot;:{}}" -->
 <section id="products">
 	<div class="row">
-		<div class="col">
-			<h1>Products</h1>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<button class="btn btn-primary" dmx-on:click="mdlProductInsert.show()">Add New Product</button>
-		</div>
-	</div>
-	<div class="row" dmx-show="scProducts.data.qryProducts">
 		<div class="col-5">
-			<div class="table-responsive">
+			<h1>Products</h1>
+			<button class="btn btn-outline-primary" dmx-on:click="mdlProductInsert.show()">Add New Product</button>
+			<div class="table-responsive mt-4">
 				<table class="table table-hover table-sm">
 					<thead>
 						<tr>
 							<th>SKU</th>
 							<th>Product name</th>
-							<th>&nbsp;</th>
+							<th>Live</th>
 						</tr>
 					</thead>
-					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scProducts.data.qryProducts" id="rptProducts">
+					<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="scProducts.data.rptProducts" id="rptProducts">
 						<tr dmx-on:click="ddProduct.select(ProductID)" dmx-class:bg-warning="(ProductID == ddProduct.data.ProductID)">
 							<td dmx-text="ProductSKU"></td>
 							<td dmx-text="ProductName"></td>
-							<td><i class="far fa-file-excel text-danger" dmx-hide="ProductLive"></i></td>
+							<td><span class="text-danger" dmx-hide="ProductLive"><i class="far fa-eye-slash fa-fw"></i></span><span class="text-success" dmx-show="ProductLive"><i class="far fa-eye"></i></span></td>
 						</tr>
 					</tbody>
 				</table>
@@ -33,54 +25,104 @@
 		</div>
 		<div class="col-6 offset-1">
 			<h5 class="text-danger" dmx-hide="ddProduct.data">Choose a Product to view the details</h5>
-			<form is="dmx-serverconnect-form" id="frmProductUpdate" method="post" action="../dmxConnect/api/products/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddProduct.data"
-				dmx-on:success="scProducts.load({});notifies.success('The product has beeb updated');frmProductUpdate.reset()" dmx-show="ddProduct.data">
-				<input type="hidden" id="upd_ProductID" name="ProductID" dmx-bind:value="ddProduct.data.ProductID">
-				<div class="form-group row">
-					<label for="ins_ProductSKU" class="col-sm-3 col-form-label">SKU</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" id="ins_ProductSKU" name="ProductSKU" dmx-bind:value="ddProduct.data.ProductSKU" placeholder="Enter Product sku">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="ins_ProductName" class="col-sm-3 col-form-label">Productname</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" id="ins_ProductName" name="ProductName" dmx-bind:value="ddProduct.data.ProductName" placeholder="Enter Product name" required="">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="ins_ProductPrice" class="col-sm-3 col-form-label">Price</label>
-					<div class="col-sm-9">
-						<input class="form-control" id="ins_ProductPrice" name="ProductPrice" dmx-bind:value="ddProduct.data.ProductPrice" placeholder="Enter Product price" required="">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="ins_ProductShortDesc" class="col-sm-3 col-form-label">Short desc</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" id="ins_ProductShortDesc" name="ProductShortDesc" dmx-bind:value="ddProduct.data.ProductShortDesc" placeholder="Enter Product short desc">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="ins_ProductLongDesc" class="col-sm-3 col-form-label">Long desc</label>
-					<div class="col-sm-9">
-						<textarea class="form-control" name="ProductLongDesc" id="ins_ProductLongDesc" is="dmx-medium-editor" rows="5" fontawesome>{{ddProduct.data.ProductLongDesc}}</textarea>
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-sm-9 offset-sm-3">
+			<section dmx-show="ddProduct.data">
+				<form is="dmx-serverconnect-form" id="frmProductLive" method="post" action="../dmxConnect/api/products/live.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddProduct.data"
+					dmx-on:success="scProducts.load({});frmProductLive.reset();notifies.success('The Live status has been changed')">
+					<input type="hidden" name="ProductID" dmx-bind:value="ddProduct.data.ProductID">
+					<div class="form-group row">
 						<div class="custom-control custom-checkbox">
-							<input class="custom-control-input" type="checkbox" id="ins_ProductLive" name="ProductLive" value="1" dmx-bind:checked="(ddProduct.data.ProductLive == 1)">
-							<label class="custom-control-label" for="ins_ProductLive">Product Live</label>
+							<input class="custom-control-input" type="checkbox" value="1" id="inp_ProductLive" name="ProductLive" dmx-bind:checked="(ddProduct.data.ProductLive == 1)" dmx-on:click="frmProductLive.submit()">
+							<label class="custom-control-label" for="inp_ProductLive">Product Live</label>
+						</div>
+					</div>
+				</form>
+				<h5>Product Detail:</h5>
+				<form is="dmx-serverconnect-form" id="frmProductUpdate" method="post" action="../dmxConnect/api/products/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddProduct.data"
+					dmx-on:success="scProducts.load({});notifies.success('The product is updated');frmProductUpdate.reset()">
+					<input type="hidden" id="upd_ProductID" name="ProductID" dmx-bind:value="ddProduct.data.ProductID">
+					<div class="form-group row">
+						<label for="upd_ProductCategoryID" class="col-sm-3 col-form-label">Category</label>
+						<div class="col-sm-9">
+							<select id="upd_ProductCategoryID" name="ProductCategoryID" class="custom-select">
+								<option value="">Choose a category &hellip;</option>
+								<option value="" dmx-repeat:rptcategories="scCategories.data.qryCategories" dmx-bind:value="CategoryID" dmx-bind:selected="(CategoryID == ddProduct.data.ProductCategoryID)">
+									{{CategoryName}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="upd_ProductSKU" class="col-sm-3 col-form-label">SKU</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="upd_ProductSKU" name="ProductSKU" dmx-bind:value="ddProduct.data.ProductSKU" placeholder="Enter Product sku">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="upd_ProductName" class="col-sm-3 col-form-label">Productname</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="upd_ProductName" name="ProductName" dmx-bind:value="ddProduct.data.ProductName" placeholder="Enter Product name" required="">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="upd_ProductPrice" class="col-sm-3 col-form-label">Price</label>
+						<div class="col-sm-9">
+							<div class="input-group mb-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text">$</div>
+								</div>
+								<input class="form-control" id="upd_ProductPrice" name="ProductPrice" dmx-bind:value="ddProduct.data.ProductPrice.formatNumber(2, &quot;.&quot;, &quot;,&quot;)" placeholder="Enter Product price" required="">
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="upd_ProductShortDesc" class="col-sm-3 col-form-label">Short desc</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="upd_ProductShortDesc" name="ProductShortDesc" dmx-bind:value="ddProduct.data.ProductShortDesc" placeholder="Enter Product short desc">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="upd_ProductLongDesc" class="col-sm-3 col-form-label">Long desc</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" name="ProductLongDesc" id="upd_ProductLongDesc" is="dmx-medium-editor" dmx-bind:value="ddProduct.data.ProductLongDesc">{{ddProduct.data.ProductLongDesc}}</textarea>
+						</div>
+					</div>
+					<div class="form-group row mt-4">
+						<div class="col-sm-9 offset-md-3">
+							<button class="btn btn-outline-danger" dmx-on:click="mdlProductDelete.show()">Delete</button>
+							<button type="submit" class="btn btn-outline-primary" dmx-bind:value="ddProduct.data.Save">Update</button>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="col">
+						<hr>
+						<h5>Images:</h5>
+						<button class="btn btn-outline-primary mb-2" dmx-on:click="mdlImagesInsert.show()">Add Images</button>
+						<form is="dmx-serverconnect-form" id="frmImagesSort" method="post" action="../dmxConnect/api/product_images/sort.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-multi="true" dmx-populate="dvProductImages.data"
+							dmx-on:success="notifies.success('The images have been re-ordered')">
+							<div id="record" class="row" is="dmx-repeat" dmx-bind:repeat="dvProductImages.data">
+								<div class="col-4" id="image">
+									<img dmx-bind:src="/assets/images/products/{{ddProduct.data.ProductID}}/thumbs/{{ProductImageFile}}" class="img-fluid img-thumbnail">
+									<button class="btn btn-danger btn-sm" dmx-on:click="ddProductImage.select(ProductImageID);mdlImageDelete.show()">X</button>
+									<input type="hidden" name="ProductImageID" id="srt_ProductImageID" dmx-bind:name="record[{{$index}}][ProductImageID]" dmx-bind:value="ProductImageID">
+									<input type="hidden" name="ProductImageDisplayOrder" id="srt_ProductImageDisplayOrder" class="cos" dmx-bind:name="record[{{$index}}][ProductImageDisplayOrder]" dmx-bind:value="ProductImageDisplayOrder">
+								</div>
+							</div>
+						</form>
+						<p dmx-hide="dvProductImages.data.hasItems()">No Images to show.</p>
+					</div>
+				</div>
+				<div class="row mt-2" dmx-show="dvProductImages.data.hasItems()">
+					<div class="col">
+						<button class="btn btn-outline-primary" dmx-on:click="frmImagesSort.submit()">Save the Display Order</button>
+						<button class="btn btn-sm text-primary" data-toggle="collapse" data-target="#sortHelp" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-question-circle fa-fw fa-lg"></i></button>
+						<div class="collapse" id="sortHelp">
+							<div class="card card-body">
+								Slide the images into their correct order. The first image will show under Products (public page), the other images will show in the Product Detail page.
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="form-group row">
-					<div class="col-sm-9 offset-md-3">
-						<button class="btn btn-danger" dmx-on:click="mdlProductDelete.show()">Delete</button>
-						<button type="submit" class="btn btn-primary" dmx-bind:value="ddProduct.data.Save">Update</button>
-					</div>
-				</div>
-			</form>
+			</section>
 		</div>
 	</div>
 	<!-- Modal to Insert a new Product -->
@@ -94,12 +136,16 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					<p>Both inputs are required!</p>
 					<form is="dmx-serverconnect-form" id="frmProductInsert" method="post" action="../dmxConnect/api/products/insert.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
-						dmx-on:success="scProducts.load({});notifies.success('A new product has been added');mdlProductInsert.hide();ddProduct.select(mdlProductInsert.frmProductInsert.data.LastProduct)">
+						dmx-on:success="scProducts.load({});notifies.success('A new product has been added');mdlProductInsert.hide()">
 						<div class="form-group row">
-							<label for="inp_ProductSKU" class="col-sm-2 col-form-label">SKU</label>
+							<label for="selCategory" class="col-sm-2 col-form-label">Category</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inp_ProductSKU" name="ProductSKU" aria-describedby="inp_ProductSKU_help" placeholder="Enter Product SKU">
+								<select id="ins_selProductCategoryID" class="custom-select" required="" name="ProductCategoryID">
+									<option value="">Select a category &hellip;</option>
+									<option value="2" dmx-repeat:rptcategories="scCategories.data.qryCategories" dmx-bind:value="CategoryID">{{CategoryName}}</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -128,7 +174,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Are you sure that you want to delete this product? This action cannot be undone.</p>
+					<p>Are you sure that you want to delete this product and all of the associated images? This action cannot be undone.</p>
 					<form is="dmx-serverconnect-form" id="frmProductDelete" method="post" action="../dmxConnect/api/products/delete.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddProduct.data"
 						dmx-on:success="scProducts.load({});notifies.success('The product has been deleted');mdlProductDelete.hide();mdlProductDelete.frmProductDelete.reset()">
 						<input type="hidden" name="ProductID" id="inp_ProductID" dmx-bind:value="ddProduct.data.ProductID"></form>
@@ -136,6 +182,58 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-danger" dmx-on:click="mdlProductDelete.frmProductDelete.submit()">Delete Product</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="mdlImagesInsert" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-on:hide-bs-modal="frmImagesInsert.reset()">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary text-light">
+					<h5 class="modal-title">Add Images</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form is="dmx-serverconnect-form" id="frmImagesInsert" method="post" action="../dmxConnect/api/product_images/insert.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
+						dmx-on:success="scProductImages.load({});notifies.success('Images have been added');mdlImagesInsert.hide()">
+						<input type="hidden" name="ProductImageProductID" id="ins_ProductImageProductID" dmx-bind:value="ddProduct.data.ProductID">
+						<div class="form-group row">
+							<label for="ins_ProductImageFile" class="col-sm-2 col-form-label">Images</label>
+							<div class="col-sm-10">
+								<input type="file" class="form-control" id="ins_ProductImageFile" name="ProductImageFile[]" aria-describedby="inp_ProductImageFile_help" multiple="true" is="dmx-dropzone" required="">
+							</div>
+						</div>
+						<input type="hidden" name="ProductImageDisplayOrder" id="ins_ProductImageDisplayOrder" dmx-bind:value="0">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" dmx-on:click="mdlImagesInsert.frmImagesInsert.submit()">Add Images</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="mdlImageDelete" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-on:hide-bs-modal="frmProductImageDelete.reset()">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-light bg-danger">
+					<h5 class="modal-title">Delete Image</h5>
+					<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure that you want to delete this image? This action cannot be undone.</p>
+					<form is="dmx-serverconnect-form" id="frmProductImageDelete" method="post" action="../dmxConnect/api/product_images/delete.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddProductImage.data"
+						dmx-on:success="scProductImages.load({});notifies.success('Image has been deleted');mdlImageDelete.hide()">
+						<input name="ProductImageID" id="del_ProductImageID" dmx-bind:value="ddProductImage.data.ProductImageID" type="hidden"><input name="ProductImageProductID" id="del_ProductImageProductID"
+							dmx-bind:value="ddProductImage.data.ProductImageProductID" type="hidden"><input name="ProductImageFile" id="del_ProductImageFile" dmx-bind:value="ddProductImage.data.ProductImageFile" type="hidden"></form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" dmx-on:click="mdlImageDelete.frmProductImageDelete.submit()">Delete Image</button>
 				</div>
 			</div>
 		</div>

@@ -10,7 +10,10 @@
 		<div class="row mt-4" is="dmx-repeat" id="rptProducts" dmx-bind:repeat="dvProducts.data">
 			<div class="col-12 col-md-4 col-lg-3">
 				<div class="card h-100 d-flex">
-					<img class="card-img-top flex-grow-1 img-fluid" alt="Card image cap" dmx-bind:src="ProductThumb" dmx-show="dvProducts.data[0].ProductThumb">
+					<!-- <div dmx-repeat:rptimages="qryImages"> -->
+					<img class="card-img-top flex-grow-1 img-fluid" alt="Card image cap" dmx-bind:src="assets/images/products/{{ProductID}}/thumbs/{{qryImages[0].ProductImageFile}}" dmx-show="qryImages.hasItems()">
+					<!-- </div> -->
+					<img class="card-img-top flex-grow-1 img-fluid" alt="Card image cap" src="assets/images/products/no-image.jpg" dmx-hide="qryImages.hasItems()">
 					<div class="card-body">
 						<h4 class="card-title" dmx-text="ProductName">Card title</h4>
 						<p class="card-text" dmx-html="ProductShortDesc"></p>

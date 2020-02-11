@@ -53,7 +53,7 @@
 	<dmx-serverconnect id="scMetaTags" url="dmxConnect/api/metatags/list.php"></dmx-serverconnect>
 	<dmx-data-view id="dvOrderDetail" dmx-bind:data="scOrders.data.rptOrderDetail[0].qryOrderDetail" filter="(OrderID ==params.id)"></dmx-data-view>
 	<dmx-data-view id="dvOrders" dmx-bind:data="scOrders.data.rptOrderDetail" filter="(scLoggedinCustomer.data.qryCustomer.CustomerID == OrderCustomerID)"></dmx-data-view>
-	<dmx-data-view id="dvProducts" dmx-bind:data="scProducts.data.qryProducts" filter="(routeproducts.params.category == &quot;all&quot;) ? &quot; &quot; : (CategoryURL == routeproducts.params.category))"></dmx-data-view>
+	<dmx-data-view id="dvProducts" dmx-bind:data="scProducts.data.rptProducts" filter="(routeproducts.params.category == &quot;all&quot;) ? ProductLive : ((CategoryURL == routeproducts.params.category) &amp;&amp; ProductLive))"></dmx-data-view>
 	<dmx-data-view id="dvMetaTags" dmx-bind:data="scMetaTags.data.qryMetaTags" filter="(metaURL == browser.location.pathname)"></dmx-data-view>
 	<dmx-data-view id="dvCountry" dmx-bind:data="scCountries.data.qryCountries" filter="(CountryISO == scLoggedinCustomer.data.qryCustomer.CustomerCountry)"></dmx-data-view>
 	<dmx-local-manager id="localStorage"></dmx-local-manager>
@@ -89,7 +89,7 @@
 									</div>
 								</div>
 								<a class="nav-item nav-link" href="./contact" dmx-on:click="scroll.goto('#index')">Contact</a>
-								<a class="nav-item nav-link" href="#" dmx-on:click="mdlLoginCustomer.show()" dmx-hide="(varLoggedin.value >= 1)">Login</a>
+								<a class="nav-item nav-link" href="#" dmx-on:click="mdlRegisterCustomer.show('signup')" dmx-hide="(varLoggedin.value >= 1)">Login</a>
 								<a class="nav-item nav-link" href="#" dmx-show="(varLoggedin.value >= 1)" dmx-on:click="scLogoutCustomer.load({});scOrders.load({});scLoggedinCustomer.load({});varLoggedin.setValue(0)">Logout </a>
 								<a class="nav-item nav-link" href="./user-home" dmx-show="(varLoggedin.value >= 1)">{{scLoggedinCustomer.data.qryCustomer.CustomerFirstName}} <i class="fas fa-user-cog"></i>
 								</a>
@@ -123,125 +123,116 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Modal Login Customer -->
-	<div class="modal fade" id="mdlLoginCustomer" is="dmx-bs4-modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header text-light bg-warning">
-					<h5 class="modal-title">Customer Login Form</h5>
-					<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form id="frmLoginCustomer" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/security/customerLogin.php"
-					dmx-on:success="scLoggedinCustomer.load({});scOrders.load({});mdlLoginCustomer.hide();notifies.success('You have successfully logged in');varLoggedin.setValue(1)"
-					dmx-on:unauthorized="notifies.danger('Your login details are incorrect. Please try again or register as a customer.')" dmx-on:error="notifies.danger('An error has occurred')">
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="logincustomerusername">Username</label>
-							<input type="text" class="form-control" id="logincustomerusername" name="username" placeholder="Your username or email">
-						</div>
-						<div class="form-group mt-2">
-							<label for="logincustomerpassword">Password</label>
-							<input type="password" class="form-control" id="logincustomerpassword" name="password" placeholder="Your password">
-						</div>
-						<div class="form-group mt-2">
-							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" value="1" id="logincustomerremember" name="remember">
-								<label class="custom-control-label" for="logincustomerremember">Keep me logged in</label>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary btn-sm" data-dismiss="modal" type="reset">Close</button>
-						<button class="btn btn-primary text-left" dmx-on:click="mdlLoginCustomer.hide();mdlRegisterCustomer.show()">Register</button>
-						or
-						<button type="submit" class="btn btn-warning text-light font-weight-bold">Login</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
 	<!-- Modal Register Customer -->
-	<div class="modal fade" id="mdlRegisterCustomer" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="mdlRegisterCustomer" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-on:hide-bs-modal="frmLoginCustomer.reset();frmRegisterCustomer.reset()">
 		<div class="modal-dialog modal-dialog-scrollable" role="document">
 			<div class="modal-content">
-				<div class="modal-header bg-primary text-light">
-					<h5 class="modal-title">Customer Registration Form</h5>
-					<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
 				<div class="modal-body">
-					<p>We need your information to know where to send the parcel as well as for you to view archived invoices. We will never share this infomation with others.</p>
-					<form is="dmx-serverconnect-form" id="frmRegisterCustomer" method="post" action="dmxConnect/api/customers/register.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
-						dmx-on:success="scLoggedinCustomer.load({},true);scOrders.load({});mdlRegisterCustomer.hide();notifies.success('You have successfully registered and are now logged in');varLoggedin.setValue(1)"
-						dmx-on:error="notifies.danger('An error has occurred')" dmx-on:unauthorized="notifies.danger('An error has occurred')">
-						<div class="form-group row">
-							<label for="inp_CustomerFirstName" class="col-sm-2 col-form-label">Firstname</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inp_CustomerFirstName" name="CustomerFirstName" aria-describedby="inp_CustomerFirstName_help" placeholder="Enter Firstname" maxlength="50" required="">
-							</div>
+					<div class="nav nav-pills nav-fill">
+						<a class="nav-item nav-link border border-primary border-rounded active m-2" data-toggle="pill" href="#login" role="tab" aria-selected="true" data-target="#login">Login</a>
+						<a class="nav-item nav-link border border-primary border-rounded m-2" data-toggle="pill" href="#signup" role="tab" aria-selected="false" data-target="#signup">Register</a>
+					</div>
+					<div class="tab-content py-0">
+						<div class="tab-pane fade in active show" id="login" role="tabpanel">
+							<form id="frmLoginCustomer" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/security/customerLogin.php"
+								dmx-on:success="scLoggedinCustomer.load();scOrders.load({});mdlRegisterCustomer.hide();notifies.success('You have successfully logged in');varLoggedin.setValue(1)"
+								dmx-on:unauthorized="notifies.danger('Your login details are incorrect. Please try again or register as a customer.')" dmx-on:error="notifies.danger('An error has occurred')">
+								<div class="form-group">
+									<label for="logincustomerusername">Username</label>
+									<input type="text" class="form-control" id="logincustomerusername" name="username" placeholder="Your username or email">
+								</div>
+								<div class="form-group mt-2">
+									<label for="logincustomerpassword">Password</label>
+									<input type="password" class="form-control" id="logincustomerpassword" name="password" placeholder="Your password">
+								</div>
+								<div class="form-group mt-2">
+									<div class="custom-control custom-checkbox">
+										<input class="custom-control-input" type="checkbox" value="1" id="logincustomerremember" name="remember">
+										<label class="custom-control-label" for="logincustomerremember">Keep me logged in</label>
+									</div>
+								</div>
+								<div class="form-group mt-4">
+									<a href="" class="btn btn-outline-primary" type="submit">Forgot password?</a>
+									<button type="submit" class="btn btn-primary">Login</button>
+								</div>
+							</form>
 						</div>
-						<div class="form-group row mt-2">
-							<label for="inp_CustomerLastName" class="col-sm-2 col-form-label">Lastname</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inp_CustomerLastName" name="CustomerLastName" aria-describedby="inp_CustomerLastName_help" placeholder="Enter Lastname" maxlength="50" required="">
-							</div>
+						<div class="tab-pane fade" id="signup" role="tabpanel">
+							<p>We need your information to know where to send the parcel as well as for you to view archived invoices. We will never share this infomation with others.</p>
+							<form is="dmx-serverconnect-form" id="frmRegisterCustomer" method="post" action="dmxConnect/api/customers/register.php" dmx-generator="bootstrap4" dmx-form-type="horizontal"
+								dmx-on:success="scLoggedinCustomer.load({},true);scOrders.load({});mdlRegisterCustomer.hide();notifies.success('You have successfully registered and are now logged in');varLoggedin.setValue(1)"
+								dmx-on:error="notifies.danger('An error has occurred')" dmx-on:unauthorized="notifies.danger('An error has occurred')">
+								<div class="form-group row">
+									<label for="inp_CustomerFirstName" class="col-sm-2 col-form-label">Firstname</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inp_CustomerFirstName" name="CustomerFirstName" aria-describedby="inp_CustomerFirstName_help" placeholder="Enter Firstname" maxlength="50" required="">
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<label for="inp_CustomerLastName" class="col-sm-2 col-form-label">Lastname</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inp_CustomerLastName" name="CustomerLastName" aria-describedby="inp_CustomerLastName_help" placeholder="Enter Lastname" maxlength="50" required="">
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<label for="inp_CustomerEmail" class="col-sm-2 col-form-label">Email</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inp_CustomerEmail" name="CustomerEmail" aria-describedby="inp_CustomerEmail_help" placeholder="Enter Email" maxlength="60" data-rule-email="" required="">
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<label for="inp_CustomerPassword" class="col-sm-2 col-form-label">Password</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" id="inp_CustomerPassword" name="CustomerPassword" aria-describedby="inp_CustomerPassword_help" placeholder="Enter Password" maxlength="20" required="">
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<label for="inp_CustomerAddress" class="col-sm-2 col-form-label">Address</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inp_CustomerAddress" name="CustomerAddress" aria-describedby="inp_CustomerAddress_help" placeholder="Enter Address" maxlength="60" required="">
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<label for="inp_CustomerCity" class="col-sm-2 col-form-label">City</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inp_CustomerCity" name="CustomerCity" aria-describedby="inp_CustomerCity_help" placeholder="Enter City" maxlength="30" required="">
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<label for="inp_CustomerZip" class="col-sm-2 col-form-label">Postcode</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="inp_CustomerZip" name="CustomerZip" aria-describedby="inp_CustomerZip_help" placeholder="Enter Postcode" maxlength="12" required="">
+									</div>
+								</div>
+								<div class="form-group row mt-2" dmx-show="scRegionsFiltered.data.qryRegions[0].RegionName">
+									<label for="sel_CustomerStateCustomerState" class="col-sm-2 col-form-label">Region</label>
+									<div class="col-sm-10">
+										<select id="sel_CustomerState" class="form-control" name="CustomerState">
+											<option value="">Select your region...</option>
+											<option value="" dmx-repeat:repeatregions="scRegionsFiltered.data.qryRegions" dmx-bind:value="RegionCode">{{RegionName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<label for="inp_CustomerCountry" class="col-sm-2 col-form-label">Country</label>
+									<div class="col-sm-10">
+										<select id="sel_CustomerCountry" class="form-control" name="CustomerCountry" required="">
+											<option value="">Select your country...</option>
+											<option dmx-repeat:repeatcountries="scCountries.data.qryCountries" dmx-bind:value="CountryISO">{{CountryName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row mt-2">
+									<div class="col-sm-10 offset-2">
+										<button class="btn btn-primary" type="submit">Sign Up</button>
+									</div>
+								</div>
+							</form>
 						</div>
-						<div class="form-group row mt-2">
-							<label for="inp_CustomerEmail" class="col-sm-2 col-form-label">Email</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inp_CustomerEmail" name="CustomerEmail" aria-describedby="inp_CustomerEmail_help" placeholder="Enter Email" maxlength="60" data-rule-email="" required="">
-							</div>
-						</div>
-						<div class="form-group row mt-2">
-							<label for="inp_CustomerPassword" class="col-sm-2 col-form-label">Password</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" id="inp_CustomerPassword" name="CustomerPassword" aria-describedby="inp_CustomerPassword_help" placeholder="Enter Password" maxlength="20" required="">
-							</div>
-						</div>
-						<div class="form-group row mt-2">
-							<label for="inp_CustomerAddress" class="col-sm-2 col-form-label">Address</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inp_CustomerAddress" name="CustomerAddress" aria-describedby="inp_CustomerAddress_help" placeholder="Enter Address" maxlength="60" required="">
-							</div>
-						</div>
-						<div class="form-group row mt-2">
-							<label for="inp_CustomerCity" class="col-sm-2 col-form-label">City</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inp_CustomerCity" name="CustomerCity" aria-describedby="inp_CustomerCity_help" placeholder="Enter City" maxlength="30" required="">
-							</div>
-						</div>
-						<div class="form-group row mt-2">
-							<label for="inp_CustomerZip" class="col-sm-2 col-form-label">Postcode</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inp_CustomerZip" name="CustomerZip" aria-describedby="inp_CustomerZip_help" placeholder="Enter Postcode" maxlength="12" required="">
-							</div>
-						</div>
-						<div class="form-group row mt-2" dmx-show="scRegionsFiltered.data.qryRegions[0].RegionName">
-							<label for="sel_CustomerStateCustomerState" class="col-sm-2 col-form-label">Region</label>
-							<div class="col-sm-10">
-								<select id="sel_CustomerState" class="form-control" name="CustomerState">
-									<option value="">Select your region...</option>
-									<option value="" dmx-repeat:repeatregions="scRegionsFiltered.data.qryRegions" dmx-bind:value="RegionCode">{{RegionName}}</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row mt-2">
-							<label for="inp_CustomerCountry" class="col-sm-2 col-form-label">Country</label>
-							<div class="col-sm-10">
-								<select id="sel_CustomerCountry" class="form-control" name="CustomerCountry" required="">
-									<option value="">Select your country...</option>
-									<option dmx-repeat:repeatcountries="scCountries.data.qryCountries" dmx-bind:value="CountryISO">{{CountryName}}</option>
-								</select>
-							</div>
-						</div>
-					</form>
+					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="reset" class="btn btn-secondary btn-sm" data-dismiss="modal" dmx-on:click="mdlRegisterCustomer.frmRegisterCustomer.reset()">Close</button>
-					<button type="button" class="btn btn-primary bg-primary" dmx-on:click="mdlRegisterCustomer.frmRegisterCustomer.submit()">Register</button>
+					<button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>

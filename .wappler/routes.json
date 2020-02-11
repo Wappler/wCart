@@ -87,13 +87,6 @@
         },
         {
           "type": "page",
-          "id": "rteProducts",
-          "path": "/products",
-          "url": "_products.html",
-          "exact": ""
-        },
-        {
-          "type": "page",
           "id": "rteAdministrators",
           "path": "/administrators",
           "url": "_administrators.html",
@@ -117,6 +110,12 @@
           "id": "rteCategories",
           "path": "/categories",
           "url": "_categories.html",
+          "exact": ""
+        },
+        {
+          "type": "page",
+          "path": "/products",
+          "url": "_products.html",
           "exact": ""
         }
       ]

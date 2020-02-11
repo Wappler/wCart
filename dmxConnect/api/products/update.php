@@ -10,71 +10,55 @@ $app->define(<<<'JSON'
     "options": {}
   },
   "meta": {
-    "options": {},
+    "options": {
+      "linkedFile": "/admin/_products.html",
+      "linkedForm": "frmProductUpdate"
+    },
     "$_POST": [
       {
         "type": "text",
-        "name": "ProductCartDesc"
-      },
-      {
-        "type": "number",
-        "name": "ProductCategoryID"
+        "fieldName": "ProductID",
+        "name": "ProductID"
       },
       {
         "type": "text",
-        "name": "ProductImage"
-      },
-      {
-        "type": "number",
-        "name": "ProductLive"
+        "fieldName": "ProductSKU",
+        "name": "ProductSKU"
       },
       {
         "type": "text",
-        "name": "ProductLocation"
-      },
-      {
-        "type": "text",
-        "name": "ProductLongDesc"
-      },
-      {
-        "type": "text",
+        "fieldName": "ProductName",
+        "options": {
+          "rules": {}
+        },
         "name": "ProductName"
       },
       {
-        "type": "number",
+        "type": "text",
+        "fieldName": "ProductPrice",
+        "options": {
+          "rules": {}
+        },
         "name": "ProductPrice"
       },
       {
         "type": "text",
+        "fieldName": "ProductShortDesc",
         "name": "ProductShortDesc"
       },
       {
         "type": "text",
-        "name": "ProductSKU"
-      },
-      {
-        "type": "number",
-        "name": "ProductStock"
+        "fieldName": "ProductCategoryID",
+        "name": "ProductCategoryID"
       },
       {
         "type": "text",
-        "name": "ProductThumb"
-      },
-      {
-        "type": "number",
-        "name": "ProductUnlimited"
+        "fieldName": "ProductLongDesc",
+        "name": "ProductLongDesc"
       },
       {
         "type": "datetime",
         "name": "ProductUpdateDate"
-      },
-      {
-        "type": "number",
-        "name": "ProductWeight"
-      },
-      {
-        "type": "number",
-        "name": "ProductID"
       }
     ]
   },
@@ -92,39 +76,9 @@ $app->define(<<<'JSON'
             "values": [
               {
                 "table": "products",
-                "column": "ProductCartDesc",
+                "column": "ProductSKU",
                 "type": "text",
-                "value": "{{$_POST.ProductCartDesc}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductCategoryID",
-                "type": "number",
-                "value": "{{$_POST.ProductCategoryID}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductImage",
-                "type": "text",
-                "value": "{{$_POST.ProductImage}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductLive",
-                "type": "number",
-                "value": "{{$_POST.ProductLive}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductLocation",
-                "type": "text",
-                "value": "{{$_POST.ProductLocation}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductLongDesc",
-                "type": "text",
-                "value": "{{$_POST.ProductLongDesc}}"
+                "value": "{{$_POST.ProductSKU}}"
               },
               {
                 "table": "products",
@@ -146,39 +100,15 @@ $app->define(<<<'JSON'
               },
               {
                 "table": "products",
-                "column": "ProductSKU",
+                "column": "ProductLongDesc",
                 "type": "text",
-                "value": "{{$_POST.ProductSKU}}"
+                "value": "{{$_POST.ProductLongDesc}}"
               },
               {
                 "table": "products",
-                "column": "ProductStock",
+                "column": "ProductCategoryID",
                 "type": "number",
-                "value": "{{$_POST.ProductStock}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductThumb",
-                "type": "text",
-                "value": "{{$_POST.ProductThumb}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductUnlimited",
-                "type": "number",
-                "value": "{{$_POST.ProductUnlimited}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductUpdateDate",
-                "type": "datetime",
-                "value": "{{$_POST.ProductUpdateDate}}"
-              },
-              {
-                "table": "products",
-                "column": "ProductWeight",
-                "type": "number",
-                "value": "{{$_POST.ProductWeight}}"
+                "value": "{{$_POST.ProductCategoryID}}"
               }
             ],
             "table": "products",
@@ -197,87 +127,42 @@ $app->define(<<<'JSON'
                 }
               ]
             },
-            "query": "UPDATE products\nSET ProductCartDesc = :P1 /* {{$_POST.ProductCartDesc}} */, ProductCategoryID = :P2 /* {{$_POST.ProductCategoryID}} */, ProductImage = :P3 /* {{$_POST.ProductImage}} */, ProductLive = :P4 /* {{$_POST.ProductLive}} */, ProductLocation = :P5 /* {{$_POST.ProductLocation}} */, ProductLongDesc = :P6 /* {{$_POST.ProductLongDesc}} */, ProductName = :P7 /* {{$_POST.ProductName}} */, ProductPrice = :P8 /* {{$_POST.ProductPrice}} */, ProductShortDesc = :P9 /* {{$_POST.ProductShortDesc}} */, ProductSKU = :P10 /* {{$_POST.ProductSKU}} */, ProductStock = :P11 /* {{$_POST.ProductStock}} */, ProductThumb = :P12 /* {{$_POST.ProductThumb}} */, ProductUnlimited = :P13 /* {{$_POST.ProductUnlimited}} */, ProductUpdateDate = :P14 /* {{$_POST.ProductUpdateDate}} */, ProductWeight = :P15 /* {{$_POST.ProductWeight}} */\nWHERE ProductID = :P16 /* {{$_POST.ProductID}} */",
+            "query": "UPDATE products\nSET ProductSKU = :P1 /* {{$_POST.ProductSKU}} */, ProductName = :P2 /* {{$_POST.ProductName}} */, ProductPrice = :P3 /* {{$_POST.ProductPrice}} */, ProductShortDesc = :P4 /* {{$_POST.ProductShortDesc}} */, ProductLongDesc = :P5 /* {{$_POST.ProductLongDesc}} */, ProductCategoryID = :P6 /* {{$_POST.ProductCategoryID}} */\nWHERE ProductID = :P7 /* {{$_POST.ProductID}} */",
             "params": [
               {
                 "name": ":P1",
                 "type": "expression",
-                "value": "{{$_POST.ProductCartDesc}}"
+                "value": "{{$_POST.ProductSKU}}"
               },
               {
                 "name": ":P2",
                 "type": "expression",
-                "value": "{{$_POST.ProductCategoryID}}"
+                "value": "{{$_POST.ProductName}}"
               },
               {
                 "name": ":P3",
                 "type": "expression",
-                "value": "{{$_POST.ProductImage}}"
+                "value": "{{$_POST.ProductPrice}}"
               },
               {
                 "name": ":P4",
                 "type": "expression",
-                "value": "{{$_POST.ProductLive}}"
+                "value": "{{$_POST.ProductShortDesc}}"
               },
               {
                 "name": ":P5",
                 "type": "expression",
-                "value": "{{$_POST.ProductLocation}}"
+                "value": "{{$_POST.ProductLongDesc}}"
               },
               {
                 "name": ":P6",
                 "type": "expression",
-                "value": "{{$_POST.ProductLongDesc}}"
-              },
-              {
-                "name": ":P7",
-                "type": "expression",
-                "value": "{{$_POST.ProductName}}"
-              },
-              {
-                "name": ":P8",
-                "type": "expression",
-                "value": "{{$_POST.ProductPrice}}"
-              },
-              {
-                "name": ":P9",
-                "type": "expression",
-                "value": "{{$_POST.ProductShortDesc}}"
-              },
-              {
-                "name": ":P10",
-                "type": "expression",
-                "value": "{{$_POST.ProductSKU}}"
-              },
-              {
-                "name": ":P11",
-                "type": "expression",
-                "value": "{{$_POST.ProductStock}}"
-              },
-              {
-                "name": ":P12",
-                "type": "expression",
-                "value": "{{$_POST.ProductThumb}}"
-              },
-              {
-                "name": ":P13",
-                "type": "expression",
-                "value": "{{$_POST.ProductUnlimited}}"
-              },
-              {
-                "name": ":P14",
-                "type": "expression",
-                "value": "{{$_POST.ProductUpdateDate}}"
-              },
-              {
-                "name": ":P15",
-                "type": "expression",
-                "value": "{{$_POST.ProductWeight}}"
+                "value": "{{$_POST.ProductCategoryID}}"
               },
               {
                 "operator": "equal",
                 "type": "expression",
-                "name": ":P16",
+                "name": ":P7",
                 "value": "{{$_POST.ProductID}}"
               }
             ]

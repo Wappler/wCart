@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
 	<meta name="ac:route" content="/admin/">
@@ -20,7 +20,7 @@
 	<link rel="stylesheet" href="../dmxAppConnect/dmxValidator/dmxValidator.css">
 
 	<script src="../dmxAppConnect/dmxAppConnect.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
 	<script src="../dmxAppConnect/dmxRouting/dmxRouting.js" defer=""></script>
 	<script src="../dmxAppConnect/dmxBootstrap4Navigation/dmxBootstrap4Navigation.js" defer=""></script>
 	<script src="../dmxAppConnect/dmxBrowser/dmxBrowser.js" defer=""></script>
@@ -30,8 +30,8 @@
 	<script src="../dmxAppConnect/dmxBootstrap4Modal/dmxBootstrap4Modal.js" defer=""></script>
 	<script src="../dmxAppConnect/dmxDropzone/dmxDropzone.js" defer=""></script>
 	<script src="../dmxAppConnect/dmxValidator/dmxValidator.js" defer=""></script>
-	<script src="../dmxAppConnect/dmxMediumEditor/dmxMediumEditor.js" defer=""></script>
 	<script src="../dmxAppConnect/dmxMediumEditor/medium-editor.js" defer=""></script>
+	<script src="../dmxAppConnect/dmxMediumEditor/dmxMediumEditor.js" defer=""></script>
 </head>
 
 <body id="admin" is="dmx-app">
@@ -41,15 +41,18 @@
 	<dmx-serverconnect id="scOrders" url="../dmxConnect/api/orders/list_admin.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scInvoice" url="../dmxConnect/api/orderdetails/invoice_admin.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scProducts" url="../dmxConnect/api/products/list.php"></dmx-serverconnect>
+	<dmx-serverconnect id="scProductImages" url="../dmxConnect/api/product_images/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCategories" url="../dmxConnect/api/categories/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scMetatags" url="../dmxConnect/api/metatags/list.php" dmx-param:sort=""></dmx-serverconnect>
 	<dmx-data-view id="dvMetatags" dmx-bind:data="scMetatags.data.qryMetaTags" filter="!metaURL.startsWith(&quot;/products/&quot;)" sortOn="metaPage"></dmx-data-view>
+	<dmx-data-view id="dvProductImages" dmx-bind:data="scProductImages.data.qryImages" filter="(ProductImageProductID == ddProduct.data.ProductID)"></dmx-data-view>
 	<dmx-data-detail id="ddAdministrator" dmx-bind:data="scAdministrators.data.qryAdministrators" key="UserID"></dmx-data-detail>
 	<dmx-data-detail id="ddCustomer" dmx-bind:data="scCustomers.data.qryCustomers" key="CustomerID">
 
 	</dmx-data-detail>
 	<dmx-data-detail id="ddInvoice" dmx-bind:data="scInvoice.data.rptOrders" key="OrderID"></dmx-data-detail>
-	<dmx-data-detail id="ddProduct" dmx-bind:data="scProducts.data.qryProducts" key="ProductID"></dmx-data-detail>
+	<dmx-data-detail id="ddProduct" dmx-bind:data="scProducts.data.rptProducts" key="ProductID"></dmx-data-detail>
+	<dmx-data-detail id="ddProductImage" dmx-bind:data="dvProductImages.data" key="ProductImageID"></dmx-data-detail>
 	<dmx-data-detail id="ddCategory" dmx-bind:data="scCategories.data.qryCategories" key="CategoryID"></dmx-data-detail>
 	<dmx-data-detail id="ddMetatag" dmx-bind:data="dvMetatags.data" key="metaID"></dmx-data-detail>
 	<div is="dmx-browser" id="browser"></div>
@@ -127,11 +130,11 @@
 						<div is="dmx-route" path="/" url="_dashboard.html" id="rteDashboard" exact></div>
 						<div is="dmx-route" path="/orders" url="_orders.html" id="rteOrders"></div>
 						<div is="dmx-route" path="/customers" url="_customers.html" id="rteCustomers" exact></div>
-						<div is="dmx-route" path="/products" url="_products.html" id="rteProducts" exact></div>
 						<div is="dmx-route" path="/administrators" url="_administrators.html" id="rteAdministrators" exact></div>
 						<div is="dmx-route" path="/seo" url="_seo.html" id="rteMetatags"></div>
 						<div is="dmx-route" path="/company" url="_company.html" id="rteCompany" exact></div>
 						<div is="dmx-route" path="/categories" url="_categories.html" id="rteCategories" exact></div>
+						<div is="dmx-route" path="/products" url="_products.html" exact id="rteProducts"></div>
 					</div>
 				</div>
 			</div>
@@ -139,6 +142,23 @@
 	</div>
 	<script src="../bootstrap/4/js/bootstrap.min.js"></script>
 	<script src="../bootstrap/4/js/popper.min.js"></script>
+	<!--sortableScript-->
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$( "#record" ).sortable({cursor: "move"},{revert:true},{scroll:true},{scrollSensitivity: 10},{tolerance: "pointer"});
+			$( "#record" ).disableSelection();
+			$( "#record" ).sortable({
+				update: function( event, ui ) {
+					var listItems = $('#record div');
+					listItems.each(function(idx) {
+						$(this).find('.cos').val(idx+1);
+					});
+				}
+			});
+		});
+	</script>
+	<!--//sortableScript-->
 </body>
 
 </html>

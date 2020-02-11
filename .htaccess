@@ -13,7 +13,7 @@ RewriteRule ^/?(?:/)?$ index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?about(?:/)?$ index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?products(?:/)?$ index.html [QSA,NC,L]
+RewriteRule ^/?products/([^/]+?)(?:/)?$ index.html?category=$1 [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?contact(?:/)?$ index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -29,8 +29,6 @@ RewriteRule ^/?admin/(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/orders(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/products(?:/)?$ admin/index.html [QSA,NC,L]
-RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/customers(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/administrators(?:/)?$ admin/index.html [QSA,NC,L]
@@ -38,6 +36,10 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/seo(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/company(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/?admin/categories(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/?admin/products(?:/)?$ admin/index.html [QSA,NC,L]
 ## End Wappler routing
 
 ## Wappler routing
@@ -72,8 +74,6 @@ RewriteRule ^/?admin/orders(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/customers(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/products(?:/)?$ admin/index.html [QSA,NC,L]
-RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/administrators(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/seo(?:/)?$ admin/index.html [QSA,NC,L]
@@ -81,4 +81,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/company(?:/)?$ admin/index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?admin/categories(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/?admin/products(?:/)?$ admin/index.html [QSA,NC,L]
 ## End Wappler routing
+

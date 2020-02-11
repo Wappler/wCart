@@ -7,10 +7,10 @@
 	</div>
 	<div class="row">
 		<div class="col">
-			<button class="btn btn-primary" dmx-on:click="mdlAdministratorInsert.show()">Add Administrator</button>
+			<button class="btn btn-outline-primary" dmx-on:click="mdlAdministratorInsert.show()">Add Administrator</button>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row mt-4">
 		<div class="col-5">
 			<div class="table-responsive">
 				<table class="table table-hover">
@@ -31,7 +31,7 @@
 		</div>
 		<div class="col-6 offset-1">
 			<h5 class="text-danger" dmx-hide="ddAdministrator.data">Choose an Administrator to edit the details</h5>
-			<p dmx-show="ddAdministrator.data" class="text-info">To change the Password, delete the Administrator and create a new one.</p>
+			<p dmx-show="ddAdministrator.data">To change the Password, delete the Administrator and create a new one. <span class="text-danger">Leave at least one Administrator, otherwise access to this section will be denied</span>.</p>
 			<form is="dmx-serverconnect-form" id="frmAdministratorUpdate" method="post" action="../dmxConnect/api/administrators/update.php" dmx-generator="bootstrap4" dmx-form-type="horizontal" dmx-populate="ddAdministrator.data"
 				dmx-show="ddAdministrator.data" dmx-on:success="scAdministrators.load();notifies.success('Updated')">
 				<input type="hidden" name="UserID" id="inp_UserID" dmx-bind:value="ddAdministrator.data.UserID">
@@ -54,10 +54,9 @@
 					</div>
 				</div>
 				<div class="form-group row mt-2">
-					<div class="col-sm-2">&nbsp;</div>
-					<div class="col-sm-9">
-						<button class="btn btn-danger" dmx-on:click="mdlAdministratorDelete.show()">Delete</button>
-						<button type="submit" class="btn btn-primary" dmx-bind:value="ddAdministrator.data.Save">Update</button>
+					<div class="col-sm-9 offset-2">
+						<button class="btn btn-outline-danger" dmx-on:click="mdlAdministratorDelete.show()">Delete</button>
+						<button type="submit" class="btn btn-outline-primary" dmx-bind:value="ddAdministrator.data.Save">Update</button>
 					</div>
 				</div>
 			</form>
