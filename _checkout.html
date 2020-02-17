@@ -1,15 +1,15 @@
 <!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" components="{&quot;dmxFormatter&quot;:{},&quot;dmxValidator&quot;:{},&quot;dmxBootstrap4Alert&quot;:{}}" id="checkout" -->
 <section id="checkout">
+	<div dmx-repeat:rptcheckoutitems="dsCart.data">
+		<div dmx-repeat:rptdatabaseitems="scProducts.data.rptProducts.where(`ProductID`, productid, &quot;==&quot;)">
+			<input type="hidden" id="checkoutcheckname" dmx-bind:value="productname == ProductName ? varCheckoutCheck.value : varCheckoutCheck.setValue(0)">
+			<input type="hidden" id="checkoutcheckprice" dmx-bind:value="productprice == ProductPrice ? varCheckoutCheck.value : varCheckoutCheck.setValue(0)">
+		</div>
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
 				<h1 class="mt-3">Checkout</h1>
-			</div>
-		</div>
-		<div dmx-repeat:rptcheckoutitems="dsCart.data">
-			<div dmx-repeat:rptdatabaseitems="scProducts.data.rptProducts.where(`ProductID`, productid, &quot;==&quot;)">
-				<input type="hidden" id="checkoutcheckname" dmx-bind:value="productname == ProductName ? varCheckoutCheck.value : varCheckoutCheck.setValue(0)">
-				<input type="hidden" id="checkoutcheckprice" dmx-bind:value="productprice == ProductPrice ? varCheckoutCheck.value : varCheckoutCheck.setValue(0)">
 			</div>
 		</div>
 		<div class="row" dmx-hide="dsCart.data.hasItems()">
@@ -22,7 +22,7 @@
 		</div>
 		<div class="row" dmx-show="varCheckoutCheck.value == 0">
 			<div class="col">
-				<div class="alert alert-danger" id="alert1" is="dmx-bs4-alert" role="alert" type="danger">
+				<div class="alert alert-danger" role="alert">
 					<h3>Oops, something has gone wrong!</h3>
 					<p>We apologise for the inconvenience, please contact us to explain the actions leading up to this error message.</p>
 				</div>
