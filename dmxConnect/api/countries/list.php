@@ -43,17 +43,18 @@ $app->define(<<<'JSON'
               "name": "countries"
             },
             "joins": [],
-            "query": "SELECT *\nFROM countries\nORDER BY CountryName ASC",
-            "params": [],
             "orders": [
               {
                 "table": "countries",
                 "column": "CountryName",
                 "direction": "ASC"
               }
-            ]
+            ],
+            "query": "SELECT *\nFROM countries\nORDER BY CountryName ASC",
+            "params": []
           }
         },
+        "output": true,
         "meta": [
           {
             "name": "CountryID",
@@ -76,8 +77,7 @@ $app->define(<<<'JSON'
             "type": "number"
           }
         ],
-        "outputType": "array",
-        "output": true
+        "outputType": "array"
       }
     ]
   }

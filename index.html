@@ -22,6 +22,9 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="dmxAppConnect/dmxValidator/dmxValidator.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous">
+	<link rel="stylesheet" href="dmxAppConnect/dmxNotifications/dmxNotifications.css">
+	<link rel="stylesheet" href="dmxAppConnect/dmxBootstrap4TableGenerator/dmxBootstrap4TableGenerator.css">
+	<link rel="stylesheet" href="dmxAppConnect/dmxAnimateCSS/animate.min.css">
 
 	<script src="dmxAppConnect/dmxAppConnect.js"></script>
 	<script src="js/jquery-3.3.1.slim.min.js"></script>
@@ -34,14 +37,15 @@
 	<script src="dmxAppConnect/dmxRouting/dmxRouting.js" defer=""></script>
 	<script src="dmxAppConnect/dmxSmoothScroll/dmxSmoothScroll.js" defer=""></script>
 	<script src="dmxAppConnect/dmxBootstrap4Modal/dmxBootstrap4Modal.js" defer=""></script>
-	<link rel="stylesheet" href="dmxAppConnect/dmxNotifications/dmxNotifications.css">
 	<script src="dmxAppConnect/dmxNotifications/dmxNotifications.js" defer=""></script>
-	<link rel="stylesheet" href="dmxAppConnect/dmxBootstrap4TableGenerator/dmxBootstrap4TableGenerator.css">
-	<link rel="stylesheet" href="dmxAppConnect/dmxAnimateCSS/animate.min.css">
 	<script src="dmxAppConnect/dmxAnimateCSS/dmxAnimateCSS.js" defer=""></script>
+	<script src="dmxAppConnect/dmxDatastore/dmxDatastore.js" defer=""></script>
+	<script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+	<script src="dmxAppConnect/dmxBootstrap4Alert/dmxBootstrap4Alert.js" defer=""></script>
 </head>
 
 <body id="index">
+	<dmx-datastore id="dsCart"></dmx-datastore>
 	<dmx-serverconnect id="scLoggedinCustomer" url="dmxConnect/api/security/customerDetails.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scLogoutCustomer" url="dmxConnect/api/security/customerLogout.php" noload="noload" dmx-on:success="notifies.success('You have successfully logged out');varLoggedin.setValue(0)"></dmx-serverconnect>
 	<dmx-serverconnect id="scCompany" url="dmxConnect/api/company/list.php"></dmx-serverconnect>
@@ -51,20 +55,19 @@
 	<dmx-serverconnect id="scCountries" url="dmxConnect/api/countries/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scRegionsFiltered" url="dmxConnect/api/regionsFiltered/list.php" dmx-param:filter="mdlRegisterCustomer.frmRegisterCustomer.sel_CustomerCountry.value"></dmx-serverconnect>
 	<dmx-serverconnect id="scMetaTags" url="dmxConnect/api/metatags/list.php"></dmx-serverconnect>
+
 	<dmx-data-view id="dvOrderDetail" dmx-bind:data="scOrders.data.rptOrderDetail[0].qryOrderDetail" filter="(OrderID ==params.id)"></dmx-data-view>
 	<dmx-data-view id="dvOrders" dmx-bind:data="scOrders.data.rptOrderDetail" filter="(scLoggedinCustomer.data.qryCustomer.CustomerID == OrderCustomerID)"></dmx-data-view>
 	<dmx-data-view id="dvProducts" dmx-bind:data="scProducts.data.rptProducts" filter="(routeproducts.params.category == &quot;all&quot;) ? ProductLive : ((CategoryURL == routeproducts.params.category) &amp;&amp; ProductLive))"></dmx-data-view>
 	<dmx-data-view id="dvMetaTags" dmx-bind:data="scMetaTags.data.qryMetaTags" filter="(metaURL == browser.location.pathname)"></dmx-data-view>
 	<dmx-data-view id="dvCountry" dmx-bind:data="scCountries.data.qryCountries" filter="(CountryISO == scLoggedinCustomer.data.qryCustomer.CustomerCountry)"></dmx-data-view>
-	<dmx-local-manager id="localStorage"></dmx-local-manager>
-	<dmx-array id="arrCart" dmx-on:updated="localStorage.set('cart',{cartitems: items})" dmx-bind:items="localStorage.data.cart.cartitems"></dmx-array>
-	<dmx-array id="arrSubtotal" dmx-bind:items="localStorage.data.subtotal" dmx-on:updated="localStorage.set('subtotal',items,{})"></dmx-array>
-	<dmx-array id="arrPID" dmx-bind:items="localStorage.data.pid" dmx-on:updated="localStorage.set('pid',items,{})"></dmx-array>
+
 	<div is="dmx-browser" id="browser"></div>
 	<dmx-datetime id="varDate" interval="days"></dmx-datetime>
 	<dmx-smooth-scroll id="scroll"></dmx-smooth-scroll>
 	<dmx-notifications id="notifies"></dmx-notifications>
 	<dmx-value id="varLoggedin" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerID"></dmx-value>
+	<dmx-value id="varCheckoutCheck" dmx-bind:value="1"></dmx-value>
 
 	<header class="bg-dark fixed-top shadow">
 		<div class="container">
@@ -78,7 +81,7 @@
 						</button>
 						<div class="collapse navbar-collapse justify-content-end" id="navbar1_collapse">
 							<div class="navbar-nav">
-								<a class="nav-item nav-link text-warning" href="./cart" dmx-show="arrCart.count"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp;({{arrSubtotal.items.sum().formatCurrency("$", ".", ",", "2")}})</a>
+								<button class="btn text-warning" dmx-on:click="mdlShoppingCart.show()" dmx-show="dsCart.data.hasItems()"><i class="fas fa-shopping-cart fa-lg"></i> {{dsCart.data.sum(`quantity`)}} </button>
 								<a class="nav-item nav-link active" href="./" dmx-on:click="scroll.goto('#index')">Home</a>
 								<a class="nav-item nav-link" href="./about" dmx-on:click="scroll.goto('#index')">About</a>
 								<div class="dropdown">
@@ -105,7 +108,6 @@
 		<div is="dmx-route" path="/about" url="_about.html" id="routeabout" exact></div>
 		<div is="dmx-route" path="/products/:category" url="_products.html" id="routeproducts" exact></div>
 		<div is="dmx-route" path="/contact" url="_contact.html" id="routecontact" exact></div>
-		<div is="dmx-route" path="/cart" url="_cart.html" id="routecart" exact></div>
 		<div is="dmx-route" path="/checkout" url="_checkout.html" id="routecheckout"></div>
 		<div is="dmx-route" path="/user-home" url="_user-home.html" id="routeuserhome"></div>
 	</main>
@@ -123,6 +125,63 @@
 			</div>
 		</div>
 	</footer>
+	<!-- Modal for Shopping Cart -->
+	<div class="modal fade" id="mdlShoppingCart" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary text-light">
+					<h5 class="modal-title"><i class="fas fa-shopping-cart"></i> Shopping Cart</h5>
+					<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h6 dmx-hide="dsCart.data.hasItems()">The Shopping Cart is empty!
+					</h6>
+					<table class="table" dmx-show="dsCart.data.hasItems()">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th class="text-center">Price</th>
+								<th class="text-center">Quantity</th>
+								<th class="text-center">Remove</th>
+								<th class="text-right">Amount</th>
+							</tr>
+						</thead>
+						<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="dsCart.data" id="rptCartItems" dmx-show="dsCart.data.hasItems()">
+							<tr>
+								<td dmx-text="productname"></td>
+								<td class="text-center" dmx-text="productprice.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)"></td>
+								<td class="text-center">
+									<button class="btn btn-sm text-primary" style="box-shadow: 0 0 0 0; margin-top: -5px;" dmx-on:click="dsCart.update({$id: $id},{quantity: quantity - 1})" dmx-bind:disabled="quantity == 1"><i
+											class="fas fa-minus fa-xs"></i></button>
+									&nbsp;{{quantity}}&nbsp;
+									<button class="btn btn-sm text-primary" style="box-shadow: 0 0 0 0; margin-top: -5px;" dmx-on:click="dsCart.update({$id: $id},{quantity: quantity + 1})"><i class="fas fa-plus fa-xs"></i></button>
+								</td>
+								<td class="text-center">
+									<button class="btn btn-sm text-danger" style="margin-top: -5px;" dmx-on:click="dsCart.delete({$id: $id})" dmx-show="(dsCart.data.count() > 1)"><i class="far fa-trash-alt"></i></button>
+									<button class="btn btn-sm text-danger" style="margin-top: -5px;" dmx-on:click="dsCart.clear();mdlShoppingCart.hide()" dmx-hide="(dsCart.data.count() > 1)"><i class="far fa-trash-alt"></i></button>
+								</td>
+								<td dmx-text="(productprice * quantity).formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)" class="text-right">
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td><button class="btn btn-outline-danger btn-sm" dmx-on:click="dsCart.clear();mdlShoppingCart.hide()" dmx-show="(dsCart.data.count() > 1)"><i class="far fa-trash-alt"></i> Empty Cart</button></td>
+								<th colspan="3" class="text-right">Total Amount</th>
+								<td class="text-right" dmx-text="(dsCart.data.sum(`productprice * quantity`)).formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)"></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="./products/all" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-arrow-alt-circle-left fa-lg"></i> Continue Shopping</a>
+					<a href="./checkout" class="btn btn-primary" dmx-show="dsCart.data.hasItems()" dmx-on:click="mdlShoppingCart.hide()">Checkout <i class="fas fa-arrow-alt-circle-right fa-lg"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Modal Register Customer -->
 	<div class="modal fade" id="mdlRegisterCustomer" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-on:hide-bs-modal="frmLoginCustomer.reset();frmRegisterCustomer.reset()">
 		<div class="modal-dialog modal-dialog-scrollable" role="document">

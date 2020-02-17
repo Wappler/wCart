@@ -1,4 +1,4 @@
-<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" components="{&quot;dmxFormatter&quot;:{}}" -->
+<!-- Wappler include head-page="index.html" appconnect="local" is="dmx-app" bootstrap4="local" fontawesome_5="cdn" jquery_slim_33="local" components="{&quot;dmxFormatter&quot;:{},&quot;dmxValidator&quot;:{},&quot;dmxBootstrap4Alert&quot;:{}}" id="checkout" -->
 <section id="checkout">
 	<div class="container">
 		<div class="row">
@@ -6,27 +6,59 @@
 				<h1 class="mt-3">Checkout</h1>
 			</div>
 		</div>
-		<div class="row" dmx-hide="arrCart.count">
+		<div dmx-repeat:rptcheckoutitems="dsCart.data">
+			<div dmx-repeat:rptdatabaseitems="scProducts.data.rptProducts.where(`ProductID`, productid, &quot;==&quot;)">
+				<input type="hidden" id="checkoutcheckname" dmx-bind:value="productname == ProductName ? varCheckoutCheck.value : varCheckoutCheck.setValue(0)">
+				<input type="hidden" id="checkoutcheckprice" dmx-bind:value="productprice == ProductPrice ? varCheckoutCheck.value : varCheckoutCheck.setValue(0)">
+			</div>
+		</div>
+		<div class="row" dmx-hide="dsCart.data.hasItems()">
 			<div class="col">
 				<h5 class="text-danger">Your cart is empty!</h5>
 			</div>
 			<div class="col text-right">
-				<button class="btn btn-primary" dmx-on:click="browser.goto('./products')"><i class="fas fa-arrow-alt-circle-left fa-lg"></i>&nbsp; Continue Shopping</button>
+				<button class="btn btn-primary" dmx-on:click="browser.goto('./products/all')"><i class="fas fa-arrow-alt-circle-left fa-lg"></i>&nbsp; Continue Shopping</button>
 			</div>
 		</div>
-		<div class="row" dmx-show="arrCart.count">
+		<div class="row" dmx-show="varCheckoutCheck.value == 0">
+			<div class="col">
+				<div class="alert alert-danger" id="alert1" is="dmx-bs4-alert" role="alert" type="danger">
+					<h3>Oops, something has gone wrong!</h3>
+					<p>We apologise for the inconvenience, please contact us to explain the actions leading up to this error message.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row" dmx-show="(dsCart.data.hasItems() &amp;&amp; varCheckoutCheck.value == 1)">
 			<div class="col-12 undefined-NaN col-md-6 order-md-2">
 				<div class="row">
 					<div class="col-12">
 						<h5>Order Summary</h5>
 						<div class="table-responsive">
-							<table class="table">
-								<tbody>
+							<table id="tblCheckout" class="table" dmx-show="dsCart.data.hasItems()">
+								<thead>
 									<tr>
-										<th scope="row">To be Paid</th>
-										<td class="text-right" dmx-text="arrSubtotal.items.sum().formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)"></td>
+										<th>Product </th>
+										<th class="text-center">Price</th>
+										<th class="text-center">Quantity</th>
+										<th class="text-right">Amount</th>
+									</tr>
+								</thead>
+								<tbody is="dmx-repeat" dmx-generator="bs4table" dmx-bind:repeat="dsCart.data" id="rptCheckoutCartItems" dmx-show="dsCart.data.hasItems()">
+									<tr>
+										<td dmx-text="productname"></td>
+										<td class="text-center" dmx-text="productprice.formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)"></td>
+										<td class="text-center">{{quantity}}</td>
+										<td class="text-right">
+											{{(productprice * quantity).formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)}}
+										</td>
 									</tr>
 								</tbody>
+								<tfoot>
+									<tr>
+										<th colspan="3" class="text-right">Total Amount </th>
+										<td class="text-right">{{(dsCart.data.sum(`productprice * quantity`)).formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)}} </td>
+									</tr>
+								</tfoot>
 							</table>
 						</div>
 					</div>
@@ -55,17 +87,17 @@
 			</div>
 			<div class="col-md-6">
 				<button class="btn btn-primary btn-block" dmx-on:click="mdlRegisterCustomer.show()" dmx-hide="(varLoggedin.value >= 1)">Add User Detail</button>
-				<form id="frmPay" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/orders/checkout.php" dmx-on:success="arrCart.empty();arrSubtotal.empty();arrPID.empty();browser.goto('invoice/' + frmPay.data.lastinvoice)">
+				<form id="frmPay" method="post" is="dmx-serverconnect-form" action="dmxConnect/api/orders/checkout.php" dmx-on:success="dsCart.clear();browser.goto('invoice/' + frmPay.data.lastinvoice)">
 					<input id="inp_customerid" name="customerid" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerID">
 					<input id="inp_customername" name="customername" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerFirstName + ' ' +  scLoggedinCustomer.data.qryCustomer.CustomerLastName">
 					<input id="inp_customeremail" name="customeremail" type="hidden" dmx-bind:value="scLoggedinCustomer.data.qryCustomer.CustomerEmail">
-					<input id="inp_subtotal" name="subtotal" type="hidden" dmx-bind:value="arrSubtotal.items.sum()">
-					<div id="record" is="dmx-repeat" dmx-bind:repeat="localStorage.data.cart.cartitems">
-						<input id="inp_productname" name="productname" type="hidden" dmx-bind:value="product" dmx-bind:name="record[{{$index}}][productname]">
-						<input id="inp_price" name="price" type="hidden" dmx-bind:value="price" dmx-bind:name="record[{{$index}}][price]">
-						<input id="inp_qty" name="qty" type="hidden" dmx-bind:value="qty" dmx-bind:name="record[{{$index}}][qty]">
+					<input id="inp_subtotal" name="subtotal" type="hidden" dmx-bind:value="dsCart.data.sum(`productprice * quantity`))">
+					<div id="record" is="dmx-repeat" dmx-bind:repeat="dsCart.data">
+						<input id="inp_productname" name="productname" type="hidden" dmx-bind:value="productname" dmx-bind:name="record[{{$index}}][productname]">
+						<input id="inp_price" name="price" type="hidden" dmx-bind:value="productprice" dmx-bind:name="record[{{$index}}][price]">
+						<input id="inp_qty" name="qty" type="hidden" dmx-bind:value="quantity" dmx-bind:name="record[{{$index}}][qty]">
 					</div>
-					<button class="btn btn-primary btn-block" dmx-show="(varLoggedin.value >= 1)" type="submit">Pay {{arrSubtotal.items.sum().formatCurrency("$", ".", ",", "2")}}</button>
+					<button class="btn btn-primary btn-block" dmx-show="(varLoggedin.value >= 1)" type="submit">Pay {{(dsCart.data.sum(`productprice * quantity`)).formatCurrency(&quot;$&quot;, &quot;.&quot;, &quot;,&quot;, &quot;2&quot;)}}</button>
 				</form>
 			</div>
 		</div>

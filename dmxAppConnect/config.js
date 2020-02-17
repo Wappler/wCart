@@ -99,6 +99,44 @@ dmx.config({
         {
           "name": "ProductLocation",
           "type": "text"
+        },
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "qryImages",
+          "type": "array",
+          "sub": [
+            {
+              "name": "ProductImageID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageProductID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageFile",
+              "type": "text"
+            },
+            {
+              "name": "ProductImageDisplayOrder",
+              "type": "number"
+            }
+          ]
         }
       ],
       "outputType": "array"
@@ -222,6 +260,18 @@ dmx.config({
     },
     "repeatcountries": {
       "meta": [
+        {
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
+        },
         {
           "name": "CountryID",
           "type": "number"
@@ -512,38 +562,368 @@ dmx.config({
     },
     "dsCart": [
       {
-        "type": "object",
-        "name": "cart",
-        "sub": [
-          {
-            "type": "key_array",
-            "name": "cartitems",
-            "sub": [
-              {
-                "type": "text",
-                "name": "product"
-              },
-              {
-                "type": "number",
-                "name": "price"
-              },
-              {
-                "type": "number",
-                "name": "qty"
-              }
-            ]
-          }
-        ]
+        "type": "number",
+        "name": "productid"
       },
       {
-        "type": "object",
-        "name": "subtotal"
+        "type": "text",
+        "name": "productname"
       },
       {
-        "type": "object",
-        "name": "pid"
+        "type": "number",
+        "name": "productprice"
+      },
+      {
+        "type": "number",
+        "name": "quantity"
       }
-    ]
+    ],
+    "varProductID": {
+      "meta": [
+        {
+          "name": "$value",
+          "type": "text"
+        }
+      ],
+      "outputType": "array"
+    },
+    "repeat2": {
+      "meta": [
+        {
+          "name": "ProductID",
+          "type": "number"
+        },
+        {
+          "name": "ProductSKU",
+          "type": "text"
+        },
+        {
+          "name": "ProductName",
+          "type": "text"
+        },
+        {
+          "name": "ProductPrice",
+          "type": "number"
+        },
+        {
+          "name": "ProductWeight",
+          "type": "number"
+        },
+        {
+          "name": "ProductCartDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductShortDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductLongDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductThumb",
+          "type": "text"
+        },
+        {
+          "name": "ProductImage",
+          "type": "text"
+        },
+        {
+          "name": "ProductCategoryID",
+          "type": "number"
+        },
+        {
+          "name": "ProductUpdateDate",
+          "type": "datetime"
+        },
+        {
+          "name": "ProductStock",
+          "type": "number"
+        },
+        {
+          "name": "ProductLive",
+          "type": "number"
+        },
+        {
+          "name": "ProductUnlimited",
+          "type": "number"
+        },
+        {
+          "name": "ProductLocation",
+          "type": "text"
+        },
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "qryImages",
+          "type": "array",
+          "sub": [
+            {
+              "name": "ProductImageID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageProductID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageFile",
+              "type": "text"
+            },
+            {
+              "name": "ProductImageDisplayOrder",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "outputType": "object"
+    },
+    "rptProducts": {
+      "meta": [
+        {
+          "name": "ProductID",
+          "type": "number"
+        },
+        {
+          "name": "ProductSKU",
+          "type": "text"
+        },
+        {
+          "name": "ProductName",
+          "type": "text"
+        },
+        {
+          "name": "ProductPrice",
+          "type": "number"
+        },
+        {
+          "name": "ProductWeight",
+          "type": "number"
+        },
+        {
+          "name": "ProductCartDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductShortDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductLongDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductThumb",
+          "type": "text"
+        },
+        {
+          "name": "ProductImage",
+          "type": "text"
+        },
+        {
+          "name": "ProductCategoryID",
+          "type": "number"
+        },
+        {
+          "name": "ProductUpdateDate",
+          "type": "datetime"
+        },
+        {
+          "name": "ProductStock",
+          "type": "number"
+        },
+        {
+          "name": "ProductLive",
+          "type": "number"
+        },
+        {
+          "name": "ProductUnlimited",
+          "type": "number"
+        },
+        {
+          "name": "ProductLocation",
+          "type": "text"
+        },
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "qryImages",
+          "type": "array",
+          "sub": [
+            {
+              "name": "ProductImageID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageProductID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageFile",
+              "type": "text"
+            },
+            {
+              "name": "ProductImageDisplayOrder",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "outputType": "array"
+    },
+    "rptproducts": {
+      "meta": [
+        {
+          "name": "$index",
+          "type": "number"
+        },
+        {
+          "name": "$key",
+          "type": "text"
+        },
+        {
+          "name": "$value",
+          "type": "object"
+        },
+        {
+          "name": "ProductID",
+          "type": "number"
+        },
+        {
+          "name": "ProductSKU",
+          "type": "text"
+        },
+        {
+          "name": "ProductName",
+          "type": "text"
+        },
+        {
+          "name": "ProductPrice",
+          "type": "number"
+        },
+        {
+          "name": "ProductWeight",
+          "type": "number"
+        },
+        {
+          "name": "ProductCartDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductShortDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductLongDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductThumb",
+          "type": "text"
+        },
+        {
+          "name": "ProductImage",
+          "type": "text"
+        },
+        {
+          "name": "ProductCategoryID",
+          "type": "number"
+        },
+        {
+          "name": "ProductUpdateDate",
+          "type": "datetime"
+        },
+        {
+          "name": "ProductStock",
+          "type": "number"
+        },
+        {
+          "name": "ProductLive",
+          "type": "number"
+        },
+        {
+          "name": "ProductUnlimited",
+          "type": "number"
+        },
+        {
+          "name": "ProductLocation",
+          "type": "text"
+        },
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "qryImages",
+          "type": "array",
+          "sub": [
+            {
+              "name": "ProductImageID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageProductID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageFile",
+              "type": "text"
+            },
+            {
+              "name": "ProductImageDisplayOrder",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "outputType": "array"
+    },
+    "varTotalAmount": {
+      "meta": null,
+      "outputType": "object"
+    }
   },
   "pgMetatags": {
     "ddMetatag": {
@@ -1467,6 +1847,379 @@ dmx.config({
         {
           "name": "ProductImageDisplayOrder",
           "type": "number"
+        }
+      ],
+      "outputType": "array"
+    }
+  },
+  "checkout": {
+    "rptproducts": {
+      "meta": [
+        {
+          "name": "ProductID",
+          "type": "number"
+        },
+        {
+          "name": "ProductSKU",
+          "type": "text"
+        },
+        {
+          "name": "ProductName",
+          "type": "text"
+        },
+        {
+          "name": "ProductPrice",
+          "type": "number"
+        },
+        {
+          "name": "ProductWeight",
+          "type": "number"
+        },
+        {
+          "name": "ProductCartDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductShortDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductLongDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductThumb",
+          "type": "text"
+        },
+        {
+          "name": "ProductImage",
+          "type": "text"
+        },
+        {
+          "name": "ProductCategoryID",
+          "type": "number"
+        },
+        {
+          "name": "ProductUpdateDate",
+          "type": "datetime"
+        },
+        {
+          "name": "ProductStock",
+          "type": "number"
+        },
+        {
+          "name": "ProductLive",
+          "type": "number"
+        },
+        {
+          "name": "ProductUnlimited",
+          "type": "number"
+        },
+        {
+          "name": "ProductLocation",
+          "type": "text"
+        },
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "qryImages",
+          "type": "array",
+          "sub": [
+            {
+              "name": "ProductImageID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageProductID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageFile",
+              "type": "text"
+            },
+            {
+              "name": "ProductImageDisplayOrder",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "outputType": "array"
+    },
+    "rptProducts": {
+      "meta": [
+        {
+          "name": "ProductID",
+          "type": "number"
+        },
+        {
+          "name": "ProductSKU",
+          "type": "text"
+        },
+        {
+          "name": "ProductName",
+          "type": "text"
+        },
+        {
+          "name": "ProductPrice",
+          "type": "number"
+        },
+        {
+          "name": "ProductWeight",
+          "type": "number"
+        },
+        {
+          "name": "ProductCartDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductShortDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductLongDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductThumb",
+          "type": "text"
+        },
+        {
+          "name": "ProductImage",
+          "type": "text"
+        },
+        {
+          "name": "ProductCategoryID",
+          "type": "number"
+        },
+        {
+          "name": "ProductUpdateDate",
+          "type": "datetime"
+        },
+        {
+          "name": "ProductStock",
+          "type": "number"
+        },
+        {
+          "name": "ProductLive",
+          "type": "number"
+        },
+        {
+          "name": "ProductUnlimited",
+          "type": "number"
+        },
+        {
+          "name": "ProductLocation",
+          "type": "text"
+        },
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "qryImages",
+          "type": "array",
+          "sub": [
+            {
+              "name": "ProductImageID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageProductID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageFile",
+              "type": "text"
+            },
+            {
+              "name": "ProductImageDisplayOrder",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "outputType": "array"
+    },
+    "rptcheckoutitems": {
+      "meta": [
+        {
+          "name": "$id",
+          "type": "number"
+        },
+        {
+          "type": "number",
+          "name": "productid"
+        },
+        {
+          "type": "text",
+          "name": "productname"
+        },
+        {
+          "type": "number",
+          "name": "productprice"
+        },
+        {
+          "type": "number",
+          "name": "quantity"
+        }
+      ],
+      "outputType": "array"
+    },
+    "rptdatabaseitems": {
+      "meta": [
+        {
+          "name": "ProductID",
+          "type": "number"
+        },
+        {
+          "name": "ProductSKU",
+          "type": "text"
+        },
+        {
+          "name": "ProductName",
+          "type": "text"
+        },
+        {
+          "name": "ProductPrice",
+          "type": "number"
+        },
+        {
+          "name": "ProductWeight",
+          "type": "number"
+        },
+        {
+          "name": "ProductCartDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductShortDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductLongDesc",
+          "type": "text"
+        },
+        {
+          "name": "ProductThumb",
+          "type": "text"
+        },
+        {
+          "name": "ProductImage",
+          "type": "text"
+        },
+        {
+          "name": "ProductCategoryID",
+          "type": "number"
+        },
+        {
+          "name": "ProductUpdateDate",
+          "type": "datetime"
+        },
+        {
+          "name": "ProductStock",
+          "type": "number"
+        },
+        {
+          "name": "ProductLive",
+          "type": "number"
+        },
+        {
+          "name": "ProductUnlimited",
+          "type": "number"
+        },
+        {
+          "name": "ProductLocation",
+          "type": "text"
+        },
+        {
+          "name": "CategoryID",
+          "type": "number"
+        },
+        {
+          "name": "CategoryName",
+          "type": "text"
+        },
+        {
+          "name": "CategoryURL",
+          "type": "text"
+        },
+        {
+          "name": "CategoryMetaID",
+          "type": "number"
+        },
+        {
+          "name": "qryImages",
+          "type": "array",
+          "sub": [
+            {
+              "name": "ProductImageID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageProductID",
+              "type": "number"
+            },
+            {
+              "name": "ProductImageFile",
+              "type": "text"
+            },
+            {
+              "name": "ProductImageDisplayOrder",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "outputType": "array"
+    },
+    "record": {
+      "meta": [
+        {
+          "name": "$id",
+          "type": "number"
+        },
+        {
+          "type": "number",
+          "name": "productid"
+        },
+        {
+          "type": "text",
+          "name": "productname"
+        },
+        {
+          "type": "number",
+          "name": "productprice"
+        },
+        {
+          "type": "number",
+          "name": "quantity"
         }
       ],
       "outputType": "array"

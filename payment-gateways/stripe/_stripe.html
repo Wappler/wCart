@@ -1,0 +1,12 @@
+<form action="dmxConnect/api/stripe/send_charge.php" method="post" id="payment-form" is="dmx-serverconnect-form" dmx-on:success="browser1.goto('success.php')">
+	<div class="form-row">
+		<input type="hidden" name="ProductID" class="form-control mb-3 StripeElement StripeElement--empty" dmx-bind:value="1">
+		<div id="card-element">
+			<!-- A Stripe Element will be inserted here. -->
+		</div>
+		<!-- Used to display form errors. -->
+		<div id="card-errors" role="alert"></div>
+	</div>
+	<button type="submit">Submit Payment</button>
+</form>
+<script src="https://js.stripe.com/v3/"></script>

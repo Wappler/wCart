@@ -47,13 +47,14 @@ CREATE TABLE IF NOT EXISTS `company` (
   `CompanyLogo` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `CompanyRegistrationDate` date DEFAULT NULL,
   `CompanyBusinessID` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `CompanyCurrency` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`CompanyID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table wcart.company: 1 rows
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` (`CompanyID`, `CompanyName`, `CompanyAddress`, `CompanyCity`, `CompanyState`, `CompanyZip`, `CompanyCountry`, `CompanyEmail`, `CompanyPhone`, `CompanyWebsite`, `CompanyLogo`, `CompanyRegistrationDate`, `CompanyBusinessID`) VALUES
-	(1, 'Anachronistic Fashion House', 'Deventerstraat 513', 'Apeldoorn', 'Gelderland', '7233 RE', 'Nederland', 'info@anachronistic.com', '+31 (0)555 555555', 'https://anachronistic.com', 'company_logo.png', '2019-04-08', '521 63158');
+INSERT INTO `company` (`CompanyID`, `CompanyName`, `CompanyAddress`, `CompanyCity`, `CompanyState`, `CompanyZip`, `CompanyCountry`, `CompanyEmail`, `CompanyPhone`, `CompanyWebsite`, `CompanyLogo`, `CompanyRegistrationDate`, `CompanyBusinessID`, `CompanyCurrency`) VALUES
+	(1, 'Anachronistic Fashion House', 'Deventerstraat 513', 'Apeldoorn', 'Gelderland', '7233 RE', 'Nederland', 'info@anachronistic.com', '+31 (0)555 555555', 'https://anachronistic.com', 'company_logo.png', '2019-04-08', '521 63158', NULL);
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
 -- Dumping structure for table wcart.countries
@@ -310,6 +311,269 @@ INSERT INTO `countries` (`CountryID`, `CountryISO`, `CountryName`, `CountryRegio
 	(239, 'ZW', 'Zimbabwe', 'State/ Province/ Region', 0);
 /*!40000 ALTER TABLE `countries` ENABLE KEYS */;
 
+-- Dumping structure for table wcart.currencies
+CREATE TABLE IF NOT EXISTS `currencies` (
+  `CurrencyID` int NOT NULL AUTO_INCREMENT,
+  `CurrencyCountryISO` varchar(5) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `CurrencyISO` varchar(5) CHARACTER SET utf32 COLLATE utf32_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`CurrencyID`)
+) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+-- Dumping data for table wcart.currencies: ~250 rows (approximately)
+/*!40000 ALTER TABLE `currencies` DISABLE KEYS */;
+INSERT INTO `currencies` (`CurrencyID`, `CurrencyCountryISO`, `CurrencyISO`) VALUES
+	(1, ' BD', ' BDT'),
+	(2, ' BE', ' EUR'),
+	(3, ' BF', ' XOF'),
+	(4, ' BG', ' BGN'),
+	(5, ' BA', ' BAM'),
+	(6, ' BB', ' BBD'),
+	(7, ' WF', ' XPF'),
+	(8, ' BL', ' EUR'),
+	(9, ' BM', ' BMD'),
+	(10, ' BN', ' BND'),
+	(11, ' BO', ' BOB'),
+	(12, ' BH', ' BHD'),
+	(13, ' BI', ' BIF'),
+	(14, ' BJ', ' XOF'),
+	(15, ' BT', ' BTN'),
+	(16, ' JM', ' JMD'),
+	(17, ' BV', ' NOK'),
+	(18, ' BW', ' BWP'),
+	(19, ' WS', ' WST'),
+	(20, ' BQ', ' USD'),
+	(21, ' BR', ' BRL'),
+	(22, ' BS', ' BSD'),
+	(23, ' JE', ' GBP'),
+	(24, ' BY', ' BYR'),
+	(25, ' BZ', ' BZD'),
+	(26, ' RU', ' RUB'),
+	(27, ' RW', ' RWF'),
+	(28, ' RS', ' RSD'),
+	(29, ' TL', ' USD'),
+	(30, ' RE', ' EUR'),
+	(31, ' TM', ' TMT'),
+	(32, ' TJ', ' TJS'),
+	(33, ' RO', ' RON'),
+	(34, ' TK', ' NZD'),
+	(35, ' GW', ' XOF'),
+	(36, ' GU', ' USD'),
+	(37, ' GT', ' GTQ'),
+	(38, ' GS', ' GBP'),
+	(39, ' GR', ' EUR'),
+	(40, ' GQ', ' XAF'),
+	(41, ' GP', ' EUR'),
+	(42, ' JP', ' JPY'),
+	(43, ' GY', ' GYD'),
+	(44, ' GG', ' GBP'),
+	(45, ' GF', ' EUR'),
+	(46, ' GE', ' GEL'),
+	(47, ' GD', ' XCD'),
+	(48, ' GB', ' GBP'),
+	(49, ' GA', ' XAF'),
+	(50, ' SV', ' USD'),
+	(51, ' GN', ' GNF'),
+	(52, ' GM', ' GMD'),
+	(53, ' GL', ' DKK'),
+	(54, ' GI', ' GIP'),
+	(55, ' GH', ' GHS'),
+	(56, ' OM', ' OMR'),
+	(57, ' TN', ' TND'),
+	(58, ' JO', ' JOD'),
+	(59, ' HR', ' HRK'),
+	(60, ' HT', ' HTG'),
+	(61, ' HU', ' HUF'),
+	(62, ' HK', ' HKD'),
+	(63, ' HN', ' HNL'),
+	(64, ' HM', ' AUD'),
+	(65, ' VE', ' VEF'),
+	(66, ' PR', ' USD'),
+	(67, ' PS', ' ILS'),
+	(68, ' PW', ' USD'),
+	(69, ' PT', ' EUR'),
+	(70, ' SJ', ' NOK'),
+	(71, ' PY', ' PYG'),
+	(72, ' IQ', ' IQD'),
+	(73, ' PA', ' PAB'),
+	(74, ' PF', ' XPF'),
+	(75, ' PG', ' PGK'),
+	(76, ' PE', ' PEN'),
+	(77, ' PK', ' PKR'),
+	(78, ' PH', ' PHP'),
+	(79, ' PN', ' NZD'),
+	(80, ' PL', ' PLN'),
+	(81, ' PM', ' EUR'),
+	(82, ' ZM', ' ZMK'),
+	(83, ' EH', ' MAD'),
+	(84, ' EE', ' EUR'),
+	(85, ' EG', ' EGP'),
+	(86, ' ZA', ' ZAR'),
+	(87, ' EC', ' USD'),
+	(88, ' IT', ' EUR'),
+	(89, ' VN', ' VND'),
+	(90, ' SB', ' SBD'),
+	(91, ' ET', ' ETB'),
+	(92, ' SO', ' SOS'),
+	(93, ' ZW', ' ZWL'),
+	(94, ' SA', ' SAR'),
+	(95, ' ES', ' EUR'),
+	(96, ' ER', ' ERN'),
+	(97, ' ME', ' EUR'),
+	(98, ' MD', ' MDL'),
+	(99, ' MG', ' MGA'),
+	(100, ' MF', ' EUR'),
+	(101, ' MA', ' MAD'),
+	(102, ' MC', ' EUR'),
+	(103, ' UZ', ' UZS'),
+	(104, ' MM', ' MMK'),
+	(105, ' ML', ' XOF'),
+	(106, ' MO', ' MOP'),
+	(107, ' MN', ' MNT'),
+	(108, ' MH', ' USD'),
+	(109, ' MK', ' MKD'),
+	(110, ' MU', ' MUR'),
+	(111, ' MT', ' EUR'),
+	(112, ' MW', ' MWK'),
+	(113, ' MV', ' MVR'),
+	(114, ' MQ', ' EUR'),
+	(115, ' MP', ' USD'),
+	(116, ' MS', ' XCD'),
+	(117, ' MR', ' MRO'),
+	(118, ' IM', ' GBP'),
+	(119, ' UG', ' UGX'),
+	(120, ' TZ', ' TZS'),
+	(121, ' MY', ' MYR'),
+	(122, ' MX', ' MXN'),
+	(123, ' IL', ' ILS'),
+	(124, ' FR', ' EUR'),
+	(125, ' IO', ' USD'),
+	(126, ' SH', ' SHP'),
+	(127, ' FI', ' EUR'),
+	(128, ' FJ', ' FJD'),
+	(129, ' FK', ' FKP'),
+	(130, ' FM', ' USD'),
+	(131, ' FO', ' DKK'),
+	(132, ' NI', ' NIO'),
+	(133, ' NL', ' EUR'),
+	(134, ' NO', ' NOK'),
+	(135, ' NA', ' NAD'),
+	(136, ' VU', ' VUV'),
+	(137, ' NC', ' XPF'),
+	(138, ' NE', ' XOF'),
+	(139, ' NF', ' AUD'),
+	(140, ' NG', ' NGN'),
+	(141, ' NZ', ' NZD'),
+	(142, ' NP', ' NPR'),
+	(143, ' NR', ' AUD'),
+	(144, ' NU', ' NZD'),
+	(145, ' CK', ' NZD'),
+	(146, ' XK', ' EUR'),
+	(147, ' CI', ' XOF'),
+	(148, ' CH', ' CHF'),
+	(149, ' CO', ' COP'),
+	(150, ' CN', ' CNY'),
+	(151, ' CM', ' XAF'),
+	(152, ' CL', ' CLP'),
+	(153, ' CC', ' AUD'),
+	(154, ' CA', ' CAD'),
+	(155, ' CG', ' XAF'),
+	(156, ' CF', ' XAF'),
+	(157, ' CD', ' CDF'),
+	(158, ' CZ', ' CZK'),
+	(159, ' CY', ' EUR'),
+	(160, ' CX', ' AUD'),
+	(161, ' CR', ' CRC'),
+	(162, ' CW', ' ANG'),
+	(163, ' CV', ' CVE'),
+	(164, ' CU', ' CUP'),
+	(165, ' SZ', ' SZL'),
+	(166, ' SY', ' SYP'),
+	(167, ' SX', ' ANG'),
+	(168, ' KG', ' KGS'),
+	(169, ' KE', ' KES'),
+	(170, ' SS', ' SSP'),
+	(171, ' SR', ' SRD'),
+	(172, ' KI', ' AUD'),
+	(173, ' KH', ' KHR'),
+	(174, ' KN', ' XCD'),
+	(175, ' KM', ' KMF'),
+	(176, ' ST', ' STD'),
+	(177, ' SK', ' EUR'),
+	(178, ' KR', ' KRW'),
+	(179, ' SI', ' EUR'),
+	(180, ' KP', ' KPW'),
+	(181, ' KW', ' KWD'),
+	(182, ' SN', ' XOF'),
+	(183, ' SM', ' EUR'),
+	(184, ' SL', ' SLL'),
+	(185, ' SC', ' SCR'),
+	(186, ' KZ', ' KZT'),
+	(187, ' KY', ' KYD'),
+	(188, ' SG', ' SGD'),
+	(189, ' SE', ' SEK'),
+	(190, ' SD', ' SDG'),
+	(191, ' DO', ' DOP'),
+	(192, ' DM', ' XCD'),
+	(193, ' DJ', ' DJF'),
+	(194, ' DK', ' DKK'),
+	(195, ' VG', ' USD'),
+	(196, ' DE', ' EUR'),
+	(197, ' YE', ' YER'),
+	(198, ' DZ', ' DZD'),
+	(199, ' US', ' USD'),
+	(200, ' UY', ' UYU'),
+	(201, ' YT', ' EUR'),
+	(202, ' UM', ' USD'),
+	(203, ' LB', ' LBP'),
+	(204, ' LC', ' XCD'),
+	(205, ' LA', ' LAK'),
+	(206, ' TV', ' AUD'),
+	(207, ' TW', ' TWD'),
+	(208, ' TT', ' TTD'),
+	(209, ' TR', ' TRY'),
+	(210, ' LK', ' LKR'),
+	(211, ' LI', ' CHF'),
+	(212, ' LV', ' EUR'),
+	(213, ' TO', ' TOP'),
+	(214, ' LT', ' LTL'),
+	(215, ' LU', ' EUR'),
+	(216, ' LR', ' LRD'),
+	(217, ' LS', ' LSL'),
+	(218, ' TH', ' THB'),
+	(219, ' TF', ' EUR'),
+	(220, ' TG', ' XOF'),
+	(221, ' TD', ' XAF'),
+	(222, ' TC', ' USD'),
+	(223, ' LY', ' LYD'),
+	(224, ' VA', ' EUR'),
+	(225, ' VC', ' XCD'),
+	(226, ' AE', ' AED'),
+	(227, ' AD', ' EUR'),
+	(228, ' AG', ' XCD'),
+	(229, ' AF', ' AFN'),
+	(230, ' AI', ' XCD'),
+	(231, ' VI', ' USD'),
+	(232, ' IS', ' ISK'),
+	(233, ' IR', ' IRR'),
+	(234, ' AM', ' AMD'),
+	(235, ' AL', ' ALL'),
+	(236, ' AO', ' AOA'),
+	(237, ' AQ', ' "'),
+	(238, ' AS', ' USD'),
+	(239, ' AR', ' ARS'),
+	(240, ' AU', ' AUD'),
+	(241, ' AT', ' EUR'),
+	(242, ' AW', ' AWG'),
+	(243, ' IN', ' INR'),
+	(244, ' AX', ' EUR'),
+	(245, ' AZ', ' AZN'),
+	(246, ' IE', ' EUR'),
+	(247, ' ID', ' IDR'),
+	(248, ' UA', ' UAH'),
+	(249, ' QA', ' QAR'),
+	(250, ' MZ', ' MZN');
+/*!40000 ALTER TABLE `currencies` ENABLE KEYS */;
+
 -- Dumping structure for table wcart.customers
 CREATE TABLE IF NOT EXISTS `customers` (
   `CustomerID` int NOT NULL AUTO_INCREMENT,
@@ -327,11 +591,14 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `CustomerRegistrationDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `CustomerVerificationCode` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `CustomerIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `CustomerPaymentGatewayID` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`CustomerID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table wcart.customers: 0 rows
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` (`CustomerID`, `CustomerEmail`, `CustomerPassword`, `CustomerFirstName`, `CustomerLastName`, `CustomerAddress`, `CustomerCity`, `CustomerState`, `CustomerZip`, `CustomerCountry`, `CustomerPhone`, `CustomerEmailVerified`, `CustomerRegistrationDate`, `CustomerVerificationCode`, `CustomerIP`, `CustomerPaymentGatewayID`) VALUES
+	(1, 'ben@pleysier.com.au', 'a12fdc5aa82dd680fdb0e1f7e7be6c529939eba72c19736d0720125e19ff0023', 'Ben', 'Pleysier', '24 Marathon Drive', 'Mount Eliza', 'Victoria', '3930', 'AU', NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 
 -- Dumping structure for table wcart.metatags
@@ -400,6 +667,22 @@ CREATE TABLE IF NOT EXISTS `orders` (
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
+-- Dumping structure for table wcart.payment_gateway
+CREATE TABLE IF NOT EXISTS `payment_gateway` (
+  `PaymentGatewayID` int NOT NULL AUTO_INCREMENT,
+  `PaymentGatewayName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `PaymentGatewayAuthorization` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `PaymentGatewayChargesURL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `PaymentGatewayCustomersURL` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`PaymentGatewayID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table wcart.payment_gateway: ~0 rows (approximately)
+/*!40000 ALTER TABLE `payment_gateway` DISABLE KEYS */;
+INSERT INTO `payment_gateway` (`PaymentGatewayID`, `PaymentGatewayName`, `PaymentGatewayAuthorization`, `PaymentGatewayChargesURL`, `PaymentGatewayCustomersURL`) VALUES
+	(1, 'Stripe', 'sk_test_xxxxxxxxxxxxxxxxxxxxxxx', 'https://api.stripe.com/v1/charges', 'https://api.stripe.com/v1/customers');
+/*!40000 ALTER TABLE `payment_gateway` ENABLE KEYS */;
+
 -- Dumping structure for table wcart.products
 CREATE TABLE IF NOT EXISTS `products` (
   `ProductID` int NOT NULL AUTO_INCREMENT,
@@ -421,7 +704,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`ProductID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table wcart.products: 3 rows
+-- Dumping data for table wcart.products: 2 rows
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` (`ProductID`, `ProductSKU`, `ProductName`, `ProductPrice`, `ProductWeight`, `ProductCartDesc`, `ProductShortDesc`, `ProductLongDesc`, `ProductThumb`, `ProductImage`, `ProductCategoryID`, `ProductUpdateDate`, `ProductStock`, `ProductLive`, `ProductUnlimited`, `ProductLocation`) VALUES
 	(1, '000-0001', 'Cotton T-Shirt', 9.99, 3, 'Light Cotton T-Shirt', 'A light cotton T-Shirt made with 100% real cotton.', 'A light cotton T-Shirt made with 100% real cotton.\r\n\r\nMade right here in the USA for over 15 years, this t-shirt is lightweight and durable.', '', '', 1, '2013-06-13 01:00:50', 100, 1, 0, NULL),

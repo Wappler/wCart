@@ -13,49 +13,42 @@
       "routes": [
         {
           "type": "page",
-          "id": "routehome",
           "path": "/",
+          "id": "routehome",
           "url": "_home.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "routeabout",
           "path": "/about",
+          "id": "routeabout",
           "url": "_about.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "routeproducts",
           "path": "/products/:category",
+          "id": "routeproducts",
           "url": "_products.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "routecontact",
           "path": "/contact",
+          "id": "routecontact",
           "url": "_contact.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "routecart",
-          "path": "/cart",
-          "url": "_cart.html",
-          "exact": ""
-        },
-        {
-          "type": "page",
-          "id": "routecheckout",
           "path": "/checkout",
+          "id": "routecheckout",
           "url": "_checkout.html"
         },
         {
           "type": "page",
-          "id": "routeuserhome",
           "path": "/user-home",
+          "id": "routeuserhome",
           "url": "_user-home.html"
         }
       ]

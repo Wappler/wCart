@@ -17,8 +17,6 @@ RewriteRule ^/?products/([^/]+?)(?:/)?$ index.html?category=$1 [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?contact(?:/)?$ index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?cart(?:/)?$ index.html [QSA,NC,L]
-RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?checkout(?:/)?$ index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?user-home(?:/)?$ index.html [QSA,NC,L]
