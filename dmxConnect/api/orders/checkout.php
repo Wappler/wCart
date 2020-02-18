@@ -66,185 +66,207 @@ $app->define(<<<'JSON'
     "steps": [
       "Connections/db",
       {
-        "name": "insOrder",
-        "module": "dbupdater",
-        "action": "insert",
+        "name": "",
+        "module": "core",
+        "action": "condition",
         "options": {
-          "connection": "db",
-          "sql": {
-            "type": "insert",
-            "values": [
+          "if": "{{$_POST.subtotal > 0}}",
+          "then": {
+            "steps": [
               {
-                "table": "orders",
-                "column": "OrderAmount",
-                "type": "number",
-                "value": "{{$_POST.subtotal}}"
+                "name": "insOrder",
+                "module": "dbupdater",
+                "action": "insert",
+                "options": {
+                  "connection": "db",
+                  "sql": {
+                    "type": "insert",
+                    "values": [
+                      {
+                        "table": "orders",
+                        "column": "OrderAmount",
+                        "type": "number",
+                        "value": "{{$_POST.subtotal}}"
+                      },
+                      {
+                        "table": "orders",
+                        "column": "OrderCustomerID",
+                        "type": "number",
+                        "value": "{{$_POST.customerid}}"
+                      }
+                    ],
+                    "table": "orders",
+                    "query": "INSERT INTO orders\n(OrderAmount, OrderCustomerID) VALUES (:P1 /* {{$_POST.subtotal}} */, :P2 /* {{$_POST.customerid}} */)",
+                    "params": [
+                      {
+                        "name": ":P1",
+                        "type": "expression",
+                        "value": "{{$_POST.subtotal}}"
+                      },
+                      {
+                        "name": ":P2",
+                        "type": "expression",
+                        "value": "{{$_POST.customerid}}"
+                      }
+                    ]
+                  }
+                },
+                "meta": [
+                  {
+                    "name": "identity",
+                    "type": "text"
+                  },
+                  {
+                    "name": "affected",
+                    "type": "number"
+                  }
+                ]
               },
               {
-                "table": "orders",
-                "column": "OrderCustomerID",
-                "type": "number",
-                "value": "{{$_POST.customerid}}"
-              }
-            ],
-            "table": "orders",
-            "query": "INSERT INTO orders\n(OrderAmount, OrderCustomerID) VALUES (:P1 /* {{$_POST.subtotal}} */, :P2 /* {{$_POST.customerid}} */)",
-            "params": [
-              {
-                "name": ":P1",
-                "type": "expression",
-                "value": "{{$_POST.subtotal}}"
+                "name": "lastinvoice",
+                "module": "core",
+                "action": "setvalue",
+                "options": {
+                  "value": "{{insOrder.identity}}"
+                },
+                "outputType": "text",
+                "output": true
               },
               {
-                "name": ":P2",
-                "type": "expression",
-                "value": "{{$_POST.customerid}}"
+                "name": "rptOrderDetails",
+                "module": "core",
+                "action": "repeat",
+                "options": {
+                  "repeat": "{{$_POST.record}}",
+                  "outputFields": [
+                    "productname",
+                    "price",
+                    "qty",
+                    "$parent.insOrder.identity"
+                  ],
+                  "exec": {
+                    "steps": {
+                      "name": "insOrderDetail",
+                      "module": "dbupdater",
+                      "action": "insert",
+                      "options": {
+                        "connection": "db",
+                        "sql": {
+                          "type": "insert",
+                          "values": [
+                            {
+                              "table": "orderdetails",
+                              "column": "DetailName",
+                              "type": "text",
+                              "value": "{{productname}}"
+                            },
+                            {
+                              "table": "orderdetails",
+                              "column": "DetailOrderID",
+                              "type": "number",
+                              "value": "{{$parent.insOrder.identity}}"
+                            },
+                            {
+                              "table": "orderdetails",
+                              "column": "DetailPrice",
+                              "type": "number",
+                              "value": "{{price}}"
+                            },
+                            {
+                              "table": "orderdetails",
+                              "column": "DetailQuantity",
+                              "type": "number",
+                              "value": "{{qty}}"
+                            }
+                          ],
+                          "table": "orderdetails",
+                          "query": "INSERT INTO orderdetails\n(DetailName, DetailOrderID, DetailPrice, DetailQuantity) VALUES (:P1 /* {{productname}} */, :P2 /* {{$parent.insOrder.identity}} */, :P3 /* {{price}} */, :P4 /* {{qty}} */)",
+                          "params": [
+                            {
+                              "name": ":P1",
+                              "type": "expression",
+                              "value": "{{productname}}"
+                            },
+                            {
+                              "name": ":P2",
+                              "type": "expression",
+                              "value": "{{$parent.insOrder.identity}}"
+                            },
+                            {
+                              "name": ":P3",
+                              "type": "expression",
+                              "value": "{{price}}"
+                            },
+                            {
+                              "name": ":P4",
+                              "type": "expression",
+                              "value": "{{qty}}"
+                            }
+                          ]
+                        }
+                      },
+                      "meta": [
+                        {
+                          "name": "identity",
+                          "type": "text"
+                        },
+                        {
+                          "name": "affected",
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "meta": [
+                  {
+                    "name": "$index",
+                    "type": "number"
+                  },
+                  {
+                    "name": "$number",
+                    "type": "number"
+                  },
+                  {
+                    "name": "$name",
+                    "type": "text"
+                  },
+                  {
+                    "name": "$value",
+                    "type": "object"
+                  },
+                  {
+                    "name": "productname",
+                    "type": "text"
+                  },
+                  {
+                    "name": "price",
+                    "type": "text"
+                  },
+                  {
+                    "name": "qty",
+                    "type": "text"
+                  },
+                  {
+                    "name": "$parent.insOrder.identity",
+                    "type": "number"
+                  }
+                ],
+                "outputType": "array"
               }
             ]
-          }
-        },
-        "meta": [
-          {
-            "name": "identity",
-            "type": "text"
           },
-          {
-            "name": "affected",
-            "type": "number"
-          }
-        ]
-      },
-      {
-        "name": "lastinvoice",
-        "module": "core",
-        "action": "setvalue",
-        "options": {
-          "value": "{{insOrder.identity}}"
-        },
-        "outputType": "text",
-        "output": true
-      },
-      {
-        "name": "rptOrderDetails",
-        "module": "core",
-        "action": "repeat",
-        "options": {
-          "repeat": "{{$_POST.record}}",
-          "outputFields": [
-            "productname",
-            "price",
-            "qty",
-            "$parent.insOrder.identity"
-          ],
-          "exec": {
+          "else": {
             "steps": {
-              "name": "insOrderDetail",
-              "module": "dbupdater",
-              "action": "insert",
+              "name": "",
+              "module": "core",
+              "action": "redirect",
               "options": {
-                "connection": "db",
-                "sql": {
-                  "type": "insert",
-                  "values": [
-                    {
-                      "table": "orderdetails",
-                      "column": "DetailName",
-                      "type": "text",
-                      "value": "{{productname}}"
-                    },
-                    {
-                      "table": "orderdetails",
-                      "column": "DetailOrderID",
-                      "type": "number",
-                      "value": "{{$parent.insOrder.identity}}"
-                    },
-                    {
-                      "table": "orderdetails",
-                      "column": "DetailPrice",
-                      "type": "number",
-                      "value": "{{price}}"
-                    },
-                    {
-                      "table": "orderdetails",
-                      "column": "DetailQuantity",
-                      "type": "number",
-                      "value": "{{qty}}"
-                    }
-                  ],
-                  "table": "orderdetails",
-                  "query": "INSERT INTO orderdetails\n(DetailName, DetailOrderID, DetailPrice, DetailQuantity) VALUES (:P1 /* {{productname}} */, :P2 /* {{$parent.insOrder.identity}} */, :P3 /* {{price}} */, :P4 /* {{qty}} */)",
-                  "params": [
-                    {
-                      "name": ":P1",
-                      "type": "expression",
-                      "value": "{{productname}}"
-                    },
-                    {
-                      "name": ":P2",
-                      "type": "expression",
-                      "value": "{{$parent.insOrder.identity}}"
-                    },
-                    {
-                      "name": ":P3",
-                      "type": "expression",
-                      "value": "{{price}}"
-                    },
-                    {
-                      "name": ":P4",
-                      "type": "expression",
-                      "value": "{{qty}}"
-                    }
-                  ]
-                }
-              },
-              "meta": [
-                {
-                  "name": "identity",
-                  "type": "text"
-                },
-                {
-                  "name": "affected",
-                  "type": "number"
-                }
-              ]
+                "url": "https://bunchoblokes.org/"
+              }
             }
           }
-        },
-        "meta": [
-          {
-            "name": "$index",
-            "type": "number"
-          },
-          {
-            "name": "$number",
-            "type": "number"
-          },
-          {
-            "name": "$name",
-            "type": "text"
-          },
-          {
-            "name": "$value",
-            "type": "object"
-          },
-          {
-            "name": "productname",
-            "type": "text"
-          },
-          {
-            "name": "price",
-            "type": "text"
-          },
-          {
-            "name": "qty",
-            "type": "text"
-          },
-          {
-            "name": "$parent.insOrder.identity",
-            "type": "number"
-          }
-        ],
-        "outputType": "array"
+        }
       }
     ]
   }
