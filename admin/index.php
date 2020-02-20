@@ -1,3 +1,23 @@
+<?php
+require('../dmxConnectLib/dmxConnect.php');
+
+$app = new \lib\App();
+
+$app->exec(<<<'JSON'
+{
+	"steps": [
+		"Connections/db",
+		"SecurityProviders/adminsecurity",
+		{
+			"module": "auth",
+			"action": "restrict",
+			"options": {"loginUrl":"login.html","provider":"adminsecurity"}
+		}
+	]
+}
+JSON
+, TRUE);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -35,6 +55,8 @@
 </head>
 
 <body id="admin" is="dmx-app">
+	<dmx-serverconnect id="scLogout" url="../dmxConnect/api/security/adminLogout.php" noload="noload" dmx-on:success="browser.goto('login.html')"></dmx-serverconnect>
+	<dmx-serverconnect id="scUser" url="../dmxConnect/api/security/adminDetails.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCompany" url="../dmxConnect/api/company/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scAdministrators" url="../dmxConnect/api/administrators/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCustomers" url="../dmxConnect/api/customers/list.php"></dmx-serverconnect>
@@ -44,6 +66,7 @@
 	<dmx-serverconnect id="scProductImages" url="../dmxConnect/api/product_images/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scCategories" url="../dmxConnect/api/categories/list.php"></dmx-serverconnect>
 	<dmx-serverconnect id="scMetatags" url="../dmxConnect/api/metatags/list.php" dmx-param:sort=""></dmx-serverconnect>
+	<dmx-data-detail id="ddCategory" dmx-bind:data="scCategories.data.qryCategories" key="CategoryID"></dmx-data-detail>
 	<dmx-data-view id="dvMetatags" dmx-bind:data="scMetatags.data.qryMetaTags" filter="!metaURL.startsWith(&quot;/products/&quot;)" sortOn="metaPage"></dmx-data-view>
 	<dmx-data-view id="dvProductImages" dmx-bind:data="scProductImages.data.qryImages" filter="(ProductImageProductID == ddProduct.data.ProductID)"></dmx-data-view>
 	<dmx-data-detail id="ddAdministrator" dmx-bind:data="scAdministrators.data.qryAdministrators" key="UserID"></dmx-data-detail>
@@ -53,7 +76,7 @@
 	<dmx-data-detail id="ddInvoice" dmx-bind:data="scInvoice.data.rptOrders" key="OrderID"></dmx-data-detail>
 	<dmx-data-detail id="ddProduct" dmx-bind:data="scProducts.data.rptProducts" key="ProductID"></dmx-data-detail>
 	<dmx-data-detail id="ddProductImage" dmx-bind:data="dvProductImages.data" key="ProductImageID"></dmx-data-detail>
-	<dmx-data-detail id="ddCategory" dmx-bind:data="scCategories.data.qryCategories" key="CategoryID"></dmx-data-detail>
+
 	<dmx-data-detail id="ddMetatag" dmx-bind:data="dvMetatags.data" key="metaID"></dmx-data-detail>
 	<div is="dmx-browser" id="browser"></div>
 	<dmx-notifications id="notifies" offset-y="45"></dmx-notifications>
@@ -62,7 +85,7 @@
 		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" dmx-text="scCompany.data.qryCompany.CompanyName">Company name</a>
 		<ul class="navbar-nav px-3">
 			<li class="nav-item text-nowrap">
-				<a class="nav-link" href="#">Sign out</a>
+				<a class="nav-link" href="#" dmx-on:click="scLogout.load()">Sign out</a>
 			</li>
 		</ul>
 	</nav>
@@ -77,48 +100,52 @@
 								<i class="fas fa-home fa-fw"></i>&nbsp;Dashboard
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot;)">
 							<a class="nav-link" href="./seo">
 								<i class="fas fa-chart-bar fa-fw"></i>&nbsp;SEO
 							</a>
 						</li>
 						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
-						<li class="nav-item font-weight-bold text-center">Sales</li>
-						<li class="nav-item">
+						<li class="nav-item font-weight-bold text-center"
+							dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Sales Manager&quot;))">Sales</li>
+						<li class="nav-item" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Sales Manager&quot;))">
 							<a class="nav-link" href="./orders">
 								<i class="fas fa-file fa-fw"></i>&nbsp;Orders
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Sales Manager&quot;))">
 							<a class="nav-link" href="./customers">
 								<i class="fas fa-users fa-fw"></i>&nbsp;Customers
 							</a>
 						</li>
-						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
-						<li class="nav-item font-weight-bold text-center">Products</li>
-						<li class="nav-item">
+						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"
+							dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Sales Manager&quot;))"></li>
+						<li class="nav-item font-weight-bold text-center"
+							dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Products Manager&quot;))">Products</li>
+						<li class="nav-item" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Products Manager&quot;))">
 							<a class="nav-link" href="./products">
 								<i class="fas fa-shopping-cart fa-fw"></i>&nbsp;Products
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Products Manager&quot;))">
 							<a class="nav-link" href="./categories">
 								<i class="fas fa-tags fa-fw"></i>&nbsp;Categories
 							</a>
 						</li>
-						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
-						<li class="nav-item font-weight-bold text-center">Company</li>
-						<li class="nav-item">
+						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"
+							dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot; || scUser.data.qryUsers.UserLevel == &quot;Supervisor&quot; || (scUser.data.qryUsers.UserLevel == &quot;Products Manager&quot;))"></li>
+						<li class="nav-item font-weight-bold text-center" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot;)">Company</li>
+						<li class="nav-item" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot;)">
 							<a class="nav-link" href="./company">
 								<i class="fas fa-building fa-fw"></i>&nbsp;Company
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot;)">
 							<a class="nav-link" href="./administrators">
 								<i class="fas fa-user-friends fa-fw"></i>&nbsp;Administrators
 							</a>
 						</li>
-						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;"></li>
+						<li class="dropdown-divider" style="border-top: 1px solid #d2d4d6;" dmx-show="(scUser.data.qryUsers.UserLevel == &quot;Manager&quot;)"></li>
 					</ul>
 				</div>
 			</nav>
@@ -135,6 +162,25 @@
 						<div is="dmx-route" path="/company" url="_company.html" id="rteCompany" exact></div>
 						<div is="dmx-route" path="/categories" url="_categories.html" id="rteCategories" exact></div>
 						<div is="dmx-route" path="/products" url="_products.html" exact id="rteProducts"></div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="mdlLogin" is="dmx-bs4-modal" tabindex="-1" role="dialog" dmx-bind:show="">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Modal title</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Modal body text goes here.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
+						</div>
 					</div>
 				</div>
 			</div>

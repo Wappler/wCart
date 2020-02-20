@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+	<base href="/admin/">
+	<script src="../dmxAppConnect/dmxAppConnect.js"></script>
+	<meta charset="UTF-8">
+	<title>Untitled Document</title>
+	<script src="../js/jquery-3.3.1.slim.min.js"></script>
+	<link rel="stylesheet" href="../fontawesome4/css/font-awesome.min.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="../bootstrap/4/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous" />
+	<script src="../dmxAppConnect/dmxBrowser/dmxBrowser.js" defer=""></script>
+	<link rel="stylesheet" href="../dmxAppConnect/dmxNotifications/dmxNotifications.css" />
+	<script src="../dmxAppConnect/dmxNotifications/dmxNotifications.js" defer=""></script>
+</head>
+
+<body is="dmx-app" id="login">
+	<dmx-serverconnect id="scCompany" url="../dmxConnect/api/company/list.php"></dmx-serverconnect>
+	<div is="dmx-browser" id="browser">
+	</div>
+	<div class="container wappler-block pt-3 pb-3">
+		<div class="row">
+			<div class="col-12 col-xl-4 offset-xl-4 text-center col-md-6 offset-md-3 col">
+				<img class="wappler-type-user rounded-circle mb-4" width="240" height="240" dmx-bind:src="../assets/images/company_logo/{{scCompany.data.qryCompany.CompanyLogo}}">
+				<form id="frmLogin" method="post" is="dmx-serverconnect-form" action="../dmxConnect/api/security/adminLogin.php" dmx-on:success="browser.goto('./')" dmx-on:unauthorized="browser.alert('Bad login details')">
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="Your username">
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Your password">
+					</div>
+					<button class="btn btn-primary" type="submit">Log in</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="../bootstrap/4/js/popper.min.js"></script>
+	<script src="../bootstrap/4/js/bootstrap.min.js"></script>
+</body>
+
+</html>

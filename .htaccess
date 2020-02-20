@@ -21,23 +21,23 @@ RewriteRule ^/?checkout(?:/)?$ index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^/?user-home(?:/)?$ index.html [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/orders(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/orders(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/customers(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/customers(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/administrators(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/administrators(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/seo(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/seo(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/company(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/company(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/categories(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/categories(?:/)?$ admin/index.php [QSA,NC,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/?admin/products(?:/)?$ admin/index.html [QSA,NC,L]
+RewriteRule ^/?admin/products(?:/)?$ admin/index.php [QSA,NC,L]
 ## End Wappler routing
 
 ## Wappler routing

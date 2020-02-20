@@ -14,7 +14,8 @@ $exports = <<<'JSON'
       "username": "CustomerEmail",
       "password": "CustomerPassword"
     },
-    "permissions": {}
+    "permissions": {},
+    "path": "/admin"
   },
   "meta": [
     {

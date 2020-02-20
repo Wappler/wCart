@@ -597,6 +597,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
 
 -- Dumping data for table wcart.customers: 0 rows
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` (`CustomerID`, `CustomerEmail`, `CustomerPassword`, `CustomerFirstName`, `CustomerLastName`, `CustomerAddress`, `CustomerCity`, `CustomerState`, `CustomerZip`, `CustomerCountry`, `CustomerPhone`, `CustomerEmailVerified`, `CustomerRegistrationDate`, `CustomerVerificationCode`, `CustomerIP`, `CustomerPaymentGatewayID`) VALUES
+	(1, 'ben@pleysier.com.au', 'a12fdc5aa82dd680fdb0e1f7e7be6c529939eba72c19736d0720125e19ff0023', 'Ben', 'Pleysier', '24 Marathon Drive', 'Mount Eliza', 'Victoria', '3930', 'AU', NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 
 -- Dumping structure for table wcart.metatags

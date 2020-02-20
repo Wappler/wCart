@@ -55,59 +55,60 @@
     },
     {
       "path": "/admin/",
-      "url": "/admin/index.html",
+      "url": "/admin/index.php",
       "name": "dashboard",
       "routes": [
         {
           "type": "page",
-          "id": "rteDashboard",
           "path": "/",
+          "id": "rteDashboard",
           "url": "_dashboard.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "rteOrders",
           "path": "/orders",
+          "id": "rteOrders",
           "url": "_orders.html"
         },
         {
           "type": "page",
-          "id": "rteCustomers",
           "path": "/customers",
+          "id": "rteCustomers",
           "url": "_customers.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "rteAdministrators",
           "path": "/administrators",
+          "id": "rteAdministrators",
           "url": "_administrators.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "rteMetatags",
           "path": "/seo",
+          "id": "rteMetatags",
           "url": "_seo.html"
         },
         {
           "type": "page",
-          "id": "rteCompany",
           "path": "/company",
+          "id": "rteCompany",
           "url": "_company.html",
           "exact": ""
         },
         {
           "type": "page",
-          "id": "rteCategories",
           "path": "/categories",
+          "id": "rteCategories",
           "url": "_categories.html",
           "exact": ""
         },
         {
           "type": "page",
           "path": "/products",
+          "id": "rteProducts",
           "url": "_products.html",
           "exact": ""
         }

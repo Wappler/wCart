@@ -69,6 +69,18 @@ $app->define(<<<'JSON'
   "exec": {
     "steps": [
       "Connections/db",
+      "SecurityProviders/adminsecurity",
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "adminsecurity",
+          "permissions": [
+            "Manager"
+          ]
+        }
+      },
       {
         "name": "updComapny",
         "module": "dbupdater",
