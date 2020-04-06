@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+	<base href="/">
+	<script src="dmxAppConnect/dmxAppConnect.js"></script>
+	<meta charset="UTF-8">
+	<title>Untitled Document</title>
+	<script src="js/jquery-3.3.1.slim.min.js"></script>
+	<link rel="stylesheet" href="fontawesome4/css/font-awesome.min.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="bootstrap/4/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous" />
+</head>
+
+<body is="dmx-app" id="sqLocations">
+	<dmx-serverconnect id="scSqLocations" url="dmxConnect/api/square/locations.php"></dmx-serverconnect>
+	<dmx-serverconnect id="scSqPayments" url="dmxConnect/api/square/payments.php"></dmx-serverconnect>
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col">
+				<p dmx-text="scSqLocations.data.apiLocations.data.locations[0].id"><i class="fa fa-spinner"></i> Please wait..</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div id="rptPayments" is="dmx-repeat" dmx-bind:repeat="scSqPayments.data.apiPayments.data.payments">
+					<p dmx-text="  amount_money.amount ">Enter your content here</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="bootstrap/4/js/popper.min.js"></script>
+	<script src="bootstrap/4/js/bootstrap.min.js"></script>
+</body>
+
+</html>
